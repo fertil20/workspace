@@ -29,6 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
 //                .loginPage("/login") // todo for custom form
+                .defaultSuccessUrl("/api/users")
                 .permitAll()
                 .and()
                 .logout()

@@ -1,14 +1,26 @@
 package com.workspace.server.rest;
 
 import com.workspace.server.dto.UserData;
+import com.workspace.server.repository.User;
+import com.workspace.server.repository.UserRepository;
 import com.workspace.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@RequestMapping("api/")
 public class UserController {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @GetMapping("user")
+    public List<User> getUser() {
+        return this.userRepository.findAll();
+    }
 
     private final UserService userService;
 
@@ -21,4 +33,5 @@ public class UserController {
     public UserData getUserData(@PathVariable Long id) {
         return userService.getUserData(id);
     }
+
 }
