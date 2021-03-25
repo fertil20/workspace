@@ -41,5 +41,11 @@
     "react-cookie": "^4.0.3",
     "react-router-dom": "^5.2.0",
     "reactstrap": "^8.9.0"
+  },
+  "proxy": {
+    "/api": {
+      "target": "http://localhost:8080",
+      "ws": true
+    }
   }
 }

@@ -9,15 +9,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("api/")
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("user")
+    @GetMapping("users")
     public List<User> getUser() {
         return this.userRepository.findAll();
     }
@@ -29,7 +28,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/users/{id}")
     public UserData getUserData(@PathVariable Long id) {
         return userService.getUserData(id);
     }
