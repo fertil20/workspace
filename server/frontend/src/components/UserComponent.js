@@ -11,7 +11,7 @@ class UserComponent extends React.Component {
     }
 
     componentDidMount(){
-        UserService.getUser().then((response) => {
+        UserService.getUsers().then((response) => {
             this.setState({ user: response.data})
         });
     }
@@ -36,7 +36,7 @@ class UserComponent extends React.Component {
                                 <tr key = {user.id}>
                                     <td> {user.name}</td>
                                     <td> {user.email}</td>
-                                    <td> {user.number}</td>
+                                    <td> {user.phone}</td>
                                 </tr>
                         )
                     }

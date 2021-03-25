@@ -4,7 +4,7 @@ const USERS_REST_API_URL = 'http://localhost:8080/api/users';
 
 class UserService {
 
-    getUser(){
+    getUsers(){
         return axios.get(USERS_REST_API_URL);
     }
 }

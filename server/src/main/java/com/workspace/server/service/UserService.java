@@ -1,3 +1,4 @@
+/*
 package com.workspace.server.service;
 
 import com.workspace.server.dto.UserData;
@@ -39,4 +40,4 @@ public class UserService implements UserDetailsService {
         }
         return new UserDetailsImpl(user);
     }
-}
+}*/

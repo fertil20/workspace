@@ -1,4 +1,4 @@
-package com.workspace.server.config;
+/*package com.workspace.server.config;
 
 import com.workspace.server.service.UserService;
 import org.springframework.context.annotation.Bean;
@@ -46,4 +46,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        return new BCryptPasswordEncoder();
         return NoOpPasswordEncoder.getInstance(); // todo insecure, use commented above instead
     }
-}
+}*/
