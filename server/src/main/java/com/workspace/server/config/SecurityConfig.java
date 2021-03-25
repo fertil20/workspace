@@ -3,6 +3,7 @@ package com.workspace.server.config;
 import com.workspace.server.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -23,19 +24,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.csrf().disable()
                 .authorizeRequests()
+                .antMatchers(
+                        HttpMethod.GET,
+                        "/index*", "/static/**", "/*.js", "/*.json", "/*.ico")
+                .permitAll()
 //                .antMatchers("/", "/home").permitAll() // todo to allow some url for unauthenticated users
-                .anyRequest().permitAll()
-//                .anyRequest().authenticated()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
-//                .loginPage("/login") // todo for custom form
-                .defaultSuccessUrl("/api/users")
-                .permitAll()
+                .loginPage("/index.html") // todo for custom form
+                .loginProcessingUrl("/perform_login")
+                .defaultSuccessUrl("/home.html",true)
+                .failureUrl("/index.html?error=true");
+ /*               .permitAll()
                 .and()
                 .logout()
-                .permitAll();
+                .permitAll();*/
     }
 
     @Override
