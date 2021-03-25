@@ -1,4 +1,4 @@
-/*package com.workspace.server.dto;
+package com.workspace.server.dto;
 
 import com.workspace.server.repository.User;
 import org.springframework.security.core.GrantedAuthority;
@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+
 
 public class UserDetailsImpl implements UserDetails {
 
@@ -49,4 +50,4 @@ public class UserDetailsImpl implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-}*/
+}

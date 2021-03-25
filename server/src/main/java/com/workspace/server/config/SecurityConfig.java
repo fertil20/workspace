@@ -1,4 +1,4 @@
-/*package com.workspace.server.config;
+package com.workspace.server.config;
 
 import com.workspace.server.service.UserService;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 @Configuration
 @EnableWebSecurity
@@ -25,7 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
 //                .antMatchers("/", "/home").permitAll() // todo to allow some url for unauthenticated users
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
+//                .anyRequest().authenticated()
                 .and()
                 .formLogin()
 //                .loginPage("/login") // todo for custom form
@@ -46,4 +48,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        return new BCryptPasswordEncoder();
         return NoOpPasswordEncoder.getInstance(); // todo insecure, use commented above instead
     }
-}*/
+}

@@ -1,4 +1,3 @@
-/*
 package com.workspace.server.service;
 
 import com.workspace.server.dto.UserData;
@@ -11,7 +10,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -40,4 +38,4 @@ public class UserService implements UserDetailsService {
         }
         return new UserDetailsImpl(user);
     }
-}*/
+}
