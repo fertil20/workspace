@@ -22,7 +22,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 //import GroupEdit from './GroupEdit';
 import { CookiesProvider } from 'react-cookie';
 import UserComponent from "./components/UserComponent";
-import Form from './Form';
 
 class App extends Component {
     render() {
@@ -31,8 +30,8 @@ class App extends Component {
                 <Router>
                     <Switch>
                         <Route path='/home' exact={true} component={Home}/>
-                        <Route path='/' exact={true} component={Form}/>
-                        <Route path='/login' exact={true} component={Form}/>
+                        {/*<Route path='/' exact={true} component={Form}/>*/}
+                        {/*<Route path='/login' exact={true} component={Form}/>*/}
                         <Route path='/users' exact={true} component={UserComponent}/>
                         {/*<Route path='/users/:id' component={UserEdit}/>*/}
                     </Switch>

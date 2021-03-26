@@ -1,11 +1,12 @@
 package com.workspace.server.dto;
 
-import com.workspace.server.repository.User;
+import com.workspace.server.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 
 public class UserDetailsImpl implements UserDetails {

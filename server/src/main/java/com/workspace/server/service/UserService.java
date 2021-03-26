@@ -2,7 +2,8 @@ package com.workspace.server.service;
 
 import com.workspace.server.dto.UserData;
 import com.workspace.server.dto.UserDetailsImpl;
-import com.workspace.server.repository.User;
+import com.workspace.server.exception.ResourceNotFoundException;
+import com.workspace.server.model.User;
 import com.workspace.server.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -32,10 +34,8 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(username);
-        }
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
         return new UserDetailsImpl(user);
     }
 }
