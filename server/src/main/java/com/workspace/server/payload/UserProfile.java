@@ -7,16 +7,18 @@ public class UserProfile {
     private String username;
     private String name;
     private Instant joinedAt;
-    private Long pollCount;
-    private Long voteCount;
+    private String email;
+/*    private Long pollCount;
+    private Long voteCount;*/
 
-    public UserProfile(Long id, String username, String name) {
+    public UserProfile(Long id, String username, String name, Instant joinedAt, String email) {
         this.id = id;
         this.username = username;
         this.name = name;
         this.joinedAt = joinedAt;
-        this.pollCount = pollCount;
-        this.voteCount = voteCount;
+        this.email = email;
+/*        this.pollCount = pollCount;
+        this.voteCount = voteCount;*/
     }
 
     public Long getId() {
@@ -51,7 +53,15 @@ public class UserProfile {
         this.joinedAt = joinedAt;
     }
 
-    public Long getPollCount() {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+/*    public Long getPollCount() {
         return pollCount;
     }
 
@@ -65,5 +75,5 @@ public class UserProfile {
 
     public void setVoteCount(Long voteCount) {
         this.voteCount = voteCount;
-    }
+    }*/
 }

@@ -1,8 +1,6 @@
 package com.workspace.server.payload;
 
-/**
- * Created by rajeevkumarsingh on 19/08/17.
- */
+
 public class JwtAuthenticationResponse {
     private String accessToken;
     private String tokenType = "Bearer";

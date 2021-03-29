@@ -3,12 +3,12 @@ package com.workspace.server.dto;
 public class UserData {
     private final String name;
     private final String email;
-    private final String phone;
+/*    private final String phone;*/
 
-    public UserData(String name, String email, String phone) {
+    public UserData(String name, String email) {
         this.name = name;
         this.email = email;
-        this.phone = phone;
+/*        this.phone = phone;*/
     }
 
     public String getName() {
@@ -19,7 +19,7 @@ public class UserData {
         return email;
     }
 
-    public String getPhone() {
+/*    public String getPhone() {
         return phone;
-    }
+    }*/
 }

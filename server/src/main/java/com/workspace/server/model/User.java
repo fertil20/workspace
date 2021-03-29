@@ -1,37 +1,66 @@
 package com.workspace.server.model;
 
+import com.workspace.server.model.audit.DateAudit;
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "username"
+        }),
+        @UniqueConstraint(columnNames = {
+                "email"
+        })
+})
+public class User extends DateAudit {
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String username;
-
-    @Column(name = "password")
-    private String password;
-
-    @Column(name = "name")
+    @NotBlank
+    @Size(max = 200)
     private String name;
 
-    @Column(name = "email")
+    @NotBlank
+    @Size(max = 50)
+    private String username;
+
+    @NaturalId
+    @NotBlank
+    @Size(max = 254)
+    @Email
     private String email;
 
-    @Column(name = "phone")
-    private String phone;
+    @NotBlank
+    @Size(max = 100)
+    private String password;
+
+/*    @Column(name = "phone")
+    private String phone;*/
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    public User(String name, String username, String email, String password) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User() {
+
+    }
 
     public Long getId() {
         return id;
@@ -73,13 +102,13 @@ public class User {
         this.email = email;
     }
 
-    public String getPhone() {
+/*    public String getPhone() {
         return phone;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
+    }*/
 
     public Set<Role> getRoles() {
         return roles;
