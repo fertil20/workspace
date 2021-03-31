@@ -44,18 +44,6 @@ class UserComponent extends Component {
         const id = this.props.match.params.id;
         this.loadAllUsers(id);
     }
-/*    constructor(props){
-        super(props)
-        this.state = {
-            user:[]
-        }
-    }
-
-    componentDidMount(){
-        APIUtils.getAllUsers().then((response) => {
-            this.setState({ user: response.data})
-        });
-    }*/
 
     render (){
         if(this.state.isLoading) {

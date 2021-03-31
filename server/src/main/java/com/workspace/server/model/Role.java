@@ -40,5 +40,4 @@ public class Role {
     public void setName(com.workspace.server.model.RoleName name) {
         this.name = name;
     }
-
 }

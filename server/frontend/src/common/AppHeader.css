@@ -14,7 +14,7 @@
   }
   
   .app-header {
-    position: static;
+    position: fixed;
     width: 100%;
     box-shadow: 0 2px 8px #f0f1f2;
     z-index: 10;
@@ -39,6 +39,7 @@
   }
 
   .profile-dropdown-menu {
+    position: fixed;
     min-width: 80px;
   }
 
