@@ -81,10 +81,11 @@ class App extends Component {
   }
 
   handleLogin() {
-    notification.success({
-      message: 'React App',
-      description: "You're successfully logged in.",
-    });
+    // notification.success({
+    //   message: 'React App',
+    //   description: "You're successfully logged in.",
+    // });
+    alert("You're successfully logged in.")
     this.loadCurrentUser();
     this.props.history.push("/");
   }

@@ -4,6 +4,7 @@ import './Login.css';
 import { Link } from 'react-router-dom';
 import { ACCESS_TOKEN } from '../../constants';
 import { Form, Input, Icon, Button, notification } from 'antd';
+// import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 const FormItem = Form.Item;
 
 class Login extends Component {
@@ -13,6 +14,7 @@ class Login extends Component {
             <div className="login-container">
                 <h1 className="page-title">Login</h1>
                 <div className="login-content">
+                    {/*<LoginForm onLogin={this.props.onLogin} />*/}
                     <AntWrappedLoginForm onLogin={this.props.onLogin} />
                 </div>
             </div>
@@ -40,12 +42,12 @@ class LoginForm extends Component {
                         notification.error({
                             message: 'React App',
                             description: 'Your Username or Password is incorrect. Please try again!'
-                        });                    
+                        });
                     } else {
                         notification.error({
                             message: 'React App',
                             description: error.message || 'Sorry! Something went wrong. Please try again!'
-                        });                                            
+                        });
                     }
                 });
             }
@@ -60,23 +62,23 @@ class LoginForm extends Component {
                     {getFieldDecorator('usernameOrEmail', {
                         rules: [{ required: true, message: 'Please input your username or email!' }],
                     })(
-                    <Input 
+                    <Input
                         prefix={<Icon type="user" />}
                         size="large"
-                        name="usernameOrEmail" 
-                        placeholder="Username or Email" />    
+                        name="usernameOrEmail"
+                        placeholder="Username or Email" />
                     )}
                 </FormItem>
                 <FormItem>
                 {getFieldDecorator('password', {
                     rules: [{ required: true, message: 'Please input your Password!' }],
                 })(
-                    <Input 
+                    <Input
                         prefix={<Icon type="lock" />}
                         size="large"
-                        name="password" 
-                        type="password" 
-                        placeholder="Password"  />                        
+                        name="password"
+                        type="password"
+                        placeholder="Password"  />
                 )}
                 </FormItem>
                 <FormItem>
@@ -84,6 +86,27 @@ class LoginForm extends Component {
                     Or <Link to="/signup">register now!</Link>
                 </FormItem>
             </Form>
+            // <Form onSubmit={this.handleSubmit}>
+            //     <FormGroup>
+            //         <Label>Username or email</Label>
+            //         <Input
+            //             type="usernameOrEmail"
+            //             name="usernameOrEmail"
+            //             id="usernameOrEmail"
+            //             placeholder="Username or Email"
+            //         />
+            //     </FormGroup>
+            //     <FormGroup>
+            //         <Label >Password</Label>
+            //         <Input
+            //             type="password"
+            //             name="password"
+            //             id="Password"
+            //             placeholder="Password"
+            //         />
+            //     </FormGroup>
+            //     <Button>Submit</Button>
+            // </Form>
         );
     }
 }
