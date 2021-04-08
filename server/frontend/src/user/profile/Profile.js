@@ -8,6 +8,7 @@ import './Profile.css';
 import NotFound from '../../common/NotFound';
 import ServerError from '../../common/ServerError';
 import PollList from "../../poll/PollList";
+import { Container, Row, Col } from 'reactstrap';
 
 const TabPane = Tabs.TabPane;
 
@@ -76,43 +77,96 @@ class Profile extends Component {
         };
 
         return (
-            <div className="profile">
-                { 
-                    this.state.user ? (
-                        <div className="user-profile">
-                            <div className="user-details">
-                                <div className="user-avatar">
-                                    <Avatar className="user-avatar-circle" style={{ backgroundColor: getAvatarColor(this.state.user.name)}}>
-                                        {this.state.user.name.toUpperCase()}
-                                    </Avatar>
-                                </div>
-                                <div className="user-summary">
-                                    <div className="full-name">{this.state.user.name}</div>
-                                    <div className="username">@{this.state.user.username}</div>
-                                    <div className="email">{this.state.user.email}</div>
-                                    {/*<div className="phone">{this.state.user.phone}</div>*/}
-                                    <div className="user-joined">
-                                        Joined {formatDate(this.state.user.joinedAt)}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="user-poll-details">
-                                <Tabs defaultActiveKey="1" 
-                                    animated={false}
-                                    tabBarStyle={tabBarStyle}
-                                    size="large"
-                                    className="profile-tabs">
-                                    <TabPane tab={`${this.state.user.pollCount} Polls`} key="1">
-                                        <PollList username={this.props.match.params.username} type="USER_CREATED_POLLS" />
-                                    </TabPane>
-                                    <TabPane tab={`${this.state.user.voteCount} Votes`}  key="2">
-                                        <PollList username={this.props.match.params.username} type="USER_VOTED_POLLS" />
-                                    </TabPane>
-                                </Tabs>
-                            </div>
-                        </div>  
-                    ): null               
-                }
+            // <div className="profile">
+            //     {
+            //         this.state.user ? (
+            //             <div className="user-profile">
+            //                 <div className="user-details">
+            //                     <div className="user-avatar">
+            //                         <Avatar className="user-avatar-circle" style={{ backgroundColor: getAvatarColor(this.state.user.name)}}>
+            //                             {this.state.user.name.toUpperCase()}
+            //                         </Avatar>
+            //                     </div>
+            //                     <div className="user-summary">
+            //                         <div className="full-name">{this.state.user.name}</div>
+            //                         <div className="username">@{this.state.user.username}</div>
+            //                         <div className="email">{this.state.user.email}</div>
+            //                         {/*<div className="phone">{this.state.user.phone}</div>*/}
+            //                         <div className="user-joined">
+            //                             Joined {formatDate(this.state.user.joinedAt)}
+            //                         </div>
+            //                     </div>
+            //                 </div>
+            //                 <div className="user-poll-details">
+            //                     <Tabs defaultActiveKey="1"
+            //                         animated={false}
+            //                         tabBarStyle={tabBarStyle}
+            //                         size="large"
+            //                         className="profile-tabs">
+            //                         <TabPane tab={`${this.state.user.pollCount} Polls`} key="1">
+            //                             <PollList username={this.props.match.params.username} type="USER_CREATED_POLLS" />
+            //                         </TabPane>
+            //                         <TabPane tab={`${this.state.user.voteCount} Votes`}  key="2">
+            //                             <PollList username={this.props.match.params.username} type="USER_VOTED_POLLS" />
+            //                         </TabPane>
+            //                     </Tabs>
+            //                 </div>
+            //             </div>
+            //         ): null
+            //     }
+            // </div>
+            <div className="profile" >
+                     {
+                       this.state.user ? (
+                <Row >
+                    <Col sm={{ size: 4 }} style={{backgroundColor: '#EDEEF0',borderRadius:10,height:500}}>
+                        <div style={{backgroundColor: 'white', margin: 20,borderRadius:10,height:300,width:300}}>
+                            <Avatar className="user-avatar-circle" style={{ backgroundColor: getAvatarColor(this.state.user.name)}}>
+                                {this.state.user.name.toUpperCase()}
+                            </Avatar>
+                        </div>
+                        <Row>
+                            <Col>
+                                <div style={{color: 'gray', paddingTop:5, fontWeight: 'bold'}}>E-mail:</div>
+                                <div style={{color: 'gray', paddingTop:20, fontWeight: 'bold'}}>Рабочий номер:</div>
+                                <div style={{color: 'gray', paddingTop:20, fontWeight: 'bold'}}>Telegram:</div>
+                            </Col>
+                            <Col>
+                                <div style={{paddingTop:5}}>{this.state.user.email}</div>
+                                <div style={{paddingTop:20}}>+0-000-000-00-00</div>
+                                <div style={{paddingTop:20}}>@{this.state.user.username}</div>
+                            </Col>
+                        </Row>
+                    </Col>
+                    <Col sm={{ size: 5, offset: 1}} style={{backgroundColor: '#EDEEF0',borderRadius:10,height:500}}>
+                        <Row>
+                            <Col>
+                                <div style={{color: 'gray', paddingTop:20, fontWeight: 'bold'}}>Ф.И.О:</div>
+                                <div style={{color: 'gray', paddingTop:50, fontWeight: 'bold'}}>О себе:</div>
+                                <div style={{color: 'gray', paddingTop:20, fontWeight: 'bold'}}>Должность:</div>
+                                <div style={{color: 'gray', paddingTop:20, fontWeight: 'bold'}}>Департамент:</div>
+                                <div style={{color: 'gray', paddingTop:20, fontWeight: 'bold'}}>Офис:</div>
+                                <div style={{color: 'gray', paddingTop:20, fontWeight: 'bold'}}>Рабочие часы:</div>
+                                <div style={{color: 'gray', paddingTop:50, fontWeight: 'bold'}}>В компании с:</div>
+                                <div style={{color: 'gray', paddingTop:20, fontWeight: 'bold'}}>Дата рождения:</div>
+                                <div style={{color: 'gray', paddingTop:20, fontWeight: 'bold'}}>Секретная заметка:</div>
+                            </Col>
+                            <Col>
+                                <div style={{paddingTop:20}}>{this.state.user.name}</div>
+                                <div style={{paddingTop:50}}>00000</div>
+                                <div style={{paddingTop:20}}>00000</div>
+                                <div style={{paddingTop:20}}>00000</div>
+                                <div style={{paddingTop:20}}>00000</div>
+                                <div style={{paddingTop:20}}>00000</div>
+                                <div style={{paddingTop:50}}>{formatDate(this.state.user.joinedAt)}</div>
+                                <div style={{paddingTop:20}}>00000</div>
+                                <div style={{paddingTop:20}}>00000</div>
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+                       ): null
+                                }
             </div>
         );
     }
