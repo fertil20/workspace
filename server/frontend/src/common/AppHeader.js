@@ -5,20 +5,17 @@ import {
 } from 'react-router-dom';
 import './AppHeader.css';
 import pollIcon from '../poll.svg';
-import { Layout, Menu, Icon, Dropdown} from 'antd';
+import { Layout } from 'antd';
 import {
     Collapse,
     Navbar,
     NavbarToggler,
     NavbarBrand,
     Nav,
-    NavItem,
-    NavLink,
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    NavbarText
 } from 'reactstrap';
 
 const Header = Layout.Header;
@@ -39,11 +36,11 @@ class AppHeader extends Component {
         let menuItems;
         if(this.props.currentUser) {
           return(
-            <NavBarLogged currentUser={this.props.currentUser} handleMenuClick={this.handleMenuClick}></NavBarLogged>
+            <NavBarLogged currentUser={this.props.currentUser} handleMenuClick={this.handleMenuClick}/>
           )
         } else {
           return(
-              <NavBarNotLogged></NavBarNotLogged>
+              <NavBarNotLogged/>
           )
         }
     }

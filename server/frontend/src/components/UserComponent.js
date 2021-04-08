@@ -3,6 +3,7 @@ import {getAllUsers} from "../util/APIUtils";
 import LoadingIndicator from "../common/LoadingIndicator";
 import NotFound from "../common/NotFound";
 import ServerError from "../common/ServerError";
+import {formatDate} from "../util/Helpers";
 
 class UserComponent extends Component {
     constructor(props) {
@@ -85,7 +86,7 @@ class UserComponent extends Component {
                                             <td> {user.name}</td>
                                             <td> {user.username}</td>
                                             <td> {user.email}</td>
-                                            <td> {user.joinedAt}</td>
+                                            <td> {formatDate(user.joinedAt)}</td>
                                         </tr>
                                 )
                             }
