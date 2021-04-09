@@ -5,13 +5,12 @@ import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "workingHours")
+@Table(name = "working_hours")
 public class WTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
     @NaturalId
     @Column(length = 11)
     private String time;

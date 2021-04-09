@@ -7,8 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -68,7 +66,7 @@ public class User extends DateAudit {
     @Size(max = 3)
     private String office="000";
 
-    @NotBlank
+//    @NotBlank
     private Date birthday;
 
     @NotBlank

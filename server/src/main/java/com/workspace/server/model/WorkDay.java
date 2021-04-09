@@ -5,7 +5,7 @@ import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 
     @Entity
-    @Table(name = "workingDays")
+    @Table(name = "working_days")
     public class WorkDay {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
