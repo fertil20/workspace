@@ -12,7 +12,7 @@ export function formatDate(dateString) {
     const monthIndex = date.getMonth();
     const year = date.getFullYear();
   
-    return monthNames[monthIndex] + ' ' + year;
+    return date.getDate() + ' ' + monthNames[monthIndex] + ' ' + year;
 }
   
 export function formatDateTime(dateTimeString) {

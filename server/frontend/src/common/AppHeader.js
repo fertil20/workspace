@@ -33,7 +33,7 @@ class AppHeader extends Component {
     }
 
     render() {
-        let menuItems;
+//        let menuItems;
         if(this.props.currentUser) {
           return(
             <NavBarLogged currentUser={this.props.currentUser} handleMenuClick={this.handleMenuClick}/>

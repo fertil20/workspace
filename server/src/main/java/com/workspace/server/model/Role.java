@@ -15,14 +15,15 @@ public class Role {
     @Enumerated(EnumType.STRING)
     @NaturalId
     @Column(length = 60)
-    private com.workspace.server.model.RoleName name;
+    private RoleName name;
+
+
+    public Role(RoleName name) {
+        this.name = name;
+    }
 
     public Role() {
 
-    }
-
-    public Role(com.workspace.server.model.RoleName name) {
-        this.name = name;
     }
 
     public Long getId() {
@@ -33,11 +34,11 @@ public class Role {
         this.id = id;
     }
 
-    public com.workspace.server.model.RoleName getName() {
+    public RoleName getName() {
         return name;
     }
 
-    public void setName(com.workspace.server.model.RoleName name) {
+    public void setName(RoleName name) {
         this.name = name;
     }
 }

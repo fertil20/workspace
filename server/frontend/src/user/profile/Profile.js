@@ -133,8 +133,8 @@ class Profile extends Component {
                             </Col>
                             <Col>
                                 <div style={{paddingTop:5}}>{this.state.user.email}</div>
-                                <div style={{paddingTop:20}}>+0-000-000-00-00</div>
-                                <div style={{paddingTop:20}}>@{this.state.user.username}</div>
+                                <div style={{paddingTop:20}}>{this.state.user.phone}</div>
+                                <div style={{paddingTop:20}}>@{this.state.user.tg}</div>
                             </Col>
                         </Row>
                     </Col>
@@ -153,14 +153,14 @@ class Profile extends Component {
                             </Col>
                             <Col>
                                 <div style={{paddingTop:20}}>{this.state.user.name}</div>
-                                <div style={{paddingTop:50}}>00000</div>
-                                <div style={{paddingTop:20}}>00000</div>
-                                <div style={{paddingTop:20}}>00000</div>
-                                <div style={{paddingTop:20}}>00000</div>
-                                <div style={{paddingTop:20}}>00000</div>
+                                <div style={{paddingTop:50}}>{this.state.user.about}</div>
+                                <div style={{paddingTop:20}}>{this.state.user.position}</div>
+                                <div style={{paddingTop:20}}>{this.state.user.department}</div>
+                                <div style={{paddingTop:20}}>{this.state.user.office}</div>
+                                <div style={{paddingTop:20}}>{this.state.user.wTimes}</div>
                                 <div style={{paddingTop:50}}>{formatDate(this.state.user.joinedAt)}</div>
-                                <div style={{paddingTop:20}}>00000</div>
-                                <div style={{paddingTop:20}}>00000</div>
+                                <div style={{paddingTop:20}}>{formatDate(this.state.user.birthday)}</div>
+                                <div style={{paddingTop:20}}>{this.state.user.secretNote}</div>
                             </Col>
                         </Row>
                     </Col>

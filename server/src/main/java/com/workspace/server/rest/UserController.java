@@ -8,7 +8,6 @@ import com.workspace.server.payload.UserSummary;
 import com.workspace.server.repository.UserRepository;
 import com.workspace.server.security.CurrentUser;
 import com.workspace.server.security.UserPrincipal;
-import com.workspace.server.util.AppConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,7 +31,8 @@ public class UserController {
     @GetMapping
     public List<UserProfile> getAllUsers() {
         return userRepository.findAll().stream()
-                .map(user -> new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), user.getEmail()))
+                .map(user -> new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), user.getEmail(), user.getPhone(), user.getTg(), user.getAbout(),
+                        user.getPosition(), user.getDepartment(), user.getOffice(), user.getBirthday(), user.getSecretNote(), user.getwTimes()))
                 .collect(Collectors.toList());
     }
 
@@ -60,6 +60,7 @@ public class UserController {
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
 
-        return new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), user.getEmail());
+        return new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), user.getEmail(), user.getPhone(), user.getTg(), user.getAbout(),
+                user.getPosition(), user.getDepartment(), user.getOffice(), user.getBirthday(), user.getSecretNote(), user.getwTimes());
     }
 }

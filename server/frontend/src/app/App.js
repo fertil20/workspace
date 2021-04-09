@@ -3,7 +3,7 @@ import './App.css';
 import {
   Route,
   withRouter,
-  Switch
+  Switch, BrowserRouter
 } from 'react-router-dom';
 
 import {getCurrentUser} from '../util/APIUtils';
@@ -39,7 +39,7 @@ class App extends Component {
       placement: 'topRight',
       top: 70,
       duration: 3,
-    });    
+    });
   }
 
   loadCurrentUser() {
@@ -64,7 +64,7 @@ class App extends Component {
     this.loadCurrentUser();
   }
 
-  handleLogout(redirectTo="/", notificationType="success", description="You're successfully logged out.") {
+  handleLogout(redirectTo="/") {
     localStorage.removeItem(ACCESS_TOKEN);
 
     this.setState({
@@ -73,12 +73,9 @@ class App extends Component {
     });
 
     this.props.history.push(redirectTo);
-    
-    notification[notificationType]({
-      message: 'React App',
-      description: description,
-    });
-  }
+
+    alert("You're successfully logged out.")
+  };
 
   handleLogin() {
     // notification.success({
@@ -96,12 +93,13 @@ class App extends Component {
     }
     return (
         <Layout className="app-container">
-          <AppHeader isAuthenticated={this.state.isAuthenticated} 
+          <AppHeader isAuthenticated={this.state.isAuthenticated}
             currentUser={this.state.currentUser} 
             onLogout={this.handleLogout} />
 
           <Content className="app-content">
             <div className="container">
+              <BrowserRouter>
               <Switch>
                <Route exact path="/"
                  render={(props) => <PollList isAuthenticated={this.state.isAuthenticated}
@@ -113,17 +111,21 @@ class App extends Component {
                 <Route path="/users/:username"
                        render={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}>
                 </Route>
-{/*                <PrivateRoute  path="/poll/new" component={NewPoll} handleLogout={this.handleLogout} exact/>
-                <Route component={NotFound}/>*/}
+{/*                <PrivateRoute path="/poll/new" authenticated={this.state.isAuthenticated} component={NewPoll} handleLogout={this.handleLogout}/>
+                <PrivateRoute path="/users" authenticated={this.state.isAuthenticated} component={UserComponent} handleLogout={this.handleLogout}/>
+                <Route component={NotFound}/>*/} //todo Разобраться с authenticated в PrivateRoute
                 <Route path="/poll/new"
                        render={(props) => <NewPoll isAuthenticated={this.state.isAuthenticated}
-                                                   currentUser={this.state.currentUser} handleLogout={this.handleLogout} {...props} />}>
+                                      currentUser={this.state.currentUser}
+                                      handleLogout={this.handleLogout} {...props} />}>
                 </Route>
                 <Route path="/users"
                        render={(props) => <UserComponent isAuthenticated={this.state.isAuthenticated}
                                                          currentUser={this.state.currentUser} handleLogout={this.handleLogout} {...props} />}>
                 </Route>
+                <Route component={NotFound}/>
               </Switch>
+              </BrowserRouter>
             </div>
           </Content>
         </Layout>
