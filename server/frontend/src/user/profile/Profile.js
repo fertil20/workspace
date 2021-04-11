@@ -157,7 +157,7 @@ class Profile extends Component {
                                 <div style={{paddingTop:20}}>{this.state.user.position}</div>
                                 <div style={{paddingTop:20}}>{this.state.user.department}</div>
                                 <div style={{paddingTop:20}}>{this.state.user.office}</div>
-                                <div style={{paddingTop:20}}>{this.state.user.wTimes.time}//todo разобраться со временем</div>
+                                <div style={{paddingTop:20}}>{this.state.user.workTimes.map(t => t.time).join()}</div>
                                 <div style={{paddingTop:50}}>{formatDate(this.state.user.joinedAt)}</div>
                                 <div style={{paddingTop:20}}>{formatDate(this.state.user.birthday)}</div>
                                 <div style={{paddingTop:20}}>{this.state.user.secretNote}</div>

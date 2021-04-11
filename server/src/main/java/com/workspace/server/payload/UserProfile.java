@@ -1,7 +1,7 @@
 package com.workspace.server.payload;
 
 
-import com.workspace.server.model.WTime;
+import com.workspace.server.model.WorkTime;
 
 import java.util.Date;
 import java.time.Instant;
@@ -21,13 +21,13 @@ public class UserProfile {
     private String office;
     private Date birthday;
     private String secretNote;
-    private Set<WTime> wTimes;
+    private Set<WorkTime> workTimes;
 /*    private Long pollCount;
     private Long voteCount;*/
 
 
     public UserProfile(Long id, String username, String name, Instant joinedAt, String email, String phone, String tg,
-                       String about, String position, String department, String office, Date birthday, String secretNote, Set<WTime> wTimes) {
+                       String about, String position, String department, String office, Date birthday, String secretNote, Set<WorkTime> workTimes) {
         this.id = id;
         this.username = username;
         this.name = name;
@@ -41,7 +41,7 @@ public class UserProfile {
         this.office = office;
         this.birthday = birthday;
         this.secretNote = secretNote;
-        this.wTimes = wTimes;
+        this.workTimes = workTimes;
 /*        this.pollCount = pollCount;
         this.voteCount = voteCount;*/
     }
@@ -151,12 +151,12 @@ public class UserProfile {
     }
 
 
-    public Set<WTime> getwTimes() {
-        return wTimes;
+    public Set<WorkTime> getWorkTimes() {
+        return workTimes;
     }
 
-    public void setwTimes(Set<WTime> wTimes) {
-        this.wTimes = wTimes;
+    public void setWorkTimes(Set<WorkTime> workTimes) {
+        this.workTimes = workTimes;
     }
 
 /*    public Long getPollCount() {

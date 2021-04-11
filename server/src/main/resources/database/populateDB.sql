@@ -15,6 +15,7 @@ VALUES ('1', '2'),
        ('2', '1');
 INSERT INTO user_hours(user_id, hours_id)
 VALUES ('1', '5'),
+       ('1', '7'),
        ('2', '3');
 INSERT INTO user_days(user_id, days_id)
 VALUES ('1', '4'),

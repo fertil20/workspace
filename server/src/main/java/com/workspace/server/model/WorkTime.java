@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "working_hours")
-public class WTime {
+public class WorkTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,12 +15,16 @@ public class WTime {
     @Column(length = 11)
     private String time;
 
+//    @Override
+//    public String toString() {
+//        return time;
+//    }
 
-    public WTime(String time) {
+    public WorkTime(String time) {
         this.time = time;
     }
 
-    public WTime() {
+    public WorkTime() {
 
     }
 

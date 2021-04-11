@@ -83,7 +83,7 @@ public class User extends DateAudit {
     @JoinTable(name = "user_hours",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "hours_id"))
-    private Set<WTime> wTimes = new HashSet<>();
+    private Set<WorkTime> workTimes = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_days",
@@ -208,12 +208,12 @@ public class User extends DateAudit {
         this.secretNote = secretNote;
     }
 
-    public Set<WTime> getwTimes() {
-        return wTimes;
+    public Set<WorkTime> getWorkTimes() {
+        return workTimes;
     }
 
-    public void setwTimes(Set<WTime> wTimes) {
-        this.wTimes = wTimes;
+    public void setwTimes(Set<WorkTime> workTimes) {
+        this.workTimes = workTimes;
     }
 
     public Set<WorkDay> getWorkDays() {

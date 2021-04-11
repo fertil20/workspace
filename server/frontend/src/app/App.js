@@ -18,19 +18,20 @@ import AppHeader from '../common/AppHeader';
 import NotFound from '../common/NotFound';
 import LoadingIndicator from '../common/LoadingIndicator';
 import PrivateRoute from '../common/PrivateRoute';
-import UserComponent from "../components/UserComponent";
+import UserComponent from '../components/UserComponent';
 
 import { Layout, notification } from 'antd';
+import {PersistentState} from "../util/PersistentState";
 const { Content } = Layout;
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.persistentState = new PersistentState(this, "app", {
       currentUser: null,
       isAuthenticated: false,
       isLoading: false
-    }
+    })
     this.handleLogout = this.handleLogout.bind(this);
     this.loadCurrentUser = this.loadCurrentUser.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
@@ -43,20 +44,20 @@ class App extends Component {
   }
 
   loadCurrentUser() {
-    this.setState({
+    this.persistentState.setState({
       isLoading: true
-    });
+    })
     getCurrentUser()
     .then(response => {
-      this.setState({
+      this.persistentState.setState({
         currentUser: response,
         isAuthenticated: true,
         isLoading: false
       });
     }).catch(error => {
-      this.setState({
+      this.persistentState.setState({
         isLoading: false
-      });  
+      });
     });
   }
 
@@ -67,7 +68,7 @@ class App extends Component {
   handleLogout(redirectTo="/") {
     localStorage.removeItem(ACCESS_TOKEN);
 
-    this.setState({
+    this.persistentState.setState({
       currentUser: null,
       isAuthenticated: false
     });
@@ -88,13 +89,13 @@ class App extends Component {
   }
 
   render() {
-    if(this.state.isLoading) {
+    if(this.persistentState.getState().isLoading) {
       return <LoadingIndicator />
     }
     return (
         <Layout className="app-container">
-          <AppHeader isAuthenticated={this.state.isAuthenticated}
-            currentUser={this.state.currentUser} 
+          <AppHeader isAuthenticated={this.persistentState.getState().isAuthenticated}
+            currentUser={this.persistentState.getState().currentUser}
             onLogout={this.handleLogout} />
 
           <Content className="app-content">
@@ -102,27 +103,15 @@ class App extends Component {
               <BrowserRouter>
               <Switch>
                <Route exact path="/"
-                 render={(props) => <PollList isAuthenticated={this.state.isAuthenticated}
-                      currentUser={this.state.currentUser} handleLogout={this.handleLogout} {...props} />}>
+                 render={(props) => <PollList isAuthenticated={this.persistentState.getState().isAuthenticated}
+                      currentUser={this.persistentState.getState().currentUser} handleLogout={this.handleLogout} {...props} />}>
                 </Route>
                 <Route path="/login"
                        render={(props) => <Login onLogin={this.handleLogin} {...props} />}/>
                 <Route path="/signup" component={Signup}/>
-                <Route path="/users/:username"
-                       render={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}>
-                </Route>
-{/*                <PrivateRoute path="/poll/new" authenticated={this.state.isAuthenticated} component={NewPoll} handleLogout={this.handleLogout}/>
-                <PrivateRoute path="/users" authenticated={this.state.isAuthenticated} component={UserComponent} handleLogout={this.handleLogout}/>
-                <Route component={NotFound}/>*/} //todo Разобраться с authenticated в PrivateRoute
-                <Route path="/poll/new"
-                       render={(props) => <NewPoll isAuthenticated={this.state.isAuthenticated}
-                                      currentUser={this.state.currentUser}
-                                      handleLogout={this.handleLogout} {...props} />}>
-                </Route>
-                <Route path="/users"
-                       render={(props) => <UserComponent isAuthenticated={this.state.isAuthenticated}
-                                                         currentUser={this.state.currentUser} handleLogout={this.handleLogout} {...props} />}>
-                </Route>
+                <PrivateRoute path="/users/:username" authenticated={this.persistentState.getState().isAuthenticated} component={Profile} handleLogout={this.handleLogout}/>
+                <PrivateRoute path="/poll/new" authenticated={this.persistentState.getState().isAuthenticated} component={NewPoll} handleLogout={this.handleLogout}/>
+                <PrivateRoute path="/users" authenticated={this.persistentState.getState().isAuthenticated} component={UserComponent} handleLogout={this.handleLogout}/>
                 <Route component={NotFound}/>
               </Switch>
               </BrowserRouter>
