@@ -6,9 +6,9 @@ import NotFound from '../../common/NotFound';
 import ServerError from '../../common/ServerError';
 import {Row, Col, Button, FormGroup, Form, Input} from 'reactstrap';
 import {TooltipWidgetHome,TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidgetIll} from './TooltipWidget'
-import {Avatar, Tabs} from "antd";
-import {Component} from "react";
-import {getUserProfile} from "../../util/APIUtils";
+import {Avatar, notification, Tabs} from "antd";
+import React, {Component} from "react";
+import {getUserProfile, profileEdit, signup} from "../../util/APIUtils";
 
 
 const TabPane = Tabs.TabPane;
@@ -21,9 +21,20 @@ class ProfileEdit extends Component {
         super(props);
         this.state = {
             user: null,
-            isLoading: false
+            isLoading: false,
+            newEmail: {
+                value: ''
+            },
+            newPhoneNumber: {
+                value: ''
+            },
+            newTg: {
+                value: ''
+            }
         }
         this.loadUserProfile = this.loadUserProfile.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     loadUserProfile(username) {
@@ -63,6 +74,37 @@ class ProfileEdit extends Component {
         }
     }
 
+    handleInputChange(event) {
+        const target = event.target;
+        const inputName = target.name;
+        const inputValue = target.value;
+        console.log(this.state.newEmail.value)
+        this.setState({
+            [inputName] : {
+                value: inputValue,
+
+                // ...validationFun(inputValue)
+            }
+        });
+    }
+
+    // handleSubmit(event) {
+    //     event.preventDefault();
+    //
+    //     const profileEditRequest = {
+    //         newEmail: this.state.newEmail.value,
+    //         newPhoneNumber: this.state.newPhoneNumber.value,
+    //         newTg: this.state.newTg.value
+    //     };
+    //     profileEdit(profileEditRequest)
+    //         .then(response => {
+    //             alert('Данные успешно изменены.');;
+    //             this.props.history.push("/users/:username");
+    //         }).catch(error => {
+    //         alert('Что-то пошло не так.');
+    //     });
+    // }
+
     render() {
         if(this.state.isLoading) {
             return <LoadingIndicator />;
@@ -89,7 +131,7 @@ class ProfileEdit extends Component {
 
 
         return (
-            <div className="profile" >
+            <div className="profile"  >
                 {
                     this.state.user ? (
                         <Row >
@@ -106,14 +148,24 @@ class ProfileEdit extends Component {
                                         <div style={{color: 'gray', paddingTop:20, fontWeight: 'bold'}}>Telegram:</div>
                                     </Col>
                                     <Col>
-                                        <Form>
+                                        <Form onSubmit={this.handleSubmit}>
                                             <FormGroup>
-                                                <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+                                                <Input type="email" name="email" id="editEmail" placeholder={this.state.user.email}
+                                                       value={this.state.newEmail.value}
+                                                       onChange={(event) => this.handleInputChange(event)}/>
+                                                <Input type="phoneNumber" name="phoneNumber" id="editPhoneNumber" placeholder={this.state.user.phone}
+                                                       value={this.state.newPhoneNumber.value}
+                                                       onChange={(event) => this.handleInputChange(event)}/>
+                                                <Input type="tg" name="tg" id="editTg" placeholder={this.state.user.tg}
+                                                       value={this.state.newTg.value}
+                                                       onChange={(event) => this.handleInputChange(event)}/>
                                             </FormGroup>
+                                            <div style={{paddingTop:5}}>
+                                                <Button outline color="primary" size="sm">
+                                                    Сохранить
+                                                </Button>
+                                            </div>
                                         </Form>
-                                        {/*<div style={{paddingTop:5}}>{this.state.user.email}</div>*/}
-                                        {/*<div style={{paddingTop:20}}>{this.state.user.phone}</div>*/}
-                                        {/*<div style={{paddingTop:20}}>@{this.state.user.tg}</div>*/}
                                         {/*<div style={{paddingTop:5}}>*/}
                                         {/*    <Button outline color="primary" size="sm" href={`/users/${this.state.user.username}/edit`}>*/}
                                         {/*        Редактировать*/}

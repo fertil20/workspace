@@ -65,6 +65,14 @@ export function signup(signupRequest) {
     });
 }
 
+// export function profileEdit(profileEditRequest){
+//     return request({
+//         url: API_BASE_URL + "/users/:username/edit",
+//         method: 'POST',
+//         body: JSON.stringify(profileEditRequest)
+//     });
+// }
+
 export function checkUsernameAvailability(username) {
     return request({
         url: API_BASE_URL + "/users/checkUsernameAvailability?username=" + username,
