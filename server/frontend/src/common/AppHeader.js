@@ -59,7 +59,7 @@ class AppHeader extends Component {
 //       </Menu.Item>
 //       <Menu.Divider />
 //       <Menu.Item key="profile" className="dropdown-item">
-//         <Link to={`/users/${props.currentUser.username}`}>Profile</Link>
+//         <Link to={`/users/${props.currentUser.username}`}>Profile1</Link>
 //       </Menu.Item>
 //         <Menu.Item key="userlist" className="dropdown-item">
 //             <Link to={`/users`}>View Users</Link>

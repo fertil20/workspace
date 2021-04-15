@@ -8,11 +8,15 @@ import './Profile.css';
 import NotFound from '../../common/NotFound';
 import ServerError from '../../common/ServerError';
 import PollList from "../../poll/PollList";
-import { Container, Row, Col } from 'reactstrap';
+import {Row, Col, Button} from 'reactstrap';
+import {TooltipWidgetHome,TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidgetIll} from './TooltipWidget'
 
 const TabPane = Tabs.TabPane;
 
+const userConst = 2;
+
 class Profile extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -76,6 +80,14 @@ class Profile extends Component {
             textAlign: 'center'
         };
 
+        let tip = 1;
+
+        if(userConst === 0){tip = <TooltipWidgetHome/>;}
+        if(userConst === 1){tip = <TooltipWidgetAtWork/>;}
+        if(userConst === 2){tip = <TooltipWidgetIll/>;}
+        if(userConst === 3){tip = <TooltipWidgetHoliday/>;}
+
+
         return (
             // <div className="profile">
             //     {
@@ -135,6 +147,11 @@ class Profile extends Component {
                                 <div style={{paddingTop:5}}>{this.state.user.email}</div>
                                 <div style={{paddingTop:20}}>{this.state.user.phone}</div>
                                 <div style={{paddingTop:20}}>@{this.state.user.tg}</div>
+                                <div style={{paddingTop:5}}>
+                                    <Button outline color="primary" size="sm" href={`/users/${this.state.user.username}/edit`}>
+                                        Редактировать
+                                    </Button>
+                                </div>
                             </Col>
                         </Row>
                     </Col>
@@ -162,6 +179,7 @@ class Profile extends Component {
                                 <div style={{paddingTop:20}}>{formatDate(this.state.user.birthday)}</div>
                                 <div style={{paddingTop:20}}>{this.state.user.secretNote}</div>
                             </Col>
+                            <div style={{paddingRight:10,paddingTop:10}}>{tip}</div>
                         </Row>
                     </Col>
                 </Row>

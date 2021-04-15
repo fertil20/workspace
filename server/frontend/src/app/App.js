@@ -22,6 +22,7 @@ import UserComponent from '../components/UserComponent';
 
 import { Layout, notification } from 'antd';
 import {PersistentState} from "../util/PersistentState";
+import ProfileEdit from "../user/profile/ProfileEdit";
 const { Content } = Layout;
 
 class App extends Component {
@@ -110,6 +111,7 @@ class App extends Component {
                                        render={(props) => <Login onLogin={this.handleLogin} {...props} />}/>
                                 <Route path="/signup" component={Signup}/>
                                 <PrivateRoute path="/users/:username" authenticated={this.persistentState.getState().isAuthenticated} component={Profile} handleLogout={this.handleLogout}/>
+                                <PrivateRoute path="/edit" authenticated={this.persistentState.getState().isAuthenticated} component={Profile1} handleLogout={this.handleLogout}/>
                                 <PrivateRoute path="/poll/new" authenticated={this.persistentState.getState().isAuthenticated} component={NewPoll} handleLogout={this.handleLogout}/>
                                 <PrivateRoute path="/users" authenticated={this.persistentState.getState().isAuthenticated} component={UserComponent} handleLogout={this.handleLogout}/>
                                 <Route component={NotFound}/>
