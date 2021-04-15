@@ -139,50 +139,52 @@ class Profile extends Component {
                         </div>
                         <Row>
                             <Col>
-                                <div style={{color: 'gray', paddingTop:5, fontWeight: 'bold'}}>E-mail:</div>
-                                <div style={{color: 'gray', paddingTop:20, fontWeight: 'bold'}}>Рабочий номер:</div>
-                                <div style={{color: 'gray', paddingTop:20, fontWeight: 'bold'}}>Telegram:</div>
+                                <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>E-mail:</div>
+                                <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Рабочий номер:</div>
+                                <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Telegram:</div>
                             </Col>
                             <Col>
-                                <div style={{paddingTop:5}}>{this.state.user.email}</div>
-                                <div style={{paddingTop:20}}>{this.state.user.phone}</div>
-                                <div style={{paddingTop:20}}>@{this.state.user.tg}</div>
-                                <div style={{paddingTop:5}}>
-                                    <Button outline color="primary" size="sm" href={`/users/${this.state.user.username}/edit`}>
-                                        Редактировать
-                                    </Button>
-                                </div>
+                                <div style={{height: 50}}>{this.state.user.email}</div>
+                                <div style={{height: 50}}>{this.state.user.phone}</div>
+                                <div style={{height: 50}}>@{this.state.user.tg}</div>
                             </Col>
                         </Row>
                     </Col>
                     <Col sm={{ size: 5, offset: 1}} style={{backgroundColor: '#EDEEF0',borderRadius:10,height:500}}>
                         <Row>
                             <Col>
-                                <div style={{color: 'gray', paddingTop:20, fontWeight: 'bold'}}>Ф.И.О:</div>
-                                <div style={{color: 'gray', paddingTop:50, fontWeight: 'bold'}}>О себе:</div>
-                                <div style={{color: 'gray', paddingTop:20, fontWeight: 'bold'}}>Должность:</div>
-                                <div style={{color: 'gray', paddingTop:20, fontWeight: 'bold'}}>Департамент:</div>
-                                <div style={{color: 'gray', paddingTop:20, fontWeight: 'bold'}}>Офис:</div>
-                                <div style={{color: 'gray', paddingTop:20, fontWeight: 'bold'}}>Рабочие часы:</div>
-                                <div style={{color: 'gray', paddingTop:50, fontWeight: 'bold'}}>В компании с:</div>
-                                <div style={{color: 'gray', paddingTop:20, fontWeight: 'bold'}}>Дата рождения:</div>
-                                <div style={{color: 'gray', paddingTop:20, fontWeight: 'bold'}}>Секретная заметка:</div>
+                                <div style={{color: 'gray', marginTop:20, fontWeight: 'bold',height:50}}>Ф.И.О:</div>
+                                <div style={{color: 'gray', marginTop:20, fontWeight: 'bold',height:50}}>О себе:</div>
+                                <div style={{color: 'gray', fontWeight: 'bold',height:50}}>Должность:</div>
+                                <div style={{color: 'gray', fontWeight: 'bold',height:50}}>Департамент:</div>
+                                <div style={{color: 'gray', fontWeight: 'bold',height:50}}>Офис:</div>
+                                <div style={{color: 'gray', fontWeight: 'bold',height:50}}>Рабочие часы:</div>
+                                <div style={{color: 'gray', fontWeight: 'bold',height:50}}>В компании с:</div>
+                                <div style={{color: 'gray', fontWeight: 'bold',height:50}}>Дата рождения:</div>
+                                <div style={{color: 'gray', fontWeight: 'bold',height:50}}>Секретная заметка:</div>
                             </Col>
                             <Col>
-                                <div style={{paddingTop:20}}>{this.state.user.name}</div>
-                                <div style={{paddingTop:50}}>{this.state.user.about}</div>
-                                <div style={{paddingTop:20}}>{this.state.user.position}</div>
-                                <div style={{paddingTop:20}}>{this.state.user.department}</div>
-                                <div style={{paddingTop:20}}>{this.state.user.office}</div>
-                                <div style={{paddingTop:20}}>{this.state.user.workTimes.map(t => t.time).join()}</div>
-                                <div style={{paddingTop:50}}>{formatDate(this.state.user.joinedAt)}</div>
-                                <div style={{paddingTop:20}}>{formatDate(this.state.user.birthday)}</div>
-                                <div style={{paddingTop:20}}>{this.state.user.secretNote}</div>
+                                <div style={{marginTop:20,height:50}}>{this.state.user.name}</div>
+                                <div style={{marginTop:20,height:50}}>{this.state.user.about}</div>
+                                <div style={{height:50}}>{this.state.user.position}</div>
+                                <div style={{height:50}}>{this.state.user.department}</div>
+                                <div style={{height:50}}>{this.state.user.office}</div>
+                                <div style={{height:50}}>{this.state.user.workTimes.map(t => t.time).join()}</div>
+                                <div style={{height:50}}>{formatDate(this.state.user.joinedAt)}</div>
+                                <div style={{height:50}}>{formatDate(this.state.user.birthday)}</div>
+                                <div style={{height:50}}>{this.state.user.secretNote}</div>
+                                <div style={{marginTop:15}}>
+                                    <Button color="primary" size="sm" href={`/users/${this.state.user.username}/edit`}>
+                                        Редактировать
+                                    </Button>
+                                </div>
                             </Col>
                             <div style={{paddingRight:10,paddingTop:10}}>{tip}</div>
+
                         </Row>
                     </Col>
                 </Row>
+
                        ): null
                                 }
             </div>

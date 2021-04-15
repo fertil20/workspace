@@ -51,7 +51,7 @@ export function castVote(voteData) {
 
 export function login(loginRequest) {
     return request({
-        url: API_BASE_URL + "/auth/singing",
+        url: API_BASE_URL + "/auth/signing",
         method: 'POST',
         body: JSON.stringify(loginRequest)
     });
@@ -65,13 +65,13 @@ export function signup(signupRequest) {
     });
 }
 
-// export function profileEdit(profileEditRequest){
-//     return request({
-//         url: API_BASE_URL + "/users/:username/edit",
-//         method: 'POST',
-//         body: JSON.stringify(profileEditRequest)
-//     });
-// }
+export function profileEdit(profileEditRequest){
+    return request({
+        url: API_BASE_URL + "/users/:username/edit",
+        method: 'POST',
+        body: JSON.stringify(profileEditRequest)
+    });
+}
 
 export function checkUsernameAvailability(username) {
     return request({
