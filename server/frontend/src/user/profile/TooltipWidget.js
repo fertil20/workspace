@@ -12,7 +12,7 @@ export const TooltipWidgetHome = () => {
 
     return (
         <div>
-            <img src={home} id="Tooltip" width={25} height={25}/>
+            <img src={home} id="Tooltip" width={25} height={25} alt={Tooltip}/>
             <Tooltip placement="bottom" isOpen={tooltipOpen} target="Tooltip" toggle={toggle}>
                 Работает дома
             </Tooltip>
@@ -27,7 +27,7 @@ export const TooltipWidgetAtWork = () => {
 
     return (
         <div>
-            <img src={working} id="Tooltip" width={25} height={25}/>
+            <img src={working} id="Tooltip" width={25} height={25} alt={Tooltip}/>
             <Tooltip placement="bottom" isOpen={tooltipOpen} target="Tooltip" toggle={toggle}>
                 Работает в офисе
             </Tooltip>
@@ -42,7 +42,7 @@ export const TooltipWidgetIll = () => {
 
     return (
         <div>
-            <img src={ill} id="Tooltip" width={25} height={25}/>
+            <img src={ill} id="Tooltip" width={25} height={25} alt={Tooltip}/>
             <Tooltip placement="bottom" isOpen={tooltipOpen} target="Tooltip" toggle={toggle}>
                 На больничном
                 с 00.00.0000
@@ -58,7 +58,7 @@ export const TooltipWidgetHoliday = () => {
 
     return (
         <div>
-            <img src={sunbed} id="Tooltip" width={25} height={25}/>
+            <img src={sunbed} id="Tooltip" width={25} height={25} alt={Tooltip}/>
             <Tooltip placement="bottom" isOpen={tooltipOpen} target="Tooltip" toggle={toggle}>
                 В отпуске
                 с 00.00.0000 до 00.00.0000

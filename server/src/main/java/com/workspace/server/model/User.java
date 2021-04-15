@@ -212,7 +212,7 @@ public class User extends DateAudit {
         return workTimes;
     }
 
-    public void setwTimes(Set<WorkTime> workTimes) {
+    public void setWorkTimes(Set<WorkTime> workTimes) {
         this.workTimes = workTimes;
     }
 
