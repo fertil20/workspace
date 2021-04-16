@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -21,6 +22,7 @@ import java.util.Set;
         })
 })
 public class User extends DateAudit {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -100,6 +102,12 @@ public class User extends DateAudit {
             inverseJoinColumns = @JoinColumn(name = "days_id"))
     private Set<WorkDay> workDays = new HashSet<>();
 
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(username, email, phone, tg, about, position,
+                department, office, secretNote, status);
+    }
 
     public User(){
 

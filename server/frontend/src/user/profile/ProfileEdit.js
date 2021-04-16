@@ -16,11 +16,9 @@ import {
 import {TooltipWidgetHome,TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidgetIll} from './TooltipWidget'
 import {Avatar} from "antd";
 import React, {Component, useState} from "react";
-import {getUserProfile, profileEdit, setUserProfile} from "../../util/APIUtils";
+import {getUserEditProfile, getUserProfile, profileEdit} from "../../util/APIUtils";
 
-let userStatus = 2;
 let flag = 1;
-let tip = 1;
 
 class ProfileEdit extends Component {
 
@@ -29,7 +27,8 @@ class ProfileEdit extends Component {
         this.state = {
             user: null,
             isLoading: false,
-            newEmail: {value: ''},
+            username: {value: ''},
+            email: {value: ''},
             newPhoneNumber: {value: ''},
             newTg: {value: ''},
             newName:{value:''},
@@ -51,7 +50,7 @@ class ProfileEdit extends Component {
             isLoading: true
         });
 
-        getUserProfile(username)
+        getUserEditProfile(username)
             .then(response => {
                 this.setState({
                     user: response,
@@ -101,7 +100,8 @@ class ProfileEdit extends Component {
         event.preventDefault();
 
         const profileEditRequest = {
-            newEmail: this.state.newEmail.value,
+            username: this.state.user.username,
+            email: this.state.email.value,
             newPhoneNumber: this.state.newPhoneNumber.value,
             newTg: this.state.newTg.value,
             newName: this.state.newName.value,
@@ -112,8 +112,8 @@ class ProfileEdit extends Component {
             // newWorktimes: this.state.newWorktimes.value,
             newSecretNote: this.state.newSecretNote.value,
             newWorkingStatus: this.state.newWorkingStatus.value // Статус работы (0,1,2,3)
-        };
-        profileEdit(profileEditRequest)
+        }; console.log(profileEditRequest.email)
+        profileEdit(profileEditRequest, this.state.user.username)
             .then(response => {
                 alert('Данные успешно изменены.');
                 this.props.history.push(`/users/${this.state.user.username}`);
@@ -140,7 +140,7 @@ class ProfileEdit extends Component {
         if (flag === 1){
             if (this.state.user != null){
 
-                this.state.newEmail.value = this.state.user.email
+                this.state.email.value = this.state.user.email
                 this.state.newPhoneNumber.value = this.state.user.phone
                 this.state.newTg.value = this.state.user.tg
                 this.state.newName.value = this.state.user.name
@@ -150,15 +150,33 @@ class ProfileEdit extends Component {
                 this.state.newOffice.value = this.state.user.office
                 // this.state.newWorktimes.value = this.state.user.workTimes.map(t => t.time).join()
                 this.state.newSecretNote.value = this.state.user.secretNote
-                this.state.newWorkingStatus.value = ''//this.state.user.workingStatus //Записать сюда статус работника (0,1,2,3)
+                this.state.newWorkingStatus.value = this.state.user.status
 
                 flag = 0}
+
         }
         //this.state.user.workingStatus = userState //Раскоментить для работы статуса работника
-        if(userStatus === 0){tip = <TooltipWidgetHome/>;}
+/*        if(userStatus === 0){tip = <TooltipWidgetHome/>;}
         if(userStatus === 1){tip = <TooltipWidgetAtWork/>;}
         if(userStatus === 2){tip = <TooltipWidgetIll/>;}
-        if(userStatus === 3){tip = <TooltipWidgetHoliday/>;}
+        if(userStatus === 3){tip = <TooltipWidgetHoliday/>;}*/
+        const DropdownStatus = () => {
+            const [dropdownOpen, setDropdownOpen] = useState(false);
+            const toggle = () => setDropdownOpen(prevState => !prevState);
+            return (
+                <Dropdown isOpen={dropdownOpen} toggle={toggle} size='sm'>
+                    <DropdownToggle caret>
+                        Изменить статус
+                    </DropdownToggle>
+                    <DropdownMenu>
+                        <DropdownItem onClick={this.state.user.status = '0'}>Работает дома</DropdownItem>
+                        <DropdownItem onClick={this.state.user.status = '1'}>Работает в офисе</DropdownItem>
+                        <DropdownItem onClick={this.state.user.status = '2'}>На больничном</DropdownItem>
+                        <DropdownItem onClick={this.state.user.status = '3'}>В отпуске</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+            )
+        };
 
         return (
             <div className="profile"  >
@@ -180,8 +198,8 @@ class ProfileEdit extends Component {
                                     </Col>
                                     <Col>
                                             <FormGroup>
-                                                <Input type="email" name="newEmail" id="editEmail"
-                                                       value={this.state.newEmail.value}
+                                                <Input type="email" name="email" id="email"
+                                                       value={this.state.email.value}
                                                        onChange={(event) => this.handleInputChange(event)}/>
                                                 <div style={{height: 10}}/>
                                                 <Input type="phoneNumber" name="newPhoneNumber" id="editPhoneNumber" placeholder={this.state.user.phone}
@@ -244,11 +262,13 @@ class ProfileEdit extends Component {
                                             </Button>
                                         </div>
                                     </Col>
-                                    <div style={{paddingRight:10,paddingTop:10}}>{tip}</div>
+                                    {this.state.user.status === '0' && <TooltipWidgetHome/>}
+                                    {this.state.user.status === '1' && <TooltipWidgetAtWork/>}
+                                    {this.state.user.status === '2' && <TooltipWidgetIll/>}
+                                    {this.state.user.status === '3' && <TooltipWidgetHoliday/>}
+                                    {DropdownStatus}
                                 </Row>
-
                             </Col>
-                            <div style={{marginTop:10, marginLeft:5}}><DropdownStatus /></div>
                         </Row>
                         </Form>
                     ): null
@@ -258,30 +278,32 @@ class ProfileEdit extends Component {
     }
 }
 
-const DropdownStatus = () => {
+/*const DropdownStatus = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
-    const toggle = () => setDropdownOpen(prevState => !prevState);
+    const toggle = () => setDropdownOpen(prevState => !prevState);*/
 
-    const changeTipToZero = () => userStatus = 0;
-    const changeTipToOne = () => userStatus = 1;
-    const changeTipToTwo = () => userStatus = 2;
-    const changeTipToThree = () => userStatus = 3;
+/*    let userStatus = '0';
 
-    return (
+    const changeTipToZero = () => userStatus = '0';
+    const changeTipToOne = () => userStatus = '1';
+    const changeTipToTwo = () => userStatus = '2';
+    const changeTipToThree = () => userStatus = '3';*/
+
+/*    return (
         <Dropdown isOpen={dropdownOpen} toggle={toggle} size='sm'>
             <DropdownToggle caret>
                 Изменить статус
             </DropdownToggle>
             <DropdownMenu>
-                <DropdownItem onClick={changeTipToZero}>Работает дома</DropdownItem>
-                <DropdownItem onClick={changeTipToOne}>Работает в офисе</DropdownItem>
-                <DropdownItem onClick={changeTipToTwo}>На больничном</DropdownItem>
-                <DropdownItem onClick={changeTipToThree}>В отпуске</DropdownItem>
+                <DropdownItem onClick={this.state.user.status = '0'}>Работает дома</DropdownItem>
+                <DropdownItem onClick={this.state.user.status = '0'}>Работает в офисе</DropdownItem>
+                <DropdownItem onClick={this.state.user.status = '0'}>На больничном</DropdownItem>
+                <DropdownItem onClick={this.state.user.status = '0'}>В отпуске</DropdownItem>
             </DropdownMenu>
         </Dropdown>
     );
-}
+}*/
 
 
 export default ProfileEdit;
