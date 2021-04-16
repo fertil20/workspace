@@ -85,6 +85,9 @@ class LoginForm extends Component {
                     <Button type="primary" htmlType="submit" size="large" className="login-form-button">Login</Button>
                     Or <Link to="/signup">register now!</Link>
                 </FormItem>
+                <FormItem>
+                    <a target="_blank" href="http://localhost:8080/api/auth/forgot_password">Forgot your password?</a>
+                </FormItem>
             </Form>
             // <Form onSubmit={this.handleSubmit}>
             //     <FormGroup>

@@ -1,5 +1,6 @@
 package com.workspace.server.security;
 
+import com.workspace.server.service.CustomUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
