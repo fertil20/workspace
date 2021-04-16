@@ -16,7 +16,7 @@ import {
 import {TooltipWidgetHome,TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidgetIll} from './TooltipWidget'
 import {Avatar} from "antd";
 import React, {Component, useState} from "react";
-import {getUserProfile, profileEdit} from "../../util/APIUtils";
+import {getUserProfile, profileEdit, setUserProfile} from "../../util/APIUtils";
 
 let userStatus = 2;
 let flag = 1;
@@ -183,11 +183,11 @@ class ProfileEdit extends Component {
                                                 <Input type="email" name="newEmail" id="editEmail"
                                                        value={this.state.newEmail.value}
                                                        onChange={(event) => this.handleInputChange(event)}/>
-                                                <div style={{height:10}}></div>
+                                                <div style={{height: 10}}/>
                                                 <Input type="phoneNumber" name="newPhoneNumber" id="editPhoneNumber" placeholder={this.state.user.phone}
                                                        value={this.state.newPhoneNumber.value}
                                                        onChange={(event) => this.handleInputChange(event)}/>
-                                                <div style={{height:10}}></div>
+                                                <div style={{height: 10}}/>
                                                 <Input type="tg" name="newTg" id="editTg" placeholder={this.state.user.tg}
                                                        value={this.state.newTg.value}
                                                        onChange={(event) => this.handleInputChange(event)}/>
@@ -209,23 +209,23 @@ class ProfileEdit extends Component {
                                         <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Секретная заметка:</div>
                                     </Col>
                                     <Col>
-                                        <div style={{height:15}}></div>
+                                        <div style={{height: 15}}/>
                                         <Input type="name" name="newName" id="editName"
                                                value={this.state.newName.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
-                                        <div style={{height:35}}></div>
+                                        <div style={{height: 35}}/>
                                         <Input type="about" name="newAbout" id="editAbout"
                                                value={this.state.newAbout.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
-                                        <div style={{height:10}}></div>
+                                        <div style={{height: 10}}/>
                                         <Input type="position" name="newPosition" id="editPosition"
                                                value={this.state.newPosition.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
-                                        <div style={{height:10}}></div>
+                                        <div style={{height: 10}}/>
                                         <Input type="department" name="newDepartment" id="editDepartment"
                                                value={this.state.newDepartment.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
-                                        <div style={{height:10}}></div>
+                                        <div style={{height: 10}}/>
                                         <Input type="office" name="newOffice" id="editOffice"
                                                value={this.state.newOffice.value}
                                                onChange={(event) => this.handleInputChange(event)}/>

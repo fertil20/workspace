@@ -113,6 +113,13 @@ export function getUserProfile(username) {
     });
 }
 
+export function setUserProfile(username) {
+    return request({
+        url: API_BASE_URL + "/users/" + username,
+        method: 'POST'
+    });
+}
+
 export function getUserCreatedPolls(username, page, size) {
     page = page || 0;
     size = size || POLL_LIST_SIZE;

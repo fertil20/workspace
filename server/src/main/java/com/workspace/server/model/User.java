@@ -73,6 +73,10 @@ public class User extends DateAudit {
     @Size(max = 300)
     private String secretNote="No notes";
 
+    @NotBlank
+    @Size(max = 1)
+    private char status='0';
+
     @Column(name = "reset_password_token")
     @Size (max = 30)
     private String resetPasswordToken;
@@ -219,6 +223,14 @@ public class User extends DateAudit {
 
     public void setSecretNote(String secretNote) {
         this.secretNote = secretNote;
+    }
+
+    public char getStatus() {
+        return status;
+    }
+
+    public void setStatus(char status) {
+        this.status = status;
     }
 
     public Set<WorkTime> getWorkTimes() {

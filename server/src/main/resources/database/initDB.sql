@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS users
     updated_at TIMESTAMP,
     birthday DATE /*NOT NULL*/,
     secret_note VARCHAR(300),
+    status VARCHAR(1),
     reset_password_token VARCHAR(30)
 );
 

@@ -21,13 +21,14 @@ public class UserProfile {
     private String office;
     private Date birthday;
     private String secretNote;
+    private char status;
     private Set<WorkTime> workTimes;
 /*    private Long pollCount;
     private Long voteCount;*/
 
 
     public UserProfile(Long id, String username, String name, Instant joinedAt, String email, String phone, String tg,
-                       String about, String position, String department, String office, Date birthday, String secretNote, Set<WorkTime> workTimes) {
+                       String about, String position, String department, String office, Date birthday, String secretNote, char status, Set<WorkTime> workTimes) {
         this.id = id;
         this.username = username;
         this.name = name;
@@ -41,6 +42,7 @@ public class UserProfile {
         this.office = office;
         this.birthday = birthday;
         this.secretNote = secretNote;
+        this.status = status;
         this.workTimes = workTimes;
 /*        this.pollCount = pollCount;
         this.voteCount = voteCount;*/
@@ -150,6 +152,13 @@ public class UserProfile {
         this.secretNote = secretNote;
     }
 
+    public char getStatus() {
+        return status;
+    }
+
+    public void setStatus(char status) {
+        this.status = status;
+    }
 
     public Set<WorkTime> getWorkTimes() {
         return workTimes;

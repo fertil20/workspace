@@ -13,7 +13,6 @@ import {TooltipWidgetHome,TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidg
 
 const TabPane = Tabs.TabPane;
 
-const userConst = 0;
 
 class Profile extends Component {
 
@@ -51,7 +50,9 @@ class Profile extends Component {
             }
         });        
     }
-      
+
+
+
     componentDidMount() {
         const username = this.props.match.params.username;
         this.loadUserProfile(username);
@@ -80,53 +81,8 @@ class Profile extends Component {
             textAlign: 'center'
         };
 
-        let tip = null;
-
-        if(userConst === 0){tip = <TooltipWidgetHome/>;}
-        if(userConst === 1){tip = <TooltipWidgetAtWork/>;}
-        if(userConst === 2){tip = <TooltipWidgetIll/>;}
-        if(userConst === 3){tip = <TooltipWidgetHoliday/>;}
-
-
         return (
-            // <div className="profile">
-            //     {
-            //         this.state.user ? (
-            //             <div className="user-profile">
-            //                 <div className="user-details">
-            //                     <div className="user-avatar">
-            //                         <Avatar className="user-avatar-circle" style={{ backgroundColor: getAvatarColor(this.state.user.name)}}>
-            //                             {this.state.user.name.toUpperCase()}
-            //                         </Avatar>
-            //                     </div>
-            //                     <div className="user-summary">
-            //                         <div className="full-name">{this.state.user.name}</div>
-            //                         <div className="username">@{this.state.user.username}</div>
-            //                         <div className="email">{this.state.user.email}</div>
-            //                         {/*<div className="phone">{this.state.user.phone}</div>*/}
-            //                         <div className="user-joined">
-            //                             Joined {formatDate(this.state.user.joinedAt)}
-            //                         </div>
-            //                     </div>
-            //                 </div>
-            //                 <div className="user-poll-details">
-            //                     <Tabs defaultActiveKey="1"
-            //                         animated={false}
-            //                         tabBarStyle={tabBarStyle}
-            //                         size="large"
-            //                         className="profile-tabs">
-            //                         <TabPane tab={`${this.state.user.pollCount} Polls`} key="1">
-            //                             <PollList username={this.props.match.params.username} type="USER_CREATED_POLLS" />
-            //                         </TabPane>
-            //                         <TabPane tab={`${this.state.user.voteCount} Votes`}  key="2">
-            //                             <PollList username={this.props.match.params.username} type="USER_VOTED_POLLS" />
-            //                         </TabPane>
-            //                     </Tabs>
-            //                 </div>
-            //             </div>
-            //         ): null
-            //     }
-            // </div>
+
             <div className="profile" >
                      {
                        this.state.user ? (
@@ -179,8 +135,10 @@ class Profile extends Component {
                                     </Button>
                                 </div>
                             </Col>
-                            <div style={{paddingRight:10,paddingTop:10}}>{tip}</div>
-
+                            {this.state.user.status === '0' && <TooltipWidgetHome/>}
+                            {this.state.user.status === '1' && <TooltipWidgetAtWork/>}
+                            {this.state.user.status === '2' && <TooltipWidgetIll/>}
+                            {this.state.user.status === '3' && <TooltipWidgetHoliday/>}
                         </Row>
                     </Col>
                 </Row>
