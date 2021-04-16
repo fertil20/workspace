@@ -112,8 +112,8 @@ class App extends Component {
                                 <Route path="/signup" component={Signup}/>
                                 <PrivateRoute exact path="/users/:username" authenticated={this.persistentState.getState().isAuthenticated} component={Profile} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/users/:username/edit" authenticated={this.persistentState.getState().isAuthenticated} component={ProfileEdit} handleLogout={this.handleLogout}/>
-                                <PrivateRoute path="/poll/new" authenticated={this.persistentState.getState().isAuthenticated} component={NewPoll} handleLogout={this.handleLogout}/>
-                                <PrivateRoute path="/users" authenticated={this.persistentState.getState().isAuthenticated} component={UserComponent} handleLogout={this.handleLogout}/>
+                                <PrivateRoute exact path="/poll/new" authenticated={this.persistentState.getState().isAuthenticated} component={NewPoll} handleLogout={this.handleLogout}/>
+                                <PrivateRoute exact path="/users" authenticated={this.persistentState.getState().isAuthenticated} component={UserComponent} handleLogout={this.handleLogout}/>
                                 <Route component={NotFound}/>
                             </Switch>
                         </BrowserRouter>

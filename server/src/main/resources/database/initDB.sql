@@ -15,7 +15,8 @@ CREATE TABLE IF NOT EXISTS users
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
     birthday DATE /*NOT NULL*/,
-    secret_note VARCHAR(300)
+    secret_note VARCHAR(300),
+    reset_password_token VARCHAR(30)
 );
 
 DROP TABLE IF EXISTS working_hours CASCADE;

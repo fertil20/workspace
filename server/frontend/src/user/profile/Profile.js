@@ -13,7 +13,7 @@ import {TooltipWidgetHome,TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidg
 
 const TabPane = Tabs.TabPane;
 
-const userConst = 2;
+const userConst = 0;
 
 class Profile extends Component {
 
@@ -80,7 +80,7 @@ class Profile extends Component {
             textAlign: 'center'
         };
 
-        let tip = 1;
+        let tip = null;
 
         if(userConst === 0){tip = <TooltipWidgetHome/>;}
         if(userConst === 1){tip = <TooltipWidgetAtWork/>;}

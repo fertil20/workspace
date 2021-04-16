@@ -1,4 +1,4 @@
-package com.workspace.server.security;
+package com.workspace.server.service;
 
 import com.workspace.server.exception.ResourceNotFoundException;
 import com.workspace.server.model.User;
@@ -27,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail)
                 .orElseThrow(() ->
                         new UsernameNotFoundException("User not found with username or email : " + usernameOrEmail)
-        );
+                );
 
         return com.workspace.server.security.UserPrincipal.create(user);
     }
@@ -35,7 +35,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFoundException("User", "id", id)
+                () -> new ResourceNotFoundException("User", "id", id)
         );
 
         return com.workspace.server.security.UserPrincipal.create(user);

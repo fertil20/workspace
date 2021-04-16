@@ -1,6 +1,6 @@
 INSERT INTO users (username, name, email, password, phone, tg, about, position, department,
                    office, birthday, secret_note)
-VALUES ('fertil', 'Илья Фертиков', 'if@mail.com', '$2b$10$QLXUPVP.ihTNij6tg/f0Kubfu2b8b4Ty9Ur0V1KnlgF1fE5iL7Gia', '+7(191)322-22-33', 'fertil13', 'Меня зовут Илья', 'Просто Илья', 'Северный Град', '215', '13.09.2000','секрет'),
+VALUES ('fertil', 'Илья Фертиков', 'fertil@list.ru', '$2b$10$QLXUPVP.ihTNij6tg/f0Kubfu2b8b4Ty9Ur0V1KnlgF1fE5iL7Gia', '+7(191)322-22-33', 'fertil13', 'Меня зовут Илья', 'Просто Илья', 'Северный Град', '215', '13.09.2000','секрет'),
        ('molose', 'Сергей Молотков', 'sm@mail.com', '$2b$10$QLXUPVP.ihTNij6tg/f0Kubfu2b8b4Ty9Ur0V1KnlgF1fE5iL7Gia', '+7(191)223-33-22', 'molose14', 'Меня зовут Серёжа', 'Сэр', 'Северный Град', '397', '18.11.2000', 'секрет');
 INSERT INTO roles(name)
 VALUES ('ROLE_USER'),

@@ -73,6 +73,11 @@ public class User extends DateAudit {
     @Size(max = 300)
     private String secretNote="No notes";
 
+    @Column(name = "reset_password_token")
+    @Size (max = 30)
+    private String resetPasswordToken;
+    private static final int EXPIRATION = 60 * 24;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -204,6 +209,14 @@ public class User extends DateAudit {
         return secretNote;
     }
 
+    public String getResetPasswordToken() {
+        return resetPasswordToken;
+    }
+
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
+    }
+
     public void setSecretNote(String secretNote) {
         this.secretNote = secretNote;
     }
@@ -212,7 +225,7 @@ public class User extends DateAudit {
         return workTimes;
     }
 
-    public void setwTimes(Set<WorkTime> workTimes) {
+    public void setWorkTimes(Set<WorkTime> workTimes) {
         this.workTimes = workTimes;
     }
 
