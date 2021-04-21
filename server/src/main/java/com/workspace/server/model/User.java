@@ -1,7 +1,8 @@
 package com.workspace.server.model;
 
 import com.workspace.server.model.audit.DateAudit;
-import org.hibernate.annotations.NaturalId;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -9,9 +10,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
                 "username"
@@ -21,6 +25,7 @@ import java.util.Set;
         })
 })
 public class User extends DateAudit {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,7 +38,6 @@ public class User extends DateAudit {
     @Size(max = 50)
     private String username;
 
-    @NaturalId
     @NotBlank
     @Size(max = 254)
     @Email
@@ -100,9 +104,11 @@ public class User extends DateAudit {
             inverseJoinColumns = @JoinColumn(name = "days_id"))
     private Set<WorkDay> workDays = new HashSet<>();
 
+    @Override
+    public int hashCode() {
 
-    public User(){
-
+        return Objects.hash(username, email, phone, tg, about, position,
+                department, office, secretNote, status);
     }
 
 
@@ -112,149 +118,4 @@ public class User extends DateAudit {
         this.email = email;
         this.password = password;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getTg() {
-        return tg;
-    }
-
-    public void setTg(String tg) {
-        this.tg = tg;
-    }
-
-    public String getAbout() {
-        return about;
-    }
-
-    public void setAbout(String about) {
-        this.about = about;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
-    public String getOffice() {
-        return office;
-    }
-
-    public void setOffice(String office) {
-        this.office = office;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getSecretNote() {
-        return secretNote;
-    }
-
-    public String getResetPasswordToken() {
-        return resetPasswordToken;
-    }
-
-    public void setResetPasswordToken(String resetPasswordToken) {
-        this.resetPasswordToken = resetPasswordToken;
-    }
-
-    public void setSecretNote(String secretNote) {
-        this.secretNote = secretNote;
-    }
-
-    public char getStatus() {
-        return status;
-    }
-
-    public void setStatus(char status) {
-        this.status = status;
-    }
-
-    public Set<WorkTime> getWorkTimes() {
-        return workTimes;
-    }
-
-    public void setWorkTimes(Set<WorkTime> workTimes) {
-        this.workTimes = workTimes;
-    }
-
-    public Set<WorkDay> getWorkDays() {
-        return workDays;
-    }
-
-    public void setWorkDays(Set<WorkDay> workDays) {
-        this.workDays = workDays;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
 }

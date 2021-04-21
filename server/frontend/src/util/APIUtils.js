@@ -13,14 +13,8 @@ const request = (options) => {
     options = Object.assign({}, defaults, options);
 
     return fetch(options.url, options)
-    .then(response => 
-        response.json().then(json => {
-            if(!response.ok) {
-                return Promise.reject(json);
-            }
-            return json;
-        })
-    );
+        .then((res) => res.text())
+        .then((text) => text.length ? JSON.parse(text) : {})
 };
 
 export function getAllPolls(page, size) {
@@ -65,9 +59,9 @@ export function signup(signupRequest) {
     });
 }
 
-export function profileEdit(profileEditRequest){
+export function profileEdit(profileEditRequest, username){
     return request({
-        url: API_BASE_URL + "/users/:username/edit",
+        url: API_BASE_URL + "/users/" + username + "/edit",
         method: 'POST',
         body: JSON.stringify(profileEditRequest)
     });
@@ -113,12 +107,12 @@ export function getUserProfile(username) {
     });
 }
 
-export function setUserProfile(username) {
+/*export function setUserProfile(username) {
     return request({
         url: API_BASE_URL + "/users/" + username,
         method: 'POST'
     });
-}
+}*/
 
 export function getUserCreatedPolls(username, page, size) {
     page = page || 0;

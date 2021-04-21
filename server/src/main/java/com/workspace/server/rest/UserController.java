@@ -2,17 +2,18 @@ package com.workspace.server.rest;
 
 import com.workspace.server.exception.ResourceNotFoundException;
 import com.workspace.server.model.User;
-import com.workspace.server.payload.UserIdentityAvailability;
-import com.workspace.server.payload.UserProfile;
-import com.workspace.server.payload.UserSummary;
+import com.workspace.server.dto.*;
 import com.workspace.server.repository.UserRepository;
 import com.workspace.server.security.CurrentUser;
 import com.workspace.server.security.UserPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,5 +63,23 @@ public class UserController {
 
         return new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), user.getEmail(), user.getPhone(), user.getTg(), user.getAbout(),
                 user.getPosition(), user.getDepartment(), user.getOffice(), user.getBirthday(), user.getSecretNote(), user.getStatus(), user.getWorkTimes());
+    }
+
+    @PostMapping("/{username}/edit")
+    public void editUserProfile(@PathVariable(value = "username") String username,
+                                                       @RequestBody ProfileEditRequest request) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+        user.setEmail(request.getEmail());
+        user.setPhone(request.getPhone());
+        user.setTg(request.getTg());
+        user.setName(request.getName());
+        user.setAbout(request.getAbout());
+        user.setPosition(request.getPosition());
+        user.setDepartment(request.getDepartment());
+        user.setOffice(request.getOffice());
+        user.setSecretNote(request.getSecretNote());
+        user.setStatus(request.getStatus());
+        userRepository.save(user);
     }
 }

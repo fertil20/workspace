@@ -16,11 +16,9 @@ import {
 import {TooltipWidgetHome,TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidgetIll} from './TooltipWidget'
 import {Avatar} from "antd";
 import React, {Component, useState} from "react";
-import {getUserProfile, profileEdit, setUserProfile} from "../../util/APIUtils";
+import {getUserProfile, profileEdit} from "../../util/APIUtils";
 
-let userStatus = 2;
 let flag = 1;
-let tip = 1;
 
 class ProfileEdit extends Component {
 
@@ -29,17 +27,18 @@ class ProfileEdit extends Component {
         this.state = {
             user: null,
             isLoading: false,
-            newEmail: {value: ''},
-            newPhoneNumber: {value: ''},
-            newTg: {value: ''},
-            newName:{value:''},
-            newAbout:{value:''},
-            newPosition:{value:''},
-            newDepartment:{value:''},
-            newOffice:{value:''},
+            username: {value: ''},
+            email: {value: ''},
+            phone: {value: ''},
+            tg: {value: ''},
+            name:{value:''},
+            about:{value:''},
+            position:{value:''},
+            department:{value:''},
+            office:{value:''},
             // newWorktimes:{value:''},
-            newSecretNote:{value:''},
-            newWorkingStatus:{value:''}
+            secretNote:{value:''},
+            status:{value:''}
         }
         this.loadUserProfile = this.loadUserProfile.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -101,19 +100,19 @@ class ProfileEdit extends Component {
         event.preventDefault();
 
         const profileEditRequest = {
-            newEmail: this.state.newEmail.value,
-            newPhoneNumber: this.state.newPhoneNumber.value,
-            newTg: this.state.newTg.value,
-            newName: this.state.newName.value,
-            newAbout: this.state.newAbout.value,
-            newPosition: this.state.newPosition.value,
-            newDepartment: this.state.newDepartment.value,
-            newOffice: this.state.newOffice.value,
+            email: this.state.email.value,
+            phone: this.state.phone.value,
+            tg: this.state.tg.value,
+            name: this.state.name.value,
+            about: this.state.about.value,
+            position: this.state.position.value,
+            department: this.state.department.value,
+            office: this.state.office.value,
             // newWorktimes: this.state.newWorktimes.value,
-            newSecretNote: this.state.newSecretNote.value,
-            newWorkingStatus: this.state.newWorkingStatus.value // Статус работы (0,1,2,3)
+            secretNote: this.state.secretNote.value,
+            status: this.state.status.value // Статус работы (0,1,2,3)
         };
-        profileEdit(profileEditRequest)
+        profileEdit(profileEditRequest, this.state.user.username)
             .then(response => {
                 alert('Данные успешно изменены.');
                 this.props.history.push(`/users/${this.state.user.username}`);
@@ -140,25 +139,58 @@ class ProfileEdit extends Component {
         if (flag === 1){
             if (this.state.user != null){
 
-                this.state.newEmail.value = this.state.user.email
-                this.state.newPhoneNumber.value = this.state.user.phone
-                this.state.newTg.value = this.state.user.tg
-                this.state.newName.value = this.state.user.name
-                this.state.newAbout.value = this.state.user.about
-                this.state.newPosition.value = this.state.user.position
-                this.state.newDepartment.value = this.state.user.department
-                this.state.newOffice.value = this.state.user.office
+                this.state.email.value = this.state.user.email
+                this.state.phone.value = this.state.user.phone
+                this.state.tg.value = this.state.user.tg
+                this.state.name.value = this.state.user.name
+                this.state.about.value = this.state.user.about
+                this.state.position.value = this.state.user.position
+                this.state.department.value = this.state.user.department
+                this.state.office.value = this.state.user.office
                 // this.state.newWorktimes.value = this.state.user.workTimes.map(t => t.time).join()
-                this.state.newSecretNote.value = this.state.user.secretNote
-                this.state.newWorkingStatus.value = ''//this.state.user.workingStatus //Записать сюда статус работника (0,1,2,3)
+                this.state.secretNote.value = this.state.user.secretNote
+                this.state.status.value = this.state.user.status
 
                 flag = 0}
+
         }
-        //this.state.user.workingStatus = userState //Раскоментить для работы статуса работника
-        if(userStatus === 0){tip = <TooltipWidgetHome/>;}
+
+/*        if(userStatus === 0){tip = <TooltipWidgetHome/>;}
         if(userStatus === 1){tip = <TooltipWidgetAtWork/>;}
         if(userStatus === 2){tip = <TooltipWidgetIll/>;}
-        if(userStatus === 3){tip = <TooltipWidgetHoliday/>;}
+        if(userStatus === 3){tip = <TooltipWidgetHoliday/>;}*/
+        const DropdownStatus = () => {
+            const [dropdownOpen, setDropdownOpen] = useState(false);
+            const toggle = () => setDropdownOpen(prevState => !prevState);
+           let setStatus = {
+                status(a) {
+                    this.state.user.status = a
+                    this.state.status.value = this.state.user.status
+                }
+           }
+           let status = setStatus.status.bind(this);
+           return (
+               <Dropdown isOpen={dropdownOpen} toggle={toggle} size='sm'>
+                   <DropdownToggle caret>
+                       Изменить статус
+                   </DropdownToggle>
+                   <DropdownMenu>
+                       <DropdownItem onClick={ (event) => {
+                           status('0');
+                           this.handleInputChange(event);}}>Работает дома</DropdownItem>
+                       <DropdownItem onClick={ (event) => {
+                           status('1');
+                           this.handleInputChange(event);}}>Работает в офисе</DropdownItem>
+                       <DropdownItem onClick={ (event) => {
+                           status('2');
+                           this.handleInputChange(event);}}>На больничном</DropdownItem>
+                       <DropdownItem onClick={ (event) => {
+                           status('3');
+                           this.handleInputChange(event);}}>В отпуске</DropdownItem>
+                   </DropdownMenu>
+               </Dropdown>
+           )
+        };
 
         return (
             <div className="profile"  >
@@ -180,16 +212,16 @@ class ProfileEdit extends Component {
                                     </Col>
                                     <Col>
                                             <FormGroup>
-                                                <Input type="email" name="newEmail" id="editEmail"
-                                                       value={this.state.newEmail.value}
+                                                <Input type="email" name="email" id="email"
+                                                       value={this.state.email.value}
                                                        onChange={(event) => this.handleInputChange(event)}/>
                                                 <div style={{height: 10}}/>
-                                                <Input type="phoneNumber" name="newPhoneNumber" id="editPhoneNumber" placeholder={this.state.user.phone}
-                                                       value={this.state.newPhoneNumber.value}
+                                                <Input type="phone" name="phone" id="phone" placeholder={this.state.user.phone}
+                                                       value={this.state.phone.value}
                                                        onChange={(event) => this.handleInputChange(event)}/>
                                                 <div style={{height: 10}}/>
-                                                <Input type="tg" name="newTg" id="editTg" placeholder={this.state.user.tg}
-                                                       value={this.state.newTg.value}
+                                                <Input type="tg" name="tg" id="tg" placeholder={this.state.user.tg}
+                                                       value={this.state.tg.value}
                                                        onChange={(event) => this.handleInputChange(event)}/>
                                             </FormGroup>
                                     </Col>
@@ -210,24 +242,24 @@ class ProfileEdit extends Component {
                                     </Col>
                                     <Col>
                                         <div style={{height: 15}}/>
-                                        <Input type="name" name="newName" id="editName"
-                                               value={this.state.newName.value}
+                                        <Input type="name" name="name" id="editName"
+                                               value={this.state.name.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
                                         <div style={{height: 35}}/>
-                                        <Input type="about" name="newAbout" id="editAbout"
-                                               value={this.state.newAbout.value}
+                                        <Input type="about" name="about" id="editAbout"
+                                               value={this.state.about.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
                                         <div style={{height: 10}}/>
-                                        <Input type="position" name="newPosition" id="editPosition"
-                                               value={this.state.newPosition.value}
+                                        <Input type="position" name="position" id="editPosition"
+                                               value={this.state.position.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
                                         <div style={{height: 10}}/>
-                                        <Input type="department" name="newDepartment" id="editDepartment"
-                                               value={this.state.newDepartment.value}
+                                        <Input type="department" name="department" id="editDepartment"
+                                               value={this.state.department.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
                                         <div style={{height: 10}}/>
-                                        <Input type="office" name="newOffice" id="editOffice"
-                                               value={this.state.newOffice.value}
+                                        <Input type="office" name="office" id="editOffice"
+                                               value={this.state.office.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
                                         {/*<Input type="worktimes" name="newWorktimes" id="editWorktimes"*/}
                                         {/*       value={this.state.newWorktimes.value}*/}
@@ -235,8 +267,8 @@ class ProfileEdit extends Component {
                                         <div style={{marginTop:20,height:30}}>{this.state.user.workTimes.map(t => t.time).join()}</div>
                                         <div style={{marginTop:22,height:50}}>{formatDate(this.state.user.joinedAt)}</div>
                                         <div style={{height:50}}>{formatDate(this.state.user.birthday)}</div>
-                                        <Input type="secretNote" name="newSecretNote" id="editSecretNote"
-                                               value={this.state.newSecretNote.value}
+                                        <Input type="secretNote" name="secretNote" id="editSecretNote"
+                                               value={this.state.secretNote.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
                                         <div style={{marginTop:27}}>
                                             <Button color="primary" size="sm">
@@ -244,11 +276,13 @@ class ProfileEdit extends Component {
                                             </Button>
                                         </div>
                                     </Col>
-                                    <div style={{paddingRight:10,paddingTop:10}}>{tip}</div>
+                                    {this.state.user.status === '0' && <TooltipWidgetHome/>}
+                                    {this.state.user.status === '1' && <TooltipWidgetAtWork/>}
+                                    {this.state.user.status === '2' && <TooltipWidgetIll/>}
+                                    {this.state.user.status === '3' && <TooltipWidgetHoliday/>}
+                                    <DropdownStatus/>
                                 </Row>
-
                             </Col>
-                            <div style={{marginTop:10, marginLeft:5}}><DropdownStatus /></div>
                         </Row>
                         </Form>
                     ): null
@@ -258,30 +292,32 @@ class ProfileEdit extends Component {
     }
 }
 
-const DropdownStatus = () => {
+/*const DropdownStatus = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
-    const toggle = () => setDropdownOpen(prevState => !prevState);
+    const toggle = () => setDropdownOpen(prevState => !prevState);*/
 
-    const changeTipToZero = () => userStatus = 0;
-    const changeTipToOne = () => userStatus = 1;
-    const changeTipToTwo = () => userStatus = 2;
-    const changeTipToThree = () => userStatus = 3;
+/*    let userStatus = '0';
 
-    return (
+    const changeTipToZero = () => userStatus = '0';
+    const changeTipToOne = () => userStatus = '1';
+    const changeTipToTwo = () => userStatus = '2';
+    const changeTipToThree = () => userStatus = '3';*/
+
+/*    return (
         <Dropdown isOpen={dropdownOpen} toggle={toggle} size='sm'>
             <DropdownToggle caret>
                 Изменить статус
             </DropdownToggle>
             <DropdownMenu>
-                <DropdownItem onClick={changeTipToZero}>Работает дома</DropdownItem>
-                <DropdownItem onClick={changeTipToOne}>Работает в офисе</DropdownItem>
-                <DropdownItem onClick={changeTipToTwo}>На больничном</DropdownItem>
-                <DropdownItem onClick={changeTipToThree}>В отпуске</DropdownItem>
+                <DropdownItem onClick={this.state.user.status = '0'}>Работает дома</DropdownItem>
+                <DropdownItem onClick={this.state.user.status = '0'}>Работает в офисе</DropdownItem>
+                <DropdownItem onClick={this.state.user.status = '0'}>На больничном</DropdownItem>
+                <DropdownItem onClick={this.state.user.status = '0'}>В отпуске</DropdownItem>
             </DropdownMenu>
         </Dropdown>
     );
-}
+}*/
 
 
 export default ProfileEdit;

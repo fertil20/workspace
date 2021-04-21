@@ -1,4 +1,4 @@
-package com.workspace.server.payload;
+package com.workspace.server.dto;
 
 import javax.validation.constraints.NotBlank;
 
