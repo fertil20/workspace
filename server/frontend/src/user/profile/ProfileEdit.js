@@ -11,12 +11,13 @@ import {
     FormGroup,
     Form,
     Input,
-    Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Tooltip
+    Dropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap';
 import {TooltipWidgetHome,TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidgetIll} from './TooltipWidget'
 import {Avatar} from "antd";
 import React, {Component, useState} from "react";
 import {getUserProfile, profileEdit} from "../../util/APIUtils";
+import {EMAIL_MAX_LENGTH} from "../../constants";
 
 let flag = 1;
 
@@ -28,7 +29,7 @@ class ProfileEdit extends Component {
             user: null,
             isLoading: false,
             username: {value: ''},
-            email: {value: ''},
+            email: {value: '',validStatus: ''},
             phone: {value: ''},
             tg: {value: ''},
             name:{value:''},
@@ -90,8 +91,7 @@ class ProfileEdit extends Component {
         this.setState({
             [inputName] : {
                 value: inputValue,
-
-                // ...validationFun(inputValue)
+                //...validationFun(inputValue)
             }
         });
     }
@@ -138,21 +138,21 @@ class ProfileEdit extends Component {
 
         if (flag === 1){
             if (this.state.user != null){
-
-                this.state.email.value = this.state.user.email
-                this.state.phone.value = this.state.user.phone
-                this.state.tg.value = this.state.user.tg
-                this.state.name.value = this.state.user.name
-                this.state.about.value = this.state.user.about
-                this.state.position.value = this.state.user.position
-                this.state.department.value = this.state.user.department
-                this.state.office.value = this.state.user.office
-                // this.state.newWorktimes.value = this.state.user.workTimes.map(t => t.time).join()
-                this.state.secretNote.value = this.state.user.secretNote
-                this.state.status.value = this.state.user.status
+                this.setState({
+                    email: {value: this.state.user.email},
+                    phone: {value: this.state.user.phone},
+                    tg: {value: this.state.user.tg},
+                    name: {value: this.state.user.name},
+                    about: {value: this.state.user.about},
+                    position: {value: this.state.user.position},
+                    department: {value: this.state.user.department},
+                    office: {value: this.state.user.office},
+                    //newWorktimes: {value: this.state.user.newWorktimes},
+                    secretNote: {value: this.state.user.secretNote},
+                    status: {value: this.state.user.status},
+                })
 
                 flag = 0}
-
         }
 
 /*        if(userStatus === 0){tip = <TooltipWidgetHome/>;}
@@ -164,8 +164,10 @@ class ProfileEdit extends Component {
             const toggle = () => setDropdownOpen(prevState => !prevState);
            let setStatus = {
                 status(a) {
-                    this.state.user.status = a
-                    this.state.status.value = this.state.user.status
+                    this.setState({user:{status: a}})
+                        this.setState({status:{value: this.state.user.status}})
+                    // this.state.user.status = a
+                    // this.state.status.value = this.state.user.status
                 }
            }
            let status = setStatus.status.bind(this);
@@ -213,8 +215,9 @@ class ProfileEdit extends Component {
                                     <Col>
                                             <FormGroup>
                                                 <Input type="email" name="email" id="email"
+                                                       valid = {this.state.email.validStatus}
                                                        value={this.state.email.value}
-                                                       onChange={(event) => this.handleInputChange(event)}/>
+                                                       onChange={(event) => {this.handleInputChange(event);this.validateEmail(this.state.email.value)}}/>
                                                 <div style={{height: 10}}/>
                                                 <Input type="phone" name="phone" id="phone" placeholder={this.state.user.phone}
                                                        value={this.state.phone.value}
@@ -280,9 +283,10 @@ class ProfileEdit extends Component {
                                     {this.state.user.status === '1' && <TooltipWidgetAtWork/>}
                                     {this.state.user.status === '2' && <TooltipWidgetIll/>}
                                     {this.state.user.status === '3' && <TooltipWidgetHoliday/>}
-                                    <DropdownStatus/>
+
                                 </Row>
                             </Col>
+                            <DropdownStatus/>
                         </Row>
                         </Form>
                     ): null
@@ -290,34 +294,39 @@ class ProfileEdit extends Component {
             </div>
         );
     }
+
+    validateEmail = (email) => {
+        if(!email) {
+            return {
+                validateStatus: 'invalid',
+                errorMsg: 'Email may not be empty'
+            }
+        }
+
+        const EMAIL_REGEX = RegExp('[^@ ]+@[^@ ]+\\.[^@ ]+');
+        if(!EMAIL_REGEX.test(email)) {
+            return {
+                validateStatus: 'invalid',
+                errorMsg: 'Email not valid'
+            }
+        }
+
+        if(email.length > EMAIL_MAX_LENGTH) {
+            return {
+                validateStatus: 'invalid',
+                errorMsg: `Email is too long (Maximum ${EMAIL_MAX_LENGTH} characters allowed)`
+            }
+        }
+
+        return {
+            validateStatus: null,
+            errorMsg: null
+        }
+
+    }
 }
 
-/*const DropdownStatus = () => {
-    const [dropdownOpen, setDropdownOpen] = useState(false);
 
-    const toggle = () => setDropdownOpen(prevState => !prevState);*/
-
-/*    let userStatus = '0';
-
-    const changeTipToZero = () => userStatus = '0';
-    const changeTipToOne = () => userStatus = '1';
-    const changeTipToTwo = () => userStatus = '2';
-    const changeTipToThree = () => userStatus = '3';*/
-
-/*    return (
-        <Dropdown isOpen={dropdownOpen} toggle={toggle} size='sm'>
-            <DropdownToggle caret>
-                Изменить статус
-            </DropdownToggle>
-            <DropdownMenu>
-                <DropdownItem onClick={this.state.user.status = '0'}>Работает дома</DropdownItem>
-                <DropdownItem onClick={this.state.user.status = '0'}>Работает в офисе</DropdownItem>
-                <DropdownItem onClick={this.state.user.status = '0'}>На больничном</DropdownItem>
-                <DropdownItem onClick={this.state.user.status = '0'}>В отпуске</DropdownItem>
-            </DropdownMenu>
-        </Dropdown>
-    );
-}*/
 
 
 export default ProfileEdit;

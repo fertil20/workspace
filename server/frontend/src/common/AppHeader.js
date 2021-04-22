@@ -1,11 +1,8 @@
 import React, {Component, useState} from 'react';
 import {
-    Link,
     withRouter
 } from 'react-router-dom';
 import './AppHeader.css';
-import pollIcon from '../poll.svg';
-import { Layout } from 'antd';
 import {
     Collapse,
     Navbar,
@@ -17,8 +14,6 @@ import {
     DropdownMenu,
     DropdownItem,
 } from 'reactstrap';
-
-const Header = Layout.Header;
 
 
 
@@ -45,42 +40,6 @@ class AppHeader extends Component {
         }
     }
 }
-
-// function ProfileDropdownMenu(props) {
-//   const dropdownMenu = (
-//     <Menu onClick={props.handleMenuClick} className="profile-dropdown-menu">
-//       <Menu.Item key="user-info" className="dropdown-item" disabled>
-//         <div className="user-full-name-info">
-//           {props.currentUser.name}
-//         </div>
-//         <div className="username-info">
-//           @{props.currentUser.username}
-//         </div>
-//       </Menu.Item>
-//       <Menu.Divider />
-//       <Menu.Item key="profile" className="dropdown-item">
-//         <Link to={`/users/${props.currentUser.username}`}>Profile1</Link>
-//       </Menu.Item>
-//         <Menu.Item key="userlist" className="dropdown-item">
-//             <Link to={`/users`}>View Users</Link>
-//         </Menu.Item>
-//       <Menu.Item key="logout" className="dropdown-item">
-//           <Link to={`/`}>Logout</Link>
-//       </Menu.Item>
-//     </Menu>
-//   );
-//
-//   return (
-//     <Dropdown
-//       overlay={dropdownMenu}
-//       trigger={['click']}
-//       getPopupContainer = { () => document.getElementsByClassName('profile-menu')[0]}>
-//       <a className="ant-dropdown-link">
-//          <Icon type="user" className="nav-icon" style={{marginRight: 0}} /> <Icon type="down" />
-//       </a>
-//     </Dropdown>
-//   );
-// }
 
 const NavBarNotLogged = () => {
 
@@ -116,8 +75,6 @@ const NavBarNotLogged = () => {
 
 
 const Navconst = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const toggle = () => setIsOpen(!isOpen);
 }
 function NavBarLogged(props){
 

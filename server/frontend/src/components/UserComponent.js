@@ -59,10 +59,6 @@ class UserComponent extends Component {
             return <ServerError />;
         }
 
-        const tabBarStyle = {
-            textAlign: 'center'
-        };
-
         return (
             <div className="userlist">
                     <h1 className="text-center"> User List</h1>

@@ -1,4 +1,4 @@
-import {API_BASE_URL, POLL_LIST_SIZE, ACCESS_TOKEN, USER_LIST_SIZE} from '../constants';
+import {API_BASE_URL, POLL_LIST_SIZE, ACCESS_TOKEN} from '../constants';
 
 const request = (options) => {
     const headers = new Headers({
@@ -16,6 +16,14 @@ const request = (options) => {
         .then((res) => res.text())
         .then((text) => text.length ? JSON.parse(text) : {})
 };
+
+export function forgotPassword(forgotPasswordRequest){
+    return request({
+        url: API_BASE_URL + "/forgotPassword",
+        method: 'POST',
+        body: JSON.stringify(forgotPasswordRequest)
+    });
+}
 
 export function getAllPolls(page, size) {
     page = page || 0;

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { login } from '../../util/APIUtils';
 import './Login.css';
-import { Link } from 'react-router-dom';
 import { ACCESS_TOKEN } from '../../constants';
-import { Form, Input, Icon, Button, notification } from 'antd';
+import { Form, Input, Button, notification } from 'antd';
 // import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 const FormItem = Form.Item;
 
@@ -12,7 +11,7 @@ class Login extends Component {
         const AntWrappedLoginForm = Form.create()(LoginForm)
         return (
             <div className="login-container">
-                <h1 className="page-title">Login</h1>
+                <h1 className="workspace-logo">Workspace</h1>
                 <div className="login-content">
                     {/*<LoginForm onLogin={this.props.onLogin} />*/}
                     <AntWrappedLoginForm onLogin={this.props.onLogin} />
@@ -57,59 +56,38 @@ class LoginForm extends Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
+
             <Form onSubmit={this.handleSubmit} className="login-form">
-                <FormItem>
+                <FormItem className="input-form-login">
                     {getFieldDecorator('usernameOrEmail', {
-                        rules: [{ required: true, message: 'Please input your username or email!' }],
+                        rules: [{ required: true, message: 'Введите E-mail или Username!' }],
                     })(
                     <Input
-                        prefix={<Icon type="user" />}
+                        // prefix={<Icon type="user" />}
+                        className="login-form-input"
                         size="large"
                         name="usernameOrEmail"
                         placeholder="Username or Email" />
                     )}
                 </FormItem>
-                <FormItem>
+                <FormItem className="input-form-password">
                 {getFieldDecorator('password', {
-                    rules: [{ required: true, message: 'Please input your Password!' }],
+                    rules: [{ required: true, message: 'Введите пароль!' }],
                 })(
                     <Input
-                        prefix={<Icon type="lock" />}
+                        className="login-form-input"
+                        // prefix={<Icon type="lock" />}
                         size="large"
                         name="password"
                         type="password"
-                        placeholder="Password"  />
+                        placeholder="Пароль"  />
                 )}
                 </FormItem>
                 <FormItem>
-                    <Button type="primary" htmlType="submit" size="large" className="login-form-button">Login</Button>
-                    Or <Link to="/signup">register now!</Link>
-                </FormItem>
-                <FormItem>
-                    <a target="_blank" href="http://localhost:8080/api/auth/forgot_password">Forgot your password?</a>
+                    <Button type="primary" htmlType="submit" size="large" className="login-form-button">Войти</Button>
+                    <a  className="forgot-password" href="/forgotPassword">Забыл пароль</a>
                 </FormItem>
             </Form>
-            // <Form onSubmit={this.handleSubmit}>
-            //     <FormGroup>
-            //         <Label>Username or email</Label>
-            //         <Input
-            //             type="usernameOrEmail"
-            //             name="usernameOrEmail"
-            //             id="usernameOrEmail"
-            //             placeholder="Username or Email"
-            //         />
-            //     </FormGroup>
-            //     <FormGroup>
-            //         <Label >Password</Label>
-            //         <Input
-            //             type="password"
-            //             name="password"
-            //             id="Password"
-            //             placeholder="Password"
-            //         />
-            //     </FormGroup>
-            //     <Button>Submit</Button>
-            // </Form>
         );
     }
 }

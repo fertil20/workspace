@@ -5,6 +5,9 @@ import App from './app/App';
 import reportWebVitals from './reportWebVitals';
 //import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import { BrowserRouter as Router } from 'react-router-dom';
+const body = document.querySelector('body')
+
+body.style.backgroundColor = '#EDEEF0'
 
 ReactDOM.render(
     <Router>
