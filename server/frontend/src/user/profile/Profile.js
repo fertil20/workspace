@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { getUserProfile } from '../../util/APIUtils';
 import { Avatar } from 'antd';
 import { getAvatarColor } from '../../util/Colors';
-import { formatDate } from '../../util/Helpers';
+import {formatDate, formatTime} from '../../util/Helpers';
 import LoadingIndicator  from '../../common/LoadingIndicator';
 import './Profile.css';
 import NotFound from '../../common/NotFound';
@@ -118,7 +118,7 @@ class Profile extends Component {
                                 <div style={{height:50}}>{this.state.user.position}</div>
                                 <div style={{height:50}}>{this.state.user.department}</div>
                                 <div style={{height:50}}>{this.state.user.office}</div>
-                                <div style={{height:50}}>{this.state.user.workTimes.map(t => t.time).join()}</div>
+                                <div style={{height:50}}>{formatTime(this.state.user.startAt)}-{formatTime(this.state.user.endAt)}</div>
                                 <div style={{height:50}}>{formatDate(this.state.user.joinedAt)}</div>
                                 <div style={{height:50}}>{formatDate(this.state.user.birthday)}</div>
                                 <div style={{height:50}}>{this.state.user.secretNote}</div>

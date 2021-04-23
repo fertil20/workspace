@@ -1,3 +1,4 @@
+/*
 package com.workspace.server.model;
 
 import org.hibernate.annotations.NaturalId;
@@ -44,3 +45,4 @@ public class WorkTime {
         this.time = time;
     }
 }
+*/

@@ -13,13 +13,17 @@ const request = (options) => {
     options = Object.assign({}, defaults, options);
 
     return fetch(options.url, options)
-        .then((res) => res.text())
+        .then((res) => {
+            if(!res.ok) {
+                return Promise.reject(res);
+            }
+            return res.text()})
         .then((text) => text.length ? JSON.parse(text) : {})
 };
 
 export function forgotPassword(forgotPasswordRequest){
     return request({
-        url: API_BASE_URL + "/forgotPassword",
+        url: API_BASE_URL + "/auth/forgotPassword",
         method: 'POST',
         body: JSON.stringify(forgotPasswordRequest)
     });
@@ -89,7 +93,6 @@ export function checkEmailAvailability(email) {
     });
 }
 
-
 export function getCurrentUser() {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
@@ -114,13 +117,6 @@ export function getUserProfile(username) {
         method: 'GET'
     });
 }
-
-/*export function setUserProfile(username) {
-    return request({
-        url: API_BASE_URL + "/users/" + username,
-        method: 'POST'
-    });
-}*/
 
 export function getUserCreatedPolls(username, page, size) {
     page = page || 0;

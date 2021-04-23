@@ -12,15 +12,19 @@ CREATE TABLE IF NOT EXISTS users
     position VARCHAR(50) NOT NULL,
     department VARCHAR(50) NOT NULL,
     office   VARCHAR(3) NOT NULL,
+    start_at TIME(0),
+    end_at TIME(0),
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
     birthday DATE /*NOT NULL*/,
     secret_note VARCHAR(300),
-    status VARCHAR(1),
+    status VARCHAR(1) NOT NULL,
+    status_date_start DATE,
+    status_date_finish DATE,
     reset_password_token VARCHAR(30)
 );
 
-DROP TABLE IF EXISTS working_hours CASCADE;
+/*DROP TABLE IF EXISTS working_hours CASCADE;
 CREATE TABLE IF NOT EXISTS working_hours (
     id BIGSERIAL PRIMARY KEY,
     time VARCHAR(11)
@@ -30,7 +34,7 @@ DROP TABLE IF EXISTS working_days CASCADE;
 CREATE TABLE IF NOT EXISTS working_days (
     id BIGSERIAL PRIMARY KEY,
     weekday VARCHAR(2) NOT NULL
-);
+);*/
 
 DROP TABLE IF EXISTS roles CASCADE;
 CREATE TABLE IF NOT EXISTS roles
@@ -53,7 +57,7 @@ CREATE TABLE IF NOT EXISTS user_roles (
 );
 CREATE INDEX fk_user_roles_role_id ON user_roles (role_id);
 
-DROP TABLE IF EXISTS user_hours CASCADE;
+/*DROP TABLE IF EXISTS user_hours CASCADE;
 CREATE TABLE IF NOT EXISTS user_hours (
     user_id BIGINT NOT NULL,
     hours_id BIGINT NOT NULL,
@@ -79,4 +83,4 @@ CREATE TABLE IF NOT EXISTS user_days (
                 FOREIGN KEY (user_id)
                     REFERENCES users (id)
 );
-CREATE INDEX fk_user_days_days_id ON user_days (days_id);
+CREATE INDEX fk_user_days_days_id ON user_days (days_id);*/

@@ -8,12 +8,10 @@ import com.workspace.server.security.CurrentUser;
 import com.workspace.server.security.UserPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
+import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,10 +28,10 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserProfile> getAllUsers() {
+    public List<Object> getAllUsers() {
         return userRepository.findAll().stream()
                 .map(user -> new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), user.getEmail(), user.getPhone(), user.getTg(), user.getAbout(),
-                        user.getPosition(), user.getDepartment(), user.getOffice(), user.getBirthday(), user.getSecretNote(), user.getStatus(), user.getWorkTimes()))
+                        user.getPosition(), user.getDepartment(), user.getOffice(), user.getBirthday(), user.getSecretNote(), user.getStatus(), user.getStartAt(), user.getEndAt()))
                 .collect(Collectors.toList());
     }
 
@@ -56,13 +54,13 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-    public UserProfile getUserProfile(@PathVariable(value = "username") String username) {
+    public UserProfile getUserProfile(@PathVariable(value = "username") String username) throws ParseException {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
 
         return new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), user.getEmail(), user.getPhone(), user.getTg(), user.getAbout(),
-                user.getPosition(), user.getDepartment(), user.getOffice(), user.getBirthday(), user.getSecretNote(), user.getStatus(), user.getWorkTimes());
+                user.getPosition(), user.getDepartment(), user.getOffice(), user.getBirthday(), user.getSecretNote(), user.getStatus(), user.getStartAt(), user.getEndAt());
     }
 
     @PostMapping("/{username}/edit")
@@ -78,6 +76,8 @@ public class UserController {
         user.setPosition(request.getPosition());
         user.setDepartment(request.getDepartment());
         user.setOffice(request.getOffice());
+        user.setStartAt(request.getStartAt());
+        user.setEndAt(request.getEndAt());
         user.setSecretNote(request.getSecretNote());
         user.setStatus(request.getStatus());
         userRepository.save(user);

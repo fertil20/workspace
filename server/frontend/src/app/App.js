@@ -67,17 +67,15 @@ class App extends Component {
         this.loadCurrentUser();
     }
 
-    handleLogout(redirectTo="/") {
+    handleLogout(redirectTo="/login") {
         localStorage.removeItem(ACCESS_TOKEN);
 
         this.persistentState.setState({
             currentUser: null,
             isAuthenticated: false
         });
-
-        this.props.history.push(redirectTo);
-
         alert("You're successfully logged out.")
+        this.props.history.push(redirectTo);
     };
 
     handleLogin() {

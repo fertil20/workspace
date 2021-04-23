@@ -1,5 +1,5 @@
 import { getAvatarColor } from '../../util/Colors';
-import { formatDate } from '../../util/Helpers';
+import {formatDate, formatFullTime, formatTime} from '../../util/Helpers';
 import LoadingIndicator  from '../../common/LoadingIndicator';
 import './Profile.css';
 import NotFound from '../../common/NotFound';
@@ -17,7 +17,7 @@ import {TooltipWidgetHome,TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidg
 import {Avatar} from "antd";
 import React, {Component, useState} from "react";
 import {getUserProfile, profileEdit} from "../../util/APIUtils";
-import {EMAIL_MAX_LENGTH} from "../../constants";
+import './ProfileEdit.css';
 
 let flag = 1;
 
@@ -29,7 +29,7 @@ class ProfileEdit extends Component {
             user: null,
             isLoading: false,
             username: {value: ''},
-            email: {value: '',validStatus: ''},
+            email: {value: ''},
             phone: {value: ''},
             tg: {value: ''},
             name:{value:''},
@@ -37,9 +37,13 @@ class ProfileEdit extends Component {
             position:{value:''},
             department:{value:''},
             office:{value:''},
+            startAt:{value:''},
+            endAt:{value:''},
             // newWorktimes:{value:''},
             secretNote:{value:''},
-            status:{value:''}
+            status:{value:''},
+            statusTimeStart:{value:''},
+            statusTimeFinish:{value:''}
         }
         this.loadUserProfile = this.loadUserProfile.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -91,7 +95,6 @@ class ProfileEdit extends Component {
         this.setState({
             [inputName] : {
                 value: inputValue,
-                //...validationFun(inputValue)
             }
         });
     }
@@ -108,9 +111,13 @@ class ProfileEdit extends Component {
             position: this.state.position.value,
             department: this.state.department.value,
             office: this.state.office.value,
+            startAt: formatFullTime(this.state.startAt.value + ":00"),
+            endAt: formatFullTime(this.state.endAt.value + ":00"),
             // newWorktimes: this.state.newWorktimes.value,
             secretNote: this.state.secretNote.value,
-            status: this.state.status.value // Статус работы (0,1,2,3)
+            status: this.state.status.value, // Статус работы (0,1,2,3)
+            statusTimeStart: this.state.statusTimeStart.value,
+            statusTimeFinish: this.state.statusTimeFinish.value
         };
         profileEdit(profileEditRequest, this.state.user.username)
             .then(response => {
@@ -147,9 +154,13 @@ class ProfileEdit extends Component {
                     position: {value: this.state.user.position},
                     department: {value: this.state.user.department},
                     office: {value: this.state.user.office},
+                    startAt: {value: this.state.user.startAt},
+                    endAt: {value: this.state.user.endAt},
                     //newWorktimes: {value: this.state.user.newWorktimes},
                     secretNote: {value: this.state.user.secretNote},
                     status: {value: this.state.user.status},
+                    statusTimeStart: {value: this.state.statusTimeStart},
+                    statusTimeFinish: {value: this.state.statusTimeFinish}
                 })
 
                 flag = 0}
@@ -163,11 +174,11 @@ class ProfileEdit extends Component {
             const [dropdownOpen, setDropdownOpen] = useState(false);
             const toggle = () => setDropdownOpen(prevState => !prevState);
            let setStatus = {
-                status(a) {
-                    this.setState({user:{status: a}})
-                        this.setState({status:{value: this.state.user.status}})
-                    // this.state.user.status = a
-                    // this.state.status.value = this.state.user.status
+                status(state) {
+                    this.state.user.status = state;
+                    this.setState({status: {value: state}});
+/*                    this.state.user.status = a;
+                    this.state.status.value = a;*/
                 }
            }
            let status = setStatus.status.bind(this);
@@ -214,16 +225,19 @@ class ProfileEdit extends Component {
                                     </Col>
                                     <Col>
                                             <FormGroup>
-                                                <Input type="email" name="email" id="email"
-                                                       valid = {this.state.email.validStatus}
+                                                <Input type="email" name="email" id="email" placeholder="sophie@example.com"
                                                        value={this.state.email.value}
-                                                       onChange={(event) => {this.handleInputChange(event);this.validateEmail(this.state.email.value)}}/>
+                                                       required
+                                                       onChange={(event) => {this.handleInputChange(event)}}/>
                                                 <div style={{height: 10}}/>
-                                                <Input type="phone" name="phone" id="phone" placeholder={this.state.user.phone}
+                                                <Input type="tel" name="phone" id="phone" placeholder={"+7 (905) 226-23-58"}
                                                        value={this.state.phone.value}
+                                                       required
+                                                       pattern="[+][7] [(][0-9]{3}[)] [0-9]{3}-[0-9]{2}-[0-9]{2}"
                                                        onChange={(event) => this.handleInputChange(event)}/>
+                                                    <span className="validity"/>
                                                 <div style={{height: 10}}/>
-                                                <Input type="tg" name="tg" id="tg" placeholder={this.state.user.tg}
+                                                <Input type="text" name="tg" id="tg" placeholder={"telegram"}
                                                        value={this.state.tg.value}
                                                        onChange={(event) => this.handleInputChange(event)}/>
                                             </FormGroup>
@@ -234,8 +248,8 @@ class ProfileEdit extends Component {
                                 <Row>
                                     <Col>
                                         <div style={{color: 'gray', marginTop:20, fontWeight: 'bold',height: 50}}>Ф.И.О:</div>
-                                        <div style={{color: 'gray', marginTop:20, fontWeight: 'bold',height: 50}}>О себе:</div>
-                                        <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Должность:</div>
+                                        <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>О себе:</div>
+                                        <div style={{color: 'gray', marginTop:30, fontWeight: 'bold',height: 50}}>Должность:</div>
                                         <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Департамент:</div>
                                         <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Офис:</div>
                                         <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Рабочие часы:</div>
@@ -244,33 +258,45 @@ class ProfileEdit extends Component {
                                         <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Секретная заметка:</div>
                                     </Col>
                                     <Col>
-                                        <div style={{height: 15}}/>
-                                        <Input type="name" name="name" id="editName"
+                                        <div style={{height: 10}}/>
+                                        <Input type="text" name="name" id="editName" placeholder={"Попов Валерий Александрович"}
                                                value={this.state.name.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
-                                        <div style={{height: 35}}/>
-                                        <Input type="about" name="about" id="editAbout"
+                                        <div style={{height: 10}}/>
+                                        <Input type="textarea" name="about" id="editAbout"
                                                value={this.state.about.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
                                         <div style={{height: 10}}/>
-                                        <Input type="position" name="position" id="editPosition"
+                                        <Input type="text" name="position" id="editPosition"
                                                value={this.state.position.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
                                         <div style={{height: 10}}/>
-                                        <Input type="department" name="department" id="editDepartment"
+                                        <Input type="text" name="department" id="editDepartment"
                                                value={this.state.department.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
                                         <div style={{height: 10}}/>
-                                        <Input type="office" name="office" id="editOffice"
+                                        <Input type="text" name="office" id="editOffice"
                                                value={this.state.office.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
                                         {/*<Input type="worktimes" name="newWorktimes" id="editWorktimes"*/}
                                         {/*       value={this.state.newWorktimes.value}*/}
                                         {/*       onChange={(event) => this.handleInputChange(event)}/>*/}
-                                        <div style={{marginTop:20,height:30}}>{this.state.user.workTimes.map(t => t.time).join()}</div>
+                                        <div style={{height: 10}}/>
+                                        <Row>
+                                        <Input type="time" name="startAt" id="startAt" style={{ width:"100px" }}
+                                               value={formatTime(this.state.startAt.value)}
+                                               required
+                                               pattern="[0-9]{2}:[0-9]{2}"
+                                               onChange={(event) => this.handleInputChange(event)}/>
+                                        <Input type="time" name="endAt" id="endAt" style={{ width:"100px" }}
+                                               value={formatTime(this.state.endAt.value)}
+                                               required
+                                               pattern="[0-9]{2}:[0-9]{2}"
+                                               onChange={(event) => this.handleInputChange(event)}/>
+                                        </Row>
                                         <div style={{marginTop:22,height:50}}>{formatDate(this.state.user.joinedAt)}</div>
                                         <div style={{height:50}}>{formatDate(this.state.user.birthday)}</div>
-                                        <Input type="secretNote" name="secretNote" id="editSecretNote"
+                                        <Input type="text" name="secretNote" id="editSecretNote"
                                                value={this.state.secretNote.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
                                         <div style={{marginTop:27}}>
@@ -283,7 +309,6 @@ class ProfileEdit extends Component {
                                     {this.state.user.status === '1' && <TooltipWidgetAtWork/>}
                                     {this.state.user.status === '2' && <TooltipWidgetIll/>}
                                     {this.state.user.status === '3' && <TooltipWidgetHoliday/>}
-
                                 </Row>
                             </Col>
                             <DropdownStatus/>
@@ -294,39 +319,6 @@ class ProfileEdit extends Component {
             </div>
         );
     }
-
-    validateEmail = (email) => {
-        if(!email) {
-            return {
-                validateStatus: 'invalid',
-                errorMsg: 'Email may not be empty'
-            }
-        }
-
-        const EMAIL_REGEX = RegExp('[^@ ]+@[^@ ]+\\.[^@ ]+');
-        if(!EMAIL_REGEX.test(email)) {
-            return {
-                validateStatus: 'invalid',
-                errorMsg: 'Email not valid'
-            }
-        }
-
-        if(email.length > EMAIL_MAX_LENGTH) {
-            return {
-                validateStatus: 'invalid',
-                errorMsg: `Email is too long (Maximum ${EMAIL_MAX_LENGTH} characters allowed)`
-            }
-        }
-
-        return {
-            validateStatus: null,
-            errorMsg: null
-        }
-
-    }
 }
-
-
-
 
 export default ProfileEdit;

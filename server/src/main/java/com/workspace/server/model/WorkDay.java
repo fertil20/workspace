@@ -1,3 +1,4 @@
+/*
 package com.workspace.server.model;
 
 import org.hibernate.annotations.NaturalId;
@@ -41,3 +42,4 @@ import javax.persistence.*;
             this.weekday = weekday;
         }
     }
+*/
