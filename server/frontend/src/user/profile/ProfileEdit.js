@@ -123,8 +123,9 @@ class ProfileEdit extends Component {
             .then(response => {
                 alert('Данные успешно изменены.');
                 this.props.history.push(`/users/${this.state.user.username}`);
-            }).catch(error => {
-            alert('Что-то пошло не так.');
+            })
+            .catch(error => {
+                alert('Что-то пошло не так.');
         });
     }
 

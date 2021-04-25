@@ -66,7 +66,6 @@ export default class ForgotPassword extends Component {
         if(this.state.serverError === true) {
             textContent = <div>Что-то пошло не так</div>;
         }
-
         if(this.state.serverError === false) {
             textContent = <div>Мы отправили вам письмо. Проверьте свой электронный ящик</div>;
         }
@@ -133,14 +132,10 @@ export default class ForgotPassword extends Component {
         };
         forgotPassword(forgotPasswordRequest)
             .then(response => {
-                if(response) {
-                    this.setState({serverError: false});
-                }
+                this.setState({serverError: false});
             })
             .catch(error => {
-                if(error) {
-                    this.setState({serverError: true});
-                }
+                this.setState({serverError: true});
             });
     };
 
