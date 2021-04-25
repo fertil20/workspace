@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {getAllUsers} from "../util/APIUtils";
-import LoadingIndicator from "../common/LoadingIndicator";
 import NotFound from "../common/NotFound";
 import ServerError from "../common/ServerError";
 import {formatDate} from "../util/Helpers";
