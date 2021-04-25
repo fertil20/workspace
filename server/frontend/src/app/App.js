@@ -90,7 +90,11 @@ class App extends Component {
 
     render() {
         if(this.persistentState.getState().isLoading) {
-            return <LoadingIndicator />
+            return <div className="text-center">
+                <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
+            </div>
         }
         return (
             <Layout className="app-container">

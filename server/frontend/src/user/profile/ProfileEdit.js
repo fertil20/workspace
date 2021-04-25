@@ -1,6 +1,5 @@
 import { getAvatarColor } from '../../util/Colors';
 import {formatDate, formatFullTime, formatTime} from '../../util/Helpers';
-import LoadingIndicator  from '../../common/LoadingIndicator';
 import './Profile.css';
 import NotFound from '../../common/NotFound';
 import ServerError from '../../common/ServerError';
@@ -133,7 +132,11 @@ class ProfileEdit extends Component {
     render() {
 
         if(this.state.isLoading) {
-            return <LoadingIndicator />;
+            return <div className="text-center">
+                <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
+            </div>;
         }
 
         if(this.state.notFound) {

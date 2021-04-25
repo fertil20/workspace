@@ -61,7 +61,7 @@ export default class ForgotPassword extends Component {
         }
         if (this.state.email.validateStatus === 'success') {
             buttonDisabled = false
-            textContent = <div>Почта найдена в системе. Нажмите Далее</div>
+            textContent = <div>Почта найдена в системе. Нажмите Отправить</div>
         }
         if(this.state.serverError === true) {
             textContent = <div>Что-то пошло не так</div>;
@@ -69,7 +69,7 @@ export default class ForgotPassword extends Component {
         if(this.state.serverError === false) {
             textContent = <div>Мы отправили вам письмо. Проверьте свой электронный ящик</div>
         }
-        if (this.state.isLoading) {
+        if ((this.state.isLoading) || (this.state.isLoaded)) {
             buttonDisabled = true
         }
 
@@ -94,8 +94,12 @@ export default class ForgotPassword extends Component {
                             onClick={(event) => {
                                 this.sendMail(event)}}>
                         { this.state.isLoading
-                            ? <span className="visible">Загрузка <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"/></span>
-                            : <span className="hidden">Далее</span>
+                            ? <span>Отправляю <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"/></span>
+                            : (
+                                this.state.isLoaded
+                                    ? <span>Отправлено</span>
+                                    : <span>Отправить</span>
+                            )
                         }
                     </Button>
                 </Form>
@@ -133,7 +137,10 @@ export default class ForgotPassword extends Component {
         }*/
 
     sendMail() {
-        this.setState({isLoading: true});
+        this.setState({
+            isLoading: true,
+            isLoaded: false
+        });
         const forgotPasswordRequest = {
             email: this.state.email.value,
         };
@@ -141,13 +148,15 @@ export default class ForgotPassword extends Component {
             .then(response => {
                 this.setState({
                     serverError: false,
-                    isLoading: false
+                    isLoading: false,
+                    isLoaded: true
                 });
             })
             .catch(error => {
                 this.setState({
                     serverError: true,
-                    isLoading: false
+                    isLoading: false,
+                    isLoaded: false
                 });
             });
     };

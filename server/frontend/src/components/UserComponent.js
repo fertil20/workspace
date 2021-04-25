@@ -48,15 +48,19 @@ class UserComponent extends Component {
 
     render (){
         if(this.state.isLoading) {
-            return <LoadingIndicator />;
+            return <div className="text-center">
+                <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
+            </div>
         }
 
         if(this.state.notFound) {
-            return <NotFound />;
+            return <NotFound/>;
         }
 
         if(this.state.serverError) {
-            return <ServerError />;
+            return <ServerError/>;
         }
 
         return (

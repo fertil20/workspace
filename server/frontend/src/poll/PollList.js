@@ -172,8 +172,12 @@ class PollList extends Component {
                         </div>): null
                 }              
                 {
-                    this.state.isLoading ? 
-                    <LoadingIndicator />: null                     
+                    this.state.isLoading ?
+                        <div className="text-center">
+                            <div className="spinner-border" role="status">
+                                <span className="sr-only">Loading...</span>
+                            </div>
+                        </div>: null
                 }
             </div>
         );
