@@ -179,10 +179,9 @@ class ProfileEdit extends Component {
             const toggle = () => setDropdownOpen(prevState => !prevState);
            let setStatus = {
                 status(state) {
+                    // eslint-disable-next-line
                     this.state.user.status = state;
                     this.setState({status: {value: state}});
-/*                    this.state.user.status = a;
-                    this.state.status.value = a;*/
                 }
            }
            let status = setStatus.status.bind(this);
