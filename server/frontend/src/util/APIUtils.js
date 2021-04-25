@@ -29,6 +29,14 @@ export function forgotPassword(forgotPasswordRequest){
     });
 }
 
+export function forgotPasswordReset(forgotPasswordResetRequest){
+    return request({
+        url: API_BASE_URL + "/auth/forgotPasswordReset",
+        method: 'POST',
+        body: JSON.stringify(forgotPasswordResetRequest)
+    });
+}
+
 export function getAllPolls(page, size) {
     page = page || 0;
     size = size || POLL_LIST_SIZE;

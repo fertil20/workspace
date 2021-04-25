@@ -23,6 +23,7 @@ import { Layout, notification } from 'antd';
 import {PersistentState} from "../util/PersistentState";
 import ProfileEdit from "../user/profile/ProfileEdit";
 import ForgotPassword from "../user/passwordReset/ForgotPassword";
+import ForgotPasswordReset from "../user/passwordReset/ForgotPasswordReset";
 const { Content } = Layout;
 
 class App extends Component {
@@ -113,6 +114,7 @@ class App extends Component {
                                        render={(props) => <Login onLogin={this.handleLogin} {...props} />}/>
                                 <Route path="/signup" component={Signup}/>
                                 <Route path="/forgotPassword" component={ForgotPassword}/>
+                                <Route path="/forgotPasswordReset" component={ForgotPasswordReset}/>
                                 <PrivateRoute exact path="/users/:username" authenticated={this.persistentState.getState().isAuthenticated} component={Profile} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/users/:username/edit" authenticated={this.persistentState.getState().isAuthenticated} component={ProfileEdit} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/poll/new" authenticated={this.persistentState.getState().isAuthenticated} component={NewPoll} handleLogout={this.handleLogout}/>

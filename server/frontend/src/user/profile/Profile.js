@@ -83,7 +83,7 @@ class Profile extends Component {
                      {
                        this.state.user ? (
                 <Row >
-                    <Col sm={{ size: 4 }} style={{backgroundColor: '#EDEEF0',borderRadius:10,height:500}}>
+                    <Col sm={{ size: 4 }} style={{backgroundColor: 'white',borderRadius:10,height:500}}>
                         <div style={{backgroundColor: 'white', margin: 20,borderRadius:10,height:300,width:300}}>
                             <Avatar className="user-avatar-circle" style={{ backgroundColor: getAvatarColor(this.state.user.name)}}>
                                 {this.state.user.name.toUpperCase()}
@@ -102,7 +102,7 @@ class Profile extends Component {
                             </Col>
                         </Row>
                     </Col>
-                    <Col sm={{ size: 5, offset: 1}} style={{backgroundColor: '#EDEEF0',borderRadius:10,height:500}}>
+                    <Col sm={{ size: 6, offset: 1}} style={{backgroundColor: 'white',borderRadius:10,height:500}}>
                         <Row>
                             <Col>
                                 <div style={{color: 'gray', marginTop:20, fontWeight: 'bold',height:50}}>Ф.И.О:</div>
@@ -115,7 +115,7 @@ class Profile extends Component {
                                 <div style={{color: 'gray', fontWeight: 'bold',height:50}}>Дата рождения:</div>
                                 <div style={{color: 'gray', fontWeight: 'bold',height:50}}>Секретная заметка:</div>
                             </Col>
-                            <Col>
+                            <Col sm={{ size: 7,offset:0}}>
                                 <div style={{marginTop:20,height:50}}>{this.state.user.name}</div>
                                 <div style={{marginTop:20,height:50}}>{this.state.user.about}</div>
                                 <div style={{height:50}}>{this.state.user.position}</div>
@@ -131,10 +131,12 @@ class Profile extends Component {
                                     </Button>
                                 </div>
                             </Col>
+                            <div style={{margin:10}}>
                             {this.state.user.status === '0' && <TooltipWidgetHome/>}
                             {this.state.user.status === '1' && <TooltipWidgetAtWork/>}
                             {this.state.user.status === '2' && <TooltipWidgetIll/>}
                             {this.state.user.status === '3' && <TooltipWidgetHoliday/>}
+                            </div>
                         </Row>
                     </Col>
                 </Row>

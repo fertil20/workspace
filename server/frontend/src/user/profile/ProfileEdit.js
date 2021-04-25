@@ -188,7 +188,7 @@ class ProfileEdit extends Component {
            return (
                <Dropdown isOpen={dropdownOpen} toggle={toggle} size='sm'>
                    <DropdownToggle caret>
-                       Изменить статус
+                       Статус
                    </DropdownToggle>
                    <DropdownMenu>
                        <DropdownItem onClick={ (event) => {
@@ -214,7 +214,7 @@ class ProfileEdit extends Component {
                     this.state.user ? (
                         <Form onSubmit={this.handleSubmit}>
                         <Row >
-                            <Col sm={{ size: 4 }} style={{backgroundColor: '#EDEEF0',borderRadius:10,height:500}}>
+                            <Col sm={{ size: 4 }} style={{backgroundColor: 'white',borderRadius:10,height:500}}>
                                 <div style={{backgroundColor: 'white', margin: 20,borderRadius:10,height:300,width:300}}>
                                     <Avatar className="user-avatar-circle" style={{ backgroundColor: getAvatarColor(this.state.user.name)}}>
                                         {this.state.user.name.toUpperCase()}
@@ -247,7 +247,7 @@ class ProfileEdit extends Component {
                                     </Col>
                                 </Row>
                             </Col>
-                            <Col sm={{ size: 5, offset: 1}} style={{backgroundColor: '#EDEEF0',borderRadius:10,height:500}}>
+                            <Col sm={{ size: 6, offset: 1}} style={{backgroundColor: 'white',borderRadius:10,height:500}}>
                                 <Row>
                                     <Col>
                                         <div style={{color: 'gray', marginTop:20, fontWeight: 'bold',height: 50}}>Ф.И.О:</div>
@@ -260,7 +260,7 @@ class ProfileEdit extends Component {
                                         <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Дата рождения:</div>
                                         <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Секретная заметка:</div>
                                     </Col>
-                                    <Col>
+                                    <Col sm={{ size: 7}}>
                                         <div style={{height: 10}}/>
                                         <Input type="text" name="name" id="editName" placeholder={"Попов Валерий Александрович"}
                                                value={this.state.name.value}
@@ -269,7 +269,7 @@ class ProfileEdit extends Component {
                                         <Input type="textarea" name="about" id="editAbout"
                                                value={this.state.about.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
-                                        <div style={{height: 10}}/>
+                                        <div style={{height: 25}}/>
                                         <Input type="text" name="position" id="editPosition"
                                                value={this.state.position.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
@@ -286,35 +286,48 @@ class ProfileEdit extends Component {
                                         {/*       onChange={(event) => this.handleInputChange(event)}/>*/}
                                         <div style={{height: 10}}/>
                                         <Row>
-                                        <Input type="time" name="startAt" id="startAt" style={{ width:"100px" }}
-                                               value={formatTime(this.state.startAt.value)}
-                                               required
-                                               pattern="[0-9]{2}:[0-9]{2}"
-                                               onChange={(event) => this.handleInputChange(event)}/>
-                                        <Input type="time" name="endAt" id="endAt" style={{ width:"100px" }}
-                                               value={formatTime(this.state.endAt.value)}
-                                               required
-                                               pattern="[0-9]{2}:[0-9]{2}"
-                                               onChange={(event) => this.handleInputChange(event)}/>
+                                            <Col sm={{size:2}}>
+                                                <div>
+                                                <Input type="time" name="startAt" id="startAt" style={{width:115}}
+                                                       value={formatTime(this.state.startAt.value)}
+                                                       required
+                                                       pattern="[0-9]{2}:[0-9]{2}"
+                                                       onChange={(event) => this.handleInputChange(event)}/>
+                                                </div>
+                                            </Col>
+                                            <Col sm={{size:2,offset:3}}>—</Col>
+                                            <Col sm={{offset:0}}>
+                                                <div >
+                                                <Input type="time" name="endAt" id="endAt" style={{width:115}}
+                                                       value={formatTime(this.state.endAt.value)}
+                                                       required
+                                                       pattern="[0-9]{2}:[0-9]{2}"
+                                                       onChange={(event) => this.handleInputChange(event)}/>
+                                                </div>
+                                            </Col>
                                         </Row>
                                         <div style={{marginTop:22,height:50}}>{formatDate(this.state.user.joinedAt)}</div>
                                         <div style={{height:50}}>{formatDate(this.state.user.birthday)}</div>
                                         <Input type="text" name="secretNote" id="editSecretNote"
                                                value={this.state.secretNote.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
-                                        <div style={{marginTop:27}}>
+                                        <div style={{marginTop:20}}>
                                             <Button color="primary" size="sm">
                                                 Сохранить
                                             </Button>
                                         </div>
                                     </Col>
+                                    <div style={{margin:10}}>
                                     {this.state.user.status === '0' && <TooltipWidgetHome/>}
                                     {this.state.user.status === '1' && <TooltipWidgetAtWork/>}
                                     {this.state.user.status === '2' && <TooltipWidgetIll/>}
                                     {this.state.user.status === '3' && <TooltipWidgetHoliday/>}
+                                    </div>
                                 </Row>
                             </Col>
+                            <div style={{margin:10}}>
                             <DropdownStatus/>
+                            </div>
                         </Row>
                         </Form>
                     ): null
