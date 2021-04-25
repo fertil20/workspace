@@ -57,6 +57,8 @@
 .login-form-button {
     background: #5380B7;
     border-radius: 10px;
+    border: 0;
+    outline: 0;
     color: #ffffff;
     width: 100px;
 }

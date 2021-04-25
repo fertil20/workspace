@@ -1,0 +1,35 @@
+.gray-text{
+    font-style: normal;
+    font-weight: bold;
+    color: #919FA2;
+    font-size: 25px;
+    line-height: 47px;
+    padding-left: 20px;
+}
+
+.add-button{
+    width: 225px;
+    height: 30px;
+    margin-top: 15px;
+    margin-left: 60px;
+    background: #5380B7;
+    border-radius: 10px;
+}
+
+.search-bar{
+    margin-left: 20px;
+    width: 225px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+.search-button{
+    height: 35px;
+    margin-top:51px;
+    margin-left:10px;
+    background: #5380B7;
+    border-radius: 10px;
+}
+
+.table-top-line{
+}

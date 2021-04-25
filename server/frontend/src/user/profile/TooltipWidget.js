@@ -12,8 +12,8 @@ export const TooltipWidgetHome = () => {
 
     return (
         <div>
-            <img src={home} id="Tooltip" width={25} height={25} alt='Home'/>
-            <Tooltip placement="bottom" isOpen={tooltipOpen} target="Tooltip" toggle={toggle}>
+            <img src={home} id="TooltipHome" width={25} height={25} alt='Home'/>
+            <Tooltip placement="bottom" isOpen={tooltipOpen} target="TooltipHome" toggle={toggle}>
                 Работает дома
             </Tooltip>
         </div>
@@ -27,8 +27,8 @@ export const TooltipWidgetAtWork = () => {
 
     return (
         <div>
-            <img src={working} id="Tooltip" width={25} height={25} alt='Work'/>
-            <Tooltip placement="bottom" isOpen={tooltipOpen} target="Tooltip" toggle={toggle}>
+            <img src={working} id="TooltipAtWork" width={25} height={25} alt='Work'/>
+            <Tooltip placement="bottom" isOpen={tooltipOpen} target="TooltipAtWork" toggle={toggle}>
                 Работает в офисе
             </Tooltip>
         </div>
@@ -42,8 +42,8 @@ export const TooltipWidgetIll = () => {
 
     return (
         <div>
-            <img src={ill} id="Tooltip" width={25} height={25} alt='Ill'/>
-            <Tooltip placement="bottom" isOpen={tooltipOpen} target="Tooltip" toggle={toggle}>
+            <img src={ill} id="TooltipIll" width={25} height={25} alt='Ill'/>
+            <Tooltip placement="bottom" isOpen={tooltipOpen} target="TooltipIll" toggle={toggle}>
                 На больничном
                 с 00.00.0000
             </Tooltip>
@@ -58,8 +58,8 @@ export const TooltipWidgetHoliday = () => {
 
     return (
         <div>
-            <img src={sunbed} id="Tooltip" width={25} height={25} alt='Holiday'/>
-            <Tooltip placement="bottom" isOpen={tooltipOpen} target="Tooltip" toggle={toggle}>
+            <img src={sunbed} id="TooltipHoliday" width={25} height={25} alt='Holiday'/>
+            <Tooltip placement="bottom" isOpen={tooltipOpen} target="TooltipHoliday" toggle={toggle}>
                 В отпуске
                 с 00.00.0000 до 00.00.0000
                 Замещающий ААААААА А.А.

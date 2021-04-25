@@ -125,7 +125,7 @@ class Signup extends Component {
                                 placeholder="Your email"
                                 value={this.state.email.value} 
                                 onBlur={this.validateEmailAvailability}
-                                onChange={(event) => this.handleInputChange(event, this.validateEmail)} />    
+                                onChange={(event) => this.handleInputChange(event, this.validateEmail())} />
                         </FormItem>
                         <FormItem 
                             label="Password"

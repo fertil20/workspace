@@ -77,7 +77,7 @@ export default class ForgotPassword extends Component {
             <div className="main-container">
                 <h1 className="header">Workspace</h1>
                 <Form className="form-container" onSubmit={this.handleSubmit}>
-                    <div className="forgot-password-text">
+                    <div className="forgot-password-text" style={{height:30}}>
                         {textContent}
                     </div>
                     <FormGroup>

@@ -29,11 +29,19 @@ export function forgotPassword(forgotPasswordRequest){
     });
 }
 
-export function forgotPasswordReset(forgotPasswordResetRequest){
+export function forgotPasswordReset(forgotPasswordResetRequest){ //Возвращает пароль
     return request({
         url: API_BASE_URL + "/auth/forgotPasswordReset",
         method: 'POST',
         body: JSON.stringify(forgotPasswordResetRequest)
+    });
+}
+
+export function deleteUser(deleteUserRequest){ // Возвращает ID пользователя
+    return request({
+        url: API_BASE_URL + "users",
+        method: 'POST',
+        body: JSON.stringify(deleteUserRequest)
     });
 }
 
