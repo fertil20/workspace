@@ -1,15 +1,18 @@
 .login-container {
     max-width: 420px;
     margin: 0 auto;
-    margin: 0 auto;
     margin-top: 40px;
 }
 
 .login-form-input {
     width: 100%;
     border-radius: 5px;
-    border-color: #EDEEF0;
     background: #EDEEF0;
+    border: 0;
+    outline: 0;
+    height: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .workspace-logo {

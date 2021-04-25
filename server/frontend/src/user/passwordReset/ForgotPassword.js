@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './ForgotPassword.css';
-import { Form, FormGroup, Input, Button} from 'reactstrap';
-import {checkEmailAvailability, forgotPassword, signup} from "../../util/APIUtils";
+import {Button, Form, FormGroup, Input} from 'reactstrap';
+import {checkEmailAvailability, forgotPassword} from "../../util/APIUtils";
 
 let textContent = ''
-let buttonStatus = ''
+let buttonDisabled = ''
 
 export default class ForgotPassword extends Component {
 
@@ -52,22 +52,25 @@ export default class ForgotPassword extends Component {
 
     render() {
         if (this.state.email.validateStatus === 'validating') {
-            buttonStatus = true
+            buttonDisabled = true
             textContent = <div>Введите вашу почту для смены пароля</div>
         }
         if (this.state.email.validateStatus === 'error') {
-            buttonStatus = true
-            textContent = <div>Пользователя с данным Email нет в системе, попробуйте еще раз.</div>
+            buttonDisabled = true
+            textContent = <div>Пользователя с данным Email нет в системе, попробуйте еще раз</div>
         }
         if (this.state.email.validateStatus === 'success') {
-            buttonStatus = false
+            buttonDisabled = false
             textContent = <div>Почта найдена в системе. Нажмите Далее</div>
         }
         if(this.state.serverError === true) {
             textContent = <div>Что-то пошло не так</div>;
         }
         if(this.state.serverError === false) {
-            textContent = <div>Мы отправили вам письмо. Проверьте свой электронный ящик</div>;
+            textContent = <div>Мы отправили вам письмо. Проверьте свой электронный ящик</div>
+        }
+        if (this.state.isLoading) {
+            buttonDisabled = true
         }
 
         return (
@@ -87,10 +90,13 @@ export default class ForgotPassword extends Component {
                         </Input>
                     </FormGroup>
                     <Button className="forgot-password-form-button" size="sm"
-                            disabled={buttonStatus}
-                            onClick={(event) =>
-                                this.sendMail(event)}>
-                    Далее
+                            disabled={buttonDisabled}
+                            onClick={(event) => {
+                                this.sendMail(event)}}>
+                        { this.state.isLoading
+                            ? <span className="visible">Загрузка <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"/></span>
+                            : <span className="hidden">Далее</span>
+                        }
                     </Button>
                 </Form>
             </div>
@@ -127,15 +133,22 @@ export default class ForgotPassword extends Component {
         }*/
 
     sendMail() {
+        this.setState({isLoading: true});
         const forgotPasswordRequest = {
             email: this.state.email.value,
         };
         forgotPassword(forgotPasswordRequest)
             .then(response => {
-                this.setState({serverError: false});
+                this.setState({
+                    serverError: false,
+                    isLoading: false
+                });
             })
             .catch(error => {
-                this.setState({serverError: true});
+                this.setState({
+                    serverError: true,
+                    isLoading: false
+                });
             });
     };
 
