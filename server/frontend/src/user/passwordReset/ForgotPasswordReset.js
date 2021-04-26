@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import './ForgotPassword.css';
 import {Button, Form, FormGroup, Input} from 'reactstrap';
-import {forgotPasswordResetPost} from "../../util/APIUtils";
+import {forgotPasswordResetGet, forgotPasswordResetPost} from "../../util/APIUtils";
+import NotFound from "../../common/NotFound";
+import ServerError from "../../common/ServerError";
 
 let textContent = ''
 let buttonDisabled = ''
@@ -19,7 +21,18 @@ export default class ForgotPasswordReset extends Component {
                 value: ''
             }
         }
-
+        const query = new URLSearchParams(this.props.location.search);
+        const setToken = query.get('token');
+        forgotPasswordResetGet(setToken)
+            .then(response => {
+                this.setState({
+                    serverError: false,
+                    isLoading: false
+                });
+            })
+            .catch(error => {
+                this.props.history.push("/login");
+            });
         this.handleSubmit = this.handleSubmit.bind(this);
         this.checkPasswordMatch = this.checkPasswordMatch.bind(this);
     }
@@ -56,7 +69,6 @@ export default class ForgotPasswordReset extends Component {
                         notFound: true,
                         isLoading: false
                     });
-                    alert('Неверный токен для сброса пароля. Попробуйте вернуться на /forgotPassword');
                 } else {
                     this.setState({
                         serverError: true,
@@ -68,6 +80,12 @@ export default class ForgotPasswordReset extends Component {
     }
 
     render() {
+        if(this.state.notFound) {
+            return <NotFound />;
+        }
+        if(this.state.serverError) {
+            return <ServerError />;
+        }
         if (this.state.password1.validateStatus === 'validating') {
             buttonDisabled = true
             textContent = <div>Введите новый пароль</div>

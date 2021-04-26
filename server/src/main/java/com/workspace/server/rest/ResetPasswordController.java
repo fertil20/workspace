@@ -2,12 +2,12 @@ package com.workspace.server.rest;
 
 
 import com.workspace.server.dto.ForgotPasswordRequest;
+import com.workspace.server.dto.ResetPasswordTokenResponse;
+import com.workspace.server.dto.UserProfile;
 import com.workspace.server.model.User;
-import com.workspace.server.repository.UserRepository;
 import com.workspace.server.service.ResetPasswordService;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
@@ -62,12 +62,12 @@ public class ResetPasswordController {
 
         mailSender.send(message);
     }
-/*
+
     @GetMapping("/resetPassword")
-    public String showResetPasswordForm(@RequestParam(value = "token") String token) {
+    public ResetPasswordTokenResponse showResetPasswordForm(@Valid @RequestParam(value = "token") String token) {
         User user = userService.getByResetPasswordToken(token);
-        return user.getResetPasswordToken();
-    }*/
+        return new ResetPasswordTokenResponse(user.getResetPasswordToken());
+    }
 
     @PostMapping("/resetPassword")
     public void processResetPassword(@Valid @RequestParam(value = "token") String token, @RequestBody String password) {
