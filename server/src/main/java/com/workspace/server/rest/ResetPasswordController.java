@@ -3,13 +3,13 @@ package com.workspace.server.rest;
 
 import com.workspace.server.dto.ForgotPasswordRequest;
 import com.workspace.server.dto.ResetPasswordTokenResponse;
-import com.workspace.server.dto.UserProfile;
 import com.workspace.server.model.User;
 import com.workspace.server.service.ResetPasswordService;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -17,7 +17,7 @@ import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 
-//@Data
+
 @RestController
 @RequestMapping("/api/auth")
 public class ResetPasswordController {
@@ -64,9 +64,14 @@ public class ResetPasswordController {
     }
 
     @GetMapping("/resetPassword")
-    public ResetPasswordTokenResponse showResetPasswordForm(@Valid @RequestParam(value = "token") String token) {
+    public ResetPasswordTokenResponse showResetPasswordForm(@Valid @RequestParam(value = "token") String token) throws UsernameNotFoundException {
         User user = userService.getByResetPasswordToken(token);
-        return new ResetPasswordTokenResponse(user.getResetPasswordToken());
+        if (user!=null) {
+            return new ResetPasswordTokenResponse(user.getResetPasswordToken());
+        }
+        else {
+            throw new UsernameNotFoundException("Could not find any user with the token " + token);
+        }
     }
 
     @PostMapping("/resetPassword")

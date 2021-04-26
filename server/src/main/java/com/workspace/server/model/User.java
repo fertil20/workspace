@@ -3,7 +3,6 @@ package com.workspace.server.model;
 import com.workspace.server.model.audit.DateAudit;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.type.LocalTimeType;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -57,7 +56,7 @@ public class User extends DateAudit {
     @Column(name = "phone")
     @NotBlank
     @Size(max = 50)
-    private String phone="No info";;
+    private String phone="No info";
 
     @Column(name = "tg")
     @NotBlank
