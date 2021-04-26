@@ -6,8 +6,6 @@ import com.workspace.server.dto.*;
 import com.workspace.server.repository.UserRepository;
 import com.workspace.server.security.CurrentUser;
 import com.workspace.server.security.UserPrincipal;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +17,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+/*    private static final Logger logger = LoggerFactory.getLogger(UserController.class);*/
 
     private final UserRepository userRepository;
 
@@ -81,5 +79,9 @@ public class UserController {
         user.setSecretNote(request.getSecretNote());
         user.setStatus(request.getStatus());
         userRepository.save(user);
+    }
+    @PostMapping("/delete/{id}")
+    public void deleteUser(@PathVariable(value = "id") Long id) {
+        userRepository.deleteById(id);
     }
 }

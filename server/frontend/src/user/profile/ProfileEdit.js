@@ -1,5 +1,5 @@
 import { getAvatarColor } from '../../util/Colors';
-import {formatDate, formatFullTime, formatTime} from '../../util/Helpers';
+import {formatDate, formatTime} from '../../util/Helpers';
 import './Profile.css';
 import NotFound from '../../common/NotFound';
 import ServerError from '../../common/ServerError';
@@ -18,7 +18,6 @@ import React, {Component, useState} from "react";
 import {getUserProfile, profileEdit} from "../../util/APIUtils";
 import './ProfileEdit.css';
 
-let flag = 1;
 
 class ProfileEdit extends Component {
 
@@ -60,6 +59,23 @@ class ProfileEdit extends Component {
                     user: response,
                     isLoading: false,
                 });
+                this.setState({
+                    email: {value: this.state.user.email},
+                    phone: {value: this.state.user.phone},
+                    tg: {value: this.state.user.tg},
+                    name: {value: this.state.user.name},
+                    about: {value: this.state.user.about},
+                    position: {value: this.state.user.position},
+                    department: {value: this.state.user.department},
+                    office: {value: this.state.user.office},
+                    startAt: {value: this.state.user.startAt},
+                    endAt: {value: this.state.user.endAt},
+                    //newWorktimes: {value: this.state.user.newWorktimes},
+                    secretNote: {value: this.state.user.secretNote},
+                    status: {value: this.state.user.status},
+                    statusTimeStart: {value: this.state.statusTimeStart},
+                    statusTimeFinish: {value: this.state.statusTimeFinish}
+                })
             }).catch(error => {
             if(error.status === 404) {
                 this.setState({
@@ -110,8 +126,8 @@ class ProfileEdit extends Component {
             position: this.state.position.value,
             department: this.state.department.value,
             office: this.state.office.value,
-            startAt: formatFullTime(this.state.startAt.value + ":00"),
-            endAt: formatFullTime(this.state.endAt.value + ":00"),
+            startAt: this.state.startAt.value,
+            endAt: this.state.endAt.value,
             // newWorktimes: this.state.newWorktimes.value,
             secretNote: this.state.secretNote.value,
             status: this.state.status.value, // Статус работы (0,1,2,3)
@@ -147,40 +163,14 @@ class ProfileEdit extends Component {
             return <ServerError />;
         }
 
-        if (flag === 1){
-            if (this.state.user != null){
-                this.setState({
-                    email: {value: this.state.user.email},
-                    phone: {value: this.state.user.phone},
-                    tg: {value: this.state.user.tg},
-                    name: {value: this.state.user.name},
-                    about: {value: this.state.user.about},
-                    position: {value: this.state.user.position},
-                    department: {value: this.state.user.department},
-                    office: {value: this.state.user.office},
-                    startAt: {value: this.state.user.startAt},
-                    endAt: {value: this.state.user.endAt},
-                    //newWorktimes: {value: this.state.user.newWorktimes},
-                    secretNote: {value: this.state.user.secretNote},
-                    status: {value: this.state.user.status},
-                    statusTimeStart: {value: this.state.statusTimeStart},
-                    statusTimeFinish: {value: this.state.statusTimeFinish}
-                })
 
-                flag = 0}
-        }
-
-/*        if(userStatus === 0){tip = <TooltipWidgetHome/>;}
-        if(userStatus === 1){tip = <TooltipWidgetAtWork/>;}
-        if(userStatus === 2){tip = <TooltipWidgetIll/>;}
-        if(userStatus === 3){tip = <TooltipWidgetHoliday/>;}*/
         const DropdownStatus = () => {
             const [dropdownOpen, setDropdownOpen] = useState(false);
             const toggle = () => setDropdownOpen(prevState => !prevState);
            let setStatus = {
                 status(state) {
                     // eslint-disable-next-line
-                    this.state.user.status = state;
+                    this.state.user.status = state; //todo по-хорошему бы надо пофиксить
                     this.setState({status: {value: state}});
                 }
            }
@@ -267,6 +257,8 @@ class ProfileEdit extends Component {
                                                onChange={(event) => this.handleInputChange(event)}/>
                                         <div style={{height: 10}}/>
                                         <Input type="textarea" name="about" id="editAbout"
+                                               spellcheck={true}
+                                               maxLength={300}
                                                value={this.state.about.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
                                         <div style={{height: 25}}/>
@@ -306,8 +298,10 @@ class ProfileEdit extends Component {
                                                 </div>
                                             </Col>
                                         </Row>
-                                        <div style={{marginTop:22,height:50}}>{formatDate(this.state.user.joinedAt)}</div>
-                                        <div style={{height:50}}>{formatDate(this.state.user.birthday)}</div>
+                                        <div style={{marginTop:15, height:20}}>{formatDate(this.state.user.joinedAt)}</div>
+                                        <div style={{height: 15}}/>
+                                        <div style={{marginTop:15, height:20}}>{formatDate(this.state.user.birthday)}</div>
+                                        <div style={{height: 25}}/>
                                         <Input type="text" name="secretNote" id="editSecretNote"
                                                value={this.state.secretNote.value}
                                                onChange={(event) => this.handleInputChange(event)}/>

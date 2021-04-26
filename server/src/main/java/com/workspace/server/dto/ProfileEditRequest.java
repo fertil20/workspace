@@ -3,7 +3,7 @@ package com.workspace.server.dto;
 
 import lombok.Data;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
 
 @Data
@@ -16,8 +16,8 @@ public class ProfileEditRequest {
     private String position;
     private String department;
     private String office;
-    private Time startAt;
-    private Time endAt;
+    private LocalTime startAt;
+    private LocalTime endAt;
     private String secretNote;
     private char status;
 /*    private Set<WorkTime> workTimes;*/

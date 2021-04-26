@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {deleteUser, getAllUsers, profileEdit} from "../util/APIUtils";
+import {deleteUser, getAllUsers} from "../util/APIUtils";
 import NotFound from "../common/NotFound";
 import ServerError from "../common/ServerError";
 import {ListGroup, ListGroupItem, Button, Row, Input, Form} from 'reactstrap';
-import "./UserComponent.css";
+import "./UsersAdminList.css";
 import search from '../media/search.png'
 import {
     TooltipWidgetAtWork,
@@ -12,7 +12,7 @@ import {
     TooltipWidgetIll
 } from "../user/profile/TooltipWidget";
 
-class UserComponent extends Component {
+class UsersAdminList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -71,6 +71,16 @@ class UserComponent extends Component {
         this.loadAllUsers(id);
     }
 
+    componentUpdate(nextProps) {
+        if(this.props.match.params.id !== nextProps.match.params.id) {
+            this.loadAllUsers(nextProps.match.params.id);
+        }
+    }
+
+/*    componentWillUnmount() {
+        clearInterval(this.props.match.params.id)
+    }*/
+
     render (){
         if(this.state.isLoading) {
             return <div className="text-center">
@@ -105,14 +115,14 @@ class UserComponent extends Component {
                                value={this.state.FIO.value}
                                onChange={(event) => {this.handleInputChange(event)}}
                         />
-                        <Button size='sm' className='search-button' onClick={() => this.FindUser(this.state.FIO.value)}><img src={search} width={25} height={25}/></Button>
+                        <Button size='sm' className='search-button' onClick={() => this.FindUser(this.state.FIO.value)}><img src={search} width={25} height={25} alt='Search'/></Button>
                         </Row>
                     </Form>
                 </div>
                 {
                     this.state.user ? (
                         <div>
-                            <ListGroup horizontal className='table-top-line' key='123123123'>
+                            <ListGroup horizontal className='table-top-line' key={"TABLE"}>
                                 <ListGroupItem style={{width:250}} key={"FIO"}>Фио</ListGroupItem>
                                 <ListGroupItem style={{width:100}} key={"STATUS"}>Статус</ListGroupItem>
                                 <ListGroupItem style={{width:150}} key={"POSITION"}>Должность</ListGroupItem>
@@ -121,15 +131,15 @@ class UserComponent extends Component {
                             </ListGroup>
                             {
                                 this.state.user.map(
-                                    user =>
+                                    user => //todo Пофиксить варнинг
                                         <div>
                                         <ListGroup horizontal="lg" key={user.id}>
-                                            <ListGroupItem style={{width:250}} key={user.id+".1"} tag = 'a' href={`/users/${user.username}`}>{user.name}</ListGroupItem> //todo Пофиксить варнинг
-                                            <ListGroupItem style={{width:100}} key={user.id+".2"}>{this.SetUserStatus(user.status)}</ListGroupItem>
-                                            <ListGroupItem style={{width:150}} key={user.id+".3"}>{user.position}</ListGroupItem>
-                                            <ListGroupItem style={{width:170}} key={user.id+".4"}>{user.department}</ListGroupItem>
-                                            <ListGroupItem style={{width:300}} key={user.id+".5"}>{user.email}<br/>{user.phone}<br/>@{user.tg}</ListGroupItem>
-                                            <Button size='sm' color='danger' style={{height:30, marginTop:30, marginLeft:10}} key={user.id+".6"} onClick={() => this.DeleteUser(user.id)}>Удалить</Button>
+                                            <ListGroupItem style={{width:250}} key={user.id+'.1'} tag = 'a' href={`/users/${user.username}`}>{user.name}</ListGroupItem>
+                                            <ListGroupItem style={{width:100}} key={user.id+'.2'}>{this.SetUserStatus(user.status)}</ListGroupItem>
+                                            <ListGroupItem style={{width:150}} key={user.id+'.3'}>{user.position}</ListGroupItem>
+                                            <ListGroupItem style={{width:170}} key={user.id+'.4'}>{user.department}</ListGroupItem>
+                                            <ListGroupItem style={{width:300}} key={user.id+'.5'}>{user.email}<br/>{user.phone}<br/>@{user.tg}</ListGroupItem>
+                                            <Button size='sm' color='danger' style={{height:30, marginTop:30, marginLeft:10}} key={user.id+'.6'} onClick={() => this.DeleteUser(user.id)}>Удалить</Button>
                                         </ListGroup>
                                         </div>
                                 )
@@ -147,18 +157,14 @@ class UserComponent extends Component {
 
     DeleteUser(userID){
         this.setState({deleteUserID: userID})
-        const deleteUserRequest ={
-            id: this.state.deleteUserID
-        }
-        deleteUser(deleteUserRequest)
+        deleteUser(userID)
             .then(response => {
                 alert('Пользователь удалён');
-                this.props.history.push(`/users`);
+                this.componentDidMount(UsersAdminList);//todo разобраться с unmount и update
             })
             .catch(error => {
                 alert('Что-то пошло не так');
             });
-        return null
     }
     SetUserStatus(userStatus){
         if(userStatus === '0'){
@@ -176,4 +182,4 @@ class UserComponent extends Component {
     }
 }
 
-export default UserComponent
+export default UsersAdminList

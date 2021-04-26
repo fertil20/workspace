@@ -21,12 +21,6 @@ export function formatTime(timeString) {
     return time.slice(0, 5);
 }
 
-export function formatFullTime(timeString) {
-    const time = String(timeString);
-
-    return time.slice(0, 8);
-}
-
 export function formatDateTime(dateTimeString) {
   const date = new Date(dateTimeString);
 

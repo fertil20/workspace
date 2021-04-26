@@ -3,12 +3,13 @@ package com.workspace.server.model;
 import com.workspace.server.model.audit.DateAudit;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.type.LocalTimeType;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
@@ -83,14 +84,14 @@ public class User extends DateAudit {
     private String office="000";
 
     @NotBlank
-    @Column(name = "start_at")
-    private Time startAt=Time.valueOf("01:00:00");
+    @Column(name = "start_at") //todo поменять на LocalTime
+    private LocalTime startAt=LocalTime.parse("08:00");
 
     @NotBlank
     @Column(name = "end_at")
-    private Time endAt=Time.valueOf("01:00:00");
+    private LocalTime endAt=LocalTime.parse("18:00");
 
-    @Column(name = "birthday")
+    @Column(name = "birthday") //todo добавить NotBlank
 //    @NotBlank
     private Date birthday;
 
@@ -137,7 +138,7 @@ public class User extends DateAudit {
     public int hashCode() {
 
         return Objects.hash(username, email, phone, tg, about, position,
-                department, office, secretNote, status);
+                department, office, startAt, endAt, secretNote, status); //todo оно нужно???
     }
 
 

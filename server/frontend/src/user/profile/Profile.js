@@ -52,6 +52,10 @@ class Profile extends Component {
     componentDidMount() {
         const username = this.props.match.params.username;
         this.loadUserProfile(username);
+/*        this.user = setInterval(
+            () => this.tick(),
+            1000
+        );*/
     }
 
     componentDidUpdate(nextProps) {
@@ -59,6 +63,15 @@ class Profile extends Component {
             this.loadUserProfile(nextProps.match.params.username);
         }
     }
+
+
+/*
+    componentWillUnmount() {
+        const username = this.props.match.params.username;
+        this.loadUserProfile(username);
+    }
+*/
+
 
     render() {
         if(this.state.isLoading) {

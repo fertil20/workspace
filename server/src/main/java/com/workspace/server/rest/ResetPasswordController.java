@@ -2,21 +2,13 @@ package com.workspace.server.rest;
 
 
 import com.workspace.server.dto.ForgotPasswordRequest;
-import com.workspace.server.dto.ResetPasswordRequest;
-import com.workspace.server.exception.ResourceNotFoundException;
 import com.workspace.server.model.User;
 import com.workspace.server.repository.UserRepository;
 import com.workspace.server.service.ResetPasswordService;
-import com.workspace.server.util.Utility;
-import lombok.Data;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -52,7 +44,7 @@ public class ResetPasswordController {
         String token = RandomString.make(30);
 
         userService.updateResetPasswordToken(token, email);
-        String resetPasswordLink = "http://localhost:8080/api/auth/reset_password?token=" + token;
+        String resetPasswordLink = "http://localhost:3000/resetPassword?token=" + token;
         sendEmail(email, resetPasswordLink);
     }
 
@@ -80,32 +72,20 @@ public class ResetPasswordController {
 
         mailSender.send(message);
     }
-
+/*
     @GetMapping("/resetPassword")
-    public String showResetPasswordForm(@Param(value = "token") String token, Model model) {
+    public String showResetPasswordForm(@RequestParam(value = "token") String token) {
         User user = userService.getByResetPasswordToken(token);
-        model.addAttribute("token", token);
-
-        if (user == null) {
-            model.addAttribute("message", "Invalid Token");
-            return "message";
-        }
-
-        return "reset_password_form";
-    }
+        return user.getResetPasswordToken();
+    }*/
 
     @PostMapping("/resetPassword")
-    public void processResetPassword(@Valid @RequestBody ResetPasswordRequest request) {
-        String token = request.getToken();
-        String password = request.getPassword();
+    public void processResetPassword(@Valid @RequestParam(value = "token") String password, String token) {
+
 
         User user = userService.getByResetPasswordToken(token);
 
-/*        if (user == null) {
-            return "message";
-        } else {
-            userService.updatePassword(user, password);*/
-
+        userService.updatePassword(user, password);
 
     }
 }

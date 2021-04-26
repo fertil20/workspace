@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './ForgotPassword.css';
 import {Button, Form, FormGroup, Input} from 'reactstrap';
-import {forgotPasswordReset} from "../../util/APIUtils";
+import {forgotPasswordResetPost} from "../../util/APIUtils";
 
 let textContent = ''
 let buttonDisabled = ''
@@ -19,6 +19,7 @@ export default class ForgotPasswordReset extends Component {
                 value: ''
             }
         }
+
         this.handleSubmit = this.handleSubmit.bind(this);
         this.checkPasswordMatch = this.checkPasswordMatch.bind(this);
     }
@@ -36,12 +37,11 @@ export default class ForgotPasswordReset extends Component {
     }
 
     handleSubmit(event) {
+        const query = new URLSearchParams(this.props.location.search);
+        const setToken = query.get('token');
         event.preventDefault();
         this.setState({isLoading: true});
-        const forgotPasswordResetRequest = {
-            password: this.state.password2.value,
-        };
-        forgotPasswordReset(forgotPasswordResetRequest)
+        forgotPasswordResetPost(this.state.password2.value, setToken)
             .then(response => {
                 this.setState({
                     serverError: false,
@@ -51,11 +51,19 @@ export default class ForgotPasswordReset extends Component {
                 this.props.history.push(`/login`);
             })
             .catch(error => {
-                this.setState({
-                    serverError: true,
-                    isLoading: false
-                });
-                alert('Что-то пошло не так.');
+                if(error.status === 404) {
+                    this.setState({
+                        notFound: true,
+                        isLoading: false
+                    });
+                    alert('Неверный токен для сброса пароля. Попробуйте вернуться на /forgotPassword');
+                } else {
+                    this.setState({
+                        serverError: true,
+                        isLoading: false
+                    });
+                    alert('Что-то пошло не так.');
+                }
             });
     }
 
@@ -105,6 +113,7 @@ export default class ForgotPasswordReset extends Component {
                         </Input>
                         <Input type="password" name="password2" id="password2" className="forgot-password-form-input"
                                style = {{marginTop:30}}
+                               autoComplete="off"
                                placeholder="Подтвердите пароль:"
                                value={this.state.password2.value}
                                onBlur={this.checkPasswordMatch}

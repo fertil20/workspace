@@ -17,7 +17,7 @@ import Profile from '../user/profile/Profile';
 import AppHeader from '../common/AppHeader';
 import NotFound from '../common/NotFound';
 import PrivateRoute from '../common/PrivateRoute';
-import UserComponent from '../components/UserComponent';
+import UsersAdminList from '../components/UsersAdminList';
 
 import { Layout, notification } from 'antd';
 import {PersistentState} from "../util/PersistentState";
@@ -67,7 +67,7 @@ class App extends Component {
         this.loadCurrentUser();
     }
 
-    handleLogout(redirectTo="/login") {
+    handleLogout() {
         localStorage.removeItem(ACCESS_TOKEN);
 
         this.persistentState.setState({
@@ -75,7 +75,7 @@ class App extends Component {
             isAuthenticated: false
         });
         alert("You're successfully logged out.")
-        this.props.history.push(redirectTo);
+        this.props.history.push("/login");
     };
 
     handleLogin() {
@@ -114,11 +114,11 @@ class App extends Component {
                                        render={(props) => <Login onLogin={this.handleLogin} {...props} />}/>
                                 <Route path="/signup" component={Signup}/>
                                 <Route path="/forgotPassword" component={ForgotPassword}/>
-                                <Route path="/forgotPasswordReset" component={ForgotPasswordReset}/>
+                                <Route path="/resetPassword" component={ForgotPasswordReset}/> //todo сделать PrivateRoute
                                 <PrivateRoute exact path="/users/:username" authenticated={this.persistentState.getState().isAuthenticated} component={Profile} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/users/:username/edit" authenticated={this.persistentState.getState().isAuthenticated} component={ProfileEdit} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/poll/new" authenticated={this.persistentState.getState().isAuthenticated} component={NewPoll} handleLogout={this.handleLogout}/>
-                                <PrivateRoute exact path="/users" authenticated={this.persistentState.getState().isAuthenticated} component={UserComponent} handleLogout={this.handleLogout}/>
+                                <PrivateRoute exact path="/users" authenticated={this.persistentState.getState().isAuthenticated} component={UsersAdminList} handleLogout={this.handleLogout}/>
                                 <Route component={NotFound}/>
                             </Switch>
                         </BrowserRouter>

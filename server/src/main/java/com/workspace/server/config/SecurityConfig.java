@@ -62,17 +62,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .cors()
-                    .and()
+                .and()
                 .csrf()
                     .disable()
                 .exceptionHandling()
                     .authenticationEntryPoint(unauthorizedHandler)
                     .and()
-                .sessionManagement()
+                    .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
-                .authorizeRequests()
-                    .antMatchers("/",
+                    .authorizeRequests()
+                .antMatchers("/",
                         "/favicon.ico",
                         "/**/*.png",
                         "/**/*.gif",
@@ -81,15 +81,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.html",
                         "/**/*.css",
                         "/**/*.js")
-                        .permitAll()
-                    .antMatchers("/api/auth/**")
-                        .permitAll()
-                    .antMatchers("/api/users/checkUsernameAvailability", "/api/users/checkEmailAvailability")
-                        .permitAll()
-//                    .antMatchers(HttpMethod.GET, "/api/users/**")
-//                        .permitAll()
-                    .anyRequest()
-                        .authenticated();
+                    .permitAll()
+                .antMatchers("/api/auth/**")
+                    .permitAll()
+                .antMatchers("/api/users/checkUsernameAvailability", "/api/users/checkEmailAvailability")
+                    .permitAll()
+//              .antMatchers(HttpMethod.GET, "/api/users/**")
+//                  .permitAll()
+                .antMatchers("/api/users/delete", "/api/users/delete/**")
+                    .hasRole("ADMIN")
+                .anyRequest()
+                    .authenticated();
 
         // Add our custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
