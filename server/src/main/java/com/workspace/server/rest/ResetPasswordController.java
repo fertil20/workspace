@@ -7,6 +7,7 @@ import com.workspace.server.repository.UserRepository;
 import com.workspace.server.service.ResetPasswordService;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
@@ -26,17 +27,6 @@ public class ResetPasswordController {
 
     @Autowired
     private ResetPasswordService userService;
-
-    private final UserRepository userRepository;
-
-    public ResetPasswordController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-/*    @GetMapping("/forgot_password")
-    public String showForgotPasswordForm(Model model) {
-        return "forgot_password_form";
-    }*/
 
     @PostMapping("/forgotPassword")
     public void processForgotPassword(@Valid @RequestBody ForgotPasswordRequest request) throws MessagingException, UnsupportedEncodingException {
@@ -80,7 +70,7 @@ public class ResetPasswordController {
     }*/
 
     @PostMapping("/resetPassword")
-    public void processResetPassword(@Valid @RequestParam(value = "token") String password, String token) {
+    public void processResetPassword(@Valid @RequestParam(value = "token") String token, @RequestBody String password) {
 
 
         User user = userService.getByResetPasswordToken(token);

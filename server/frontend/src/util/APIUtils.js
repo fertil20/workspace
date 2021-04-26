@@ -29,10 +29,11 @@ export function forgotPassword(forgotPasswordRequest){
     });
 }
 
-export function forgotPasswordResetPost(password, token){ //Возвращает пароль и токен
+export function forgotPasswordResetPost(password, token){ //Возвращает пароль и токен todo сделать GET token запрос
     return request({
         url: API_BASE_URL + "/auth/resetPassword?token=" + token,
-        method: 'POST'
+        method: 'POST',
+        body: password
     });
 }
 
