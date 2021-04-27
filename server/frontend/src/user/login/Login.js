@@ -67,6 +67,7 @@ class LoginForm extends Component {
                     <Input
                         // prefix={<Icon type="user" />}
                         className="login-form-input"
+                        style={{backgroundColor: '#EDEEF0'}}
                         size="large"
                         name="usernameOrEmail"
                         placeholder="Username or Email" />
@@ -78,6 +79,7 @@ class LoginForm extends Component {
                 })(
                     <Input
                         className="login-form-input"
+                        style={{backgroundColor: '#EDEEF0'}}
                         // prefix={<Icon type="lock" />}
                         size="large"
                         name="password"
