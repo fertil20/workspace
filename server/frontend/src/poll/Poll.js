@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Poll.css';
-import { Avatar, Icon } from 'antd';
+import { CheckCircleOutlined } from '@ant-design/icons';
+import { Avatar } from 'antd';
 import { Link } from 'react-router-dom';
 import { getAvatarColor } from '../util/Colors';
 import { formatDateTime } from '../util/Helpers';
@@ -136,10 +137,7 @@ function CompletedOrVotedPollChoice(props) {
                 </span>
                 {
                     props.isSelected ? (
-                    <Icon
-                        className="selected-choice-icon"
-                        type="check-circle-o"
-                    /> ): null
+                    <CheckCircleOutlined className="selected-choice-icon" /> ): null
                 }    
             </span>
             <span className={props.isWinner ? 'cv-choice-percent-chart winner': 'cv-choice-percent-chart'} 

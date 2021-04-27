@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { login } from '../../util/APIUtils';
 import './Login.css';
 import { ACCESS_TOKEN } from '../../constants';
-import { Form, Input, Button, notification } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Button, notification } from 'antd';
 // import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 const FormItem = Form.Item;
 

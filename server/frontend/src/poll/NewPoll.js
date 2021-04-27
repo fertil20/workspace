@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { createPoll } from '../util/APIUtils';
 import { MAX_CHOICES, POLL_QUESTION_MAX_LENGTH, POLL_CHOICE_MAX_LENGTH } from '../constants';
-import './NewPoll.css';  
-import { Form, Input, Button, Select, Col, notification, Icon } from 'antd';
+import './NewPoll.css';
+import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Button, Select, Col, notification } from 'antd';
 const Option = Select.Option;
 const FormItem = Form.Item;
 const { TextArea } = Input
@@ -189,7 +192,7 @@ class NewPoll extends Component {
                         {choiceViews}
                         <FormItem className="poll-form-row">
                             <Button type="dashed" onClick={this.addChoice} disabled={this.state.choices.length === MAX_CHOICES}>
-                                <Icon type="plus" /> Add a choice
+                                <PlusOutlined /> Add a choice
                             </Button>
                         </FormItem>
                         <FormItem className="poll-form-row">
@@ -254,12 +257,10 @@ function PollChoice(props) {
 
             {
                 props.choiceNumber > 1 ? (
-                <Icon
+                <CloseOutlined
                     className="dynamic-delete-button"
-                    type="close"
                     disabled={props.choiceNumber <= 1}
-                    onClick={() => props.removeChoice(props.choiceNumber)}
-                /> ): null
+                    onClick={() => props.removeChoice(props.choiceNumber)} /> ): null
             }    
         </FormItem>
     );

@@ -9,7 +9,10 @@ import {
     PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH
 } from '../../constants';
 
-import { Form, Input, Button, notification } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Input, Button, notification } from 'antd';
 const FormItem = Form.Item;
 
 class Signup extends Component {
