@@ -106,10 +106,9 @@ class App extends Component {
                     <div className="container">
                         <BrowserRouter>
                             <Switch>
-                                <Route exact path="/"
+                                <PrivateRoute exact path="/"
                                        render={(props) => <PollList isAuthenticated={this.persistentState.getState().isAuthenticated}
-                                                                    currentUser={this.persistentState.getState().currentUser} handleLogout={this.handleLogout} {...props} />}>
-                                </Route>
+                                                                    currentUser={this.persistentState.getState().currentUser} handleLogout={this.handleLogout} {...props} />}/>
                                 <Route path="/login"
                                        render={(props) => <Login onLogin={this.handleLogin} {...props} />}/>
                                 <Route path="/signup" component={Signup}/>
