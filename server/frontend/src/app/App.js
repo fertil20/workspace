@@ -24,7 +24,9 @@ import {PersistentState} from "../util/PersistentState";
 import ProfileEdit from "../user/profile/ProfileEdit";
 import ForgotPassword from "../user/passwordReset/ForgotPassword";
 import ForgotPasswordReset from "../user/passwordReset/ForgotPasswordReset";
+import Home from "../common/Home";
 const { Content } = Layout;
+
 
 class App extends Component {
     constructor(props) {
@@ -106,9 +108,7 @@ class App extends Component {
                     <div className="container">
                         <BrowserRouter>
                             <Switch>
-                                <PrivateRoute exact path="/"
-                                       render={(props) => <PollList isAuthenticated={this.persistentState.getState().isAuthenticated}
-                                                                    currentUser={this.persistentState.getState().currentUser} handleLogout={this.handleLogout} {...props} />}/>
+                                <PrivateRoute exact path="/" authenticated={this.persistentState.getState().isAuthenticated} component={Home}/>
                                 <Route path="/login"
                                        render={(props) => <Login onLogin={this.handleLogin} {...props} />}/>
                                 <Route path="/signup" component={Signup}/>
