@@ -1,5 +1,4 @@
-import { getAvatarColor } from '../../util/Colors';
-import {formatDate, formatTime} from '../../util/Helpers';
+import {formatTime} from '../../util/Helpers';
 import './NewUser.css';
 import NotFound from '../../common/NotFound';
 import ServerError from '../../common/ServerError';
@@ -13,9 +12,9 @@ import {
     Dropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap';
 import {TooltipWidgetHome,TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidgetIll} from '../profile/TooltipWidget'
-import {Avatar} from "antd";
 import React, {Component, useState} from "react";
-import {newUser} from "../../util/APIUtils";
+import {checkEmailAvailability, checkUsernameAvailability, newUser} from "../../util/APIUtils";
+import {EMAIL_MAX_LENGTH, USERNAME_MAX_LENGTH, USERNAME_MIN_LENGTH} from "../../constants";
 
 
 class NewUser extends Component {
@@ -48,64 +47,6 @@ class NewUser extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    // loadUserProfile(username) {
-    //     this._isMounted && this.setState({
-    //         isLoading: true
-    //     });
-    //
-    //     getUserProfile(username)
-    //         .then(response => {
-    //             this._isMounted && this.setState({
-    //                 user: response,
-    //                 isLoading: false,
-    //             });
-    //             // this._isMounted && this.setState({
-    //             //     email: {value: this.state.user.email},
-    //             //     phone: {value: this.state.user.phone},
-    //             //     tg: {value: this.state.user.tg},
-    //             //     name: {value: this.state.user.name},
-    //             //     about: {value: this.state.user.about},
-    //             //     position: {value: this.state.user.position},
-    //             //     department: {value: this.state.user.department},
-    //             //     office: {value: this.state.user.office},
-    //             //     startAt: {value: this.state.user.startAt},
-    //             //     endAt: {value: this.state.user.endAt},
-    //             //     //newWorktimes: {value: this.state.user.newWorktimes},
-    //             //     secretNote: {value: this.state.user.secretNote},
-    //             //     status: {value: this.state.user.status},
-    //             //     statusTimeStart: {value: this.state.statusTimeStart},
-    //             //     statusTimeFinish: {value: this.state.statusTimeFinish}
-    //             // })
-    //         }).catch(error => {
-    //         if(error.status === 404) {
-    //             this._isMounted && this.setState({
-    //                 notFound: true,
-    //                 isLoading: false
-    //             });
-    //         } else {
-    //             this._isMounted && this.setState({
-    //                 serverError: true,
-    //                 isLoading: false
-    //             });
-    //         }
-    //     });
-    // }
-
-    componentDidMount() {
-        this._isMounted = true;
-        // this._isMounted && this.loadUserProfile(this.props.match.params.username);
-    }
-
-    componentWillUnmount() {
-        this._isMounted = false;
-    }
-
-    componentDidUpdate(prevProps) {
-        // if(this.props.match.params.username !== prevProps.match.params.username) {
-        //     this.loadUserProfile(this.props.match.params.username);
-        // }
-    }
-
     handleInputChange(event) {
         const target = event.target;
         const inputName = target.name;
@@ -124,7 +65,6 @@ class NewUser extends Component {
         const newUserRequest = {
             username: this.state.username.value,
             email: this.state.email.value,
-            password: this.state.password.value,
             phone: this.state.phone.value,
             tg: this.state.tg.value,
             name: this.state.name.value,
@@ -148,6 +88,156 @@ class NewUser extends Component {
             .catch(error => {
                 alert('Что-то пошло не так.');
             });
+    }
+    validateEmail = (email) => {
+        if(!email) {
+            return {
+                validateStatus: 'error',
+                errorMsg: 'Email may not be empty'
+            }
+        }
+
+        const EMAIL_REGEX = RegExp('[^@ ]+@[^@ ]+\\.[^@ ]+');
+        if(!EMAIL_REGEX.test(email)) {
+            return {
+                validateStatus: 'error',
+                errorMsg: 'Email not valid'
+            }
+        }
+
+        if(email.length > EMAIL_MAX_LENGTH) {
+            return {
+                validateStatus: 'error',
+                errorMsg: `Email is too long (Maximum ${EMAIL_MAX_LENGTH} characters allowed)`
+            }
+        }
+
+        return {
+            validateStatus: null,
+            errorMsg: null
+        }
+    }
+
+    validateUsername = (username) => {
+        if(username.length < USERNAME_MIN_LENGTH) {
+            return {
+                validateStatus: 'error',
+                errorMsg: `Username is too short (Minimum ${USERNAME_MIN_LENGTH} characters needed.)`
+            }
+        } else if (username.length > USERNAME_MAX_LENGTH) {
+            return {
+                validationStatus: 'error',
+                errorMsg: `Username is too long (Maximum ${USERNAME_MAX_LENGTH} characters allowed.)`
+            }
+        } else {
+            return {
+                validateStatus: null,
+                errorMsg: null
+            }
+        }
+    }
+
+    validateUsernameAvailability() {
+        // First check for client side errors in username
+        const usernameValue = this.state.username.value;
+        const usernameValidation = this.validateUsername(usernameValue);
+
+        if(usernameValidation.validateStatus === 'error') {
+            this.setState({
+                username: {
+                    value: usernameValue,
+                    ...usernameValidation
+                }
+            });
+            return;
+        }
+
+        this.setState({
+            username: {
+                value: usernameValue,
+                validateStatus: 'validating',
+                errorMsg: null
+            }
+        });
+
+        checkUsernameAvailability(usernameValue)
+            .then(response => {
+                if(response.available) {
+                    this.setState({
+                        username: {
+                            value: usernameValue,
+                            validateStatus: 'success',
+                            errorMsg: null
+                        }
+                    });
+                } else {
+                    this.setState({
+                        username: {
+                            value: usernameValue,
+                            validateStatus: 'error',
+                            errorMsg: 'This username is already taken'
+                        }
+                    });
+                }
+            }).catch(error => {
+            // Marking validateStatus as success, Form will be recchecked at server
+            this.setState({
+                username: {
+                    value: usernameValue,
+                    validateStatus: 'success',
+                    errorMsg: null
+                }
+            });
+        });
+    }
+
+    validateEmailAvailability() {
+        const emailValue = this.state.email.value;
+        const emailValidation = this.validateEmail(emailValue);
+
+        if(emailValidation.validateStatus === 'error') {
+            this.setState({
+                email: {
+                    value: emailValue,
+                    ...emailValidation
+                }
+            });
+            return;
+        }
+
+        this.setState({
+            email: {
+                value: emailValue,
+                validateStatus: 'validating'
+            }
+        });
+
+        checkEmailAvailability(emailValue)
+            .then(response => {
+                if(response.available) {
+                    this.setState({
+                        email: {
+                            value: emailValue,
+                            validateStatus: 'error'
+                        }
+                    });
+                } else {
+                    this.setState({
+                        email: {
+                            value: emailValue,
+                            validateStatus: 'success'
+                        }
+                    });
+                }
+            }).catch(error => {
+            // Marking validateStatus as success, Form will be rechecked at server
+            this.setState({
+                email: {
+                    value: emailValue,
+                    validateStatus: 'validating',
+                }
+            });
+        });
     }
 
 
@@ -217,7 +307,6 @@ class NewUser extends Component {
                                         <Col>
                                             <div style={{color: 'gray', fontWeight: 'bold',height: 50,marginTop:20}}>Username:</div>
                                             <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>E-mail:</div>
-                                            <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Пароль:</div>
                                             <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Рабочий номер:</div>
                                             <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Telegram:</div>
                                         </Col>
@@ -230,11 +319,6 @@ class NewUser extends Component {
                                                 <div style={{height: 10}}/>
                                                 <Input type="email" name="email" id="email" placeholder="sophie@example.com"
                                                        value={this.state.email.value}
-                                                       required
-                                                       onChange={(event) => {this.handleInputChange(event)}}/>
-                                                <div style={{height: 10}}/>
-                                                <Input type="password" name="password" id="password" placeholder=""
-                                                       value={this.state.password.value}
                                                        required
                                                        onChange={(event) => {this.handleInputChange(event)}}/>
                                                 <div style={{height: 10}}/>
@@ -288,9 +372,6 @@ class NewUser extends Component {
                                             <Input type="text" name="office" id="editOffice"
                                                    value={this.state.office.value}
                                                    onChange={(event) => this.handleInputChange(event)}/>
-                                            {/*<Input type="worktimes" name="newWorktimes" id="editWorktimes"*/}
-                                            {/*       value={this.state.newWorktimes.value}*/}
-                                            {/*       onChange={(event) => this.handleInputChange(event)}/>*/}
                                             <div style={{height: 10}}/>
                                             <Row>
                                                 <Col sm={{size:2}}>

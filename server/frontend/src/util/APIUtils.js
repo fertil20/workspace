@@ -23,10 +23,17 @@ const request = (options) => {
 
 export function newUser(newUserRequest){
     return request({
-        url: API_BASE_URL + "/users/new",
+        url: API_BASE_URL + "/newUser",
         method: 'POST',
         body: JSON.stringify(newUserRequest)
     });
+}
+
+export function getAllRoles(){
+    return request({
+        url: API_BASE_URL + "/roles",
+        method: 'GET'
+    })
 }
 
 export function forgotPassword(forgotPasswordRequest){

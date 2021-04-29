@@ -1,15 +1,30 @@
 package com.workspace.server.rest;
 
+import com.workspace.server.exception.AppException;
 import com.workspace.server.exception.ResourceNotFoundException;
+import com.workspace.server.model.Role;
+import com.workspace.server.model.RoleName;
 import com.workspace.server.model.User;
 import com.workspace.server.dto.*;
+import com.workspace.server.repository.RoleRepository;
 import com.workspace.server.repository.UserRepository;
 import com.workspace.server.security.CurrentUser;
 import com.workspace.server.security.UserPrincipal;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
+import java.security.SecureRandom;
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,13 +32,21 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/users")
 public class UserController {
 
-/*    private static final Logger logger = LoggerFactory.getLogger(UserController.class);*/
 
     private final UserRepository userRepository;
 
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
+    @Autowired
+    RoleRepository roleRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     @GetMapping
     public List<UserProfile> getAllUsers() {
@@ -34,7 +57,7 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    @PreAuthorize("hasAnyRole('ADMIN, USER')")
+    @PreAuthorize("hasRole('USER')")
     public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
         return new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
     }
@@ -86,13 +109,21 @@ public class UserController {
         userRepository.deleteById(id);
     }
 
-    @PostMapping("/new")
-    public void createUserProfile(@RequestBody User request) {
+    @PostMapping("../newUser")
+    public void createUserProfile(@RequestBody User request) throws MessagingException, UnsupportedEncodingException {
         User user = new User();
-        user.setUsername(request.getUsername());
-        user.setPassword(request.getPassword()); //todo сгенерить и отправить пароль
+        String username = request.getUsername();
+
+        String password = new SecureRandom()
+                .ints(8, '!', '{')
+                .mapToObj(i -> String.valueOf((char)i))
+                .collect(Collectors.joining());
+
+        String email = request.getEmail();
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setEmail(email);
         user.setBirthday(request.getBirthday());
-        user.setEmail(request.getEmail());
         user.setPhone(request.getPhone());
         user.setTg(request.getTg());
         user.setName(request.getName());
@@ -104,6 +135,43 @@ public class UserController {
         user.setEndAt(request.getEndAt());
         user.setSecretNote(request.getSecretNote());
         user.setStatus(request.getStatus());
+
+        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+                .orElseThrow(() -> new AppException("User Role not set."));
+
+        user.setRoles(Collections.singleton(userRole));
+
         userRepository.save(user);
+
+        sendEmail(email, password, username);
+    }
+
+    public void sendEmail(String recipientEmail, String password, String username)
+            throws MessagingException, UnsupportedEncodingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom("workspace.app.8371@gmail.com", "Workspace Support");
+        helper.setTo(recipientEmail);
+
+        String subject = "Добро пожаловать в систему!";
+
+        String content = "<p>Добро пожаловать!</p>"
+                + "<p>Вы были зарегистрированы в системе и теперь можете перейти к ней по ссылке:</p>"
+                + "<p><a href=\"http://localhost:3000\">Перейти к системе</a></p>"
+                + "<p>Ваш логин: </p>" + username
+                + "<p>Ваш пароль: </p>" + password;
+
+        helper.setSubject(subject);
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
+    }
+    @GetMapping("../roles")
+    public List<Role> getAllRoles() {
+        return roleRepository.findAll().stream()
+                .map(roles -> new Role(roles.getName()))
+                .collect(Collectors.toList());
     }
 }

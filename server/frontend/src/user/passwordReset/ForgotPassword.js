@@ -107,35 +107,6 @@ export default class ForgotPassword extends Component {
         );
     }
 
-    /*    validateEmail = (email) => {
-            if(!email) {
-                return {
-                    validateStatus: 'error',
-                    errorMsg: 'Email may not be empty'
-                }
-            }
-
-            const EMAIL_REGEX = RegExp('[^@ ]+@[^@ ]+\\.[^@ ]+');
-            if(!EMAIL_REGEX.test(email)) {
-                return {
-                    validateStatus: 'error',
-                    errorMsg: 'Email not valid'
-                }
-            }
-
-            if(email.length > EMAIL_MAX_LENGTH) {
-                return {
-                    validateStatus: 'error',
-                    errorMsg: `Email is too long (Maximum ${EMAIL_MAX_LENGTH} characters allowed)`
-                }
-            }
-
-            return {
-                validateStatus: null,
-                errorMsg: null
-            }
-        }*/
-
     sendMail() {
         this.setState({
             isLoading: true,
@@ -164,18 +135,6 @@ export default class ForgotPassword extends Component {
     validateEmailAvailability() {
 
         const emailValue = this.state.email.value;
-/*        const emailValidation = this.validateEmail(emailValue);
-
-        if(emailValidation.validateStatus === 'error') {
-            this.setState({
-                email: {
-                    value: emailValue,
-                    ...emailValidation
-                }
-            });
-            return;
-        }*/
-
         this.setState({
             email: {
                 value: emailValue,

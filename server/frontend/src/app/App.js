@@ -114,7 +114,6 @@ class App extends Component {
                                 <Route path="/signup" component={Signup}/>
                                 <Route path="/forgotPassword" component={ForgotPassword}/>
                                 <Route path="/resetPassword" component={ForgotPasswordReset}/>
-                                {/*<Route path="/users/new" component={NewUser}/>*/}
                                 <PrivateRoute exact path="/users/:username" authenticated={this.persistentState.getState().isAuthenticated} component={Profile} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/newUser" authenticated={this.persistentState.getState().isAuthenticated} component={NewUser} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/users/:username/edit" authenticated={this.persistentState.getState().isAuthenticated} component={ProfileEdit} handleLogout={this.handleLogout}/>

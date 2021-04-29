@@ -68,18 +68,18 @@ class UsersAdminList extends Component {
 
     componentDidMount() {
         this._isMounted = true;
-        this._isMounted && this.loadAllUsers(this.props.match.params.id);
+        this._isMounted && this.loadAllUsers();
     }
 
     componentWillUnmount() {
         this._isMounted = false;
     }
 
-    componentDidUpdate(prevProps) {
-        if(this.props.match.params.id !== prevProps.match.params.id) {
-            this.loadUserProfile(prevProps.match.params.id);
+/*    componentDidUpdate(prevState) {
+        if(this.state.deleteUserID !== prevState.deleteUserID) {
+            this.loadAllUsers();
         }
-    }
+    }*/
 
     render (){
         if(this.state.isLoading) {

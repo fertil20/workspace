@@ -3,10 +3,10 @@ export function formatDate(dateString) {
     const date = new Date(dateString);
 
     const monthNames = [
-      "January", "February", "March",
-      "April", "May", "June", "July",
-      "August", "September", "October",
-      "November", "December"
+      "Январь", "Февраль", "Март",
+      "Апрель", "Май", "Июнь", "Июль",
+      "Август", "Сентябрь", "Октябрь",
+      "Ноябрь", "Декабрь"
     ];
   
     const monthIndex = date.getMonth();
@@ -25,9 +25,9 @@ export function formatDateTime(dateTimeString) {
   const date = new Date(dateTimeString);
 
   const monthNames = [
-    "Jan", "Feb", "Mar", "Apr",
-    "May", "Jun", "Jul", "Aug", 
-    "Sep", "Oct", "Nov", "Dec"
+    "Янв", "Фев", "Мар", "Апр",
+    "Май", "Июн", "Июл", "Авг",
+    "Сен", "Окт", "Ноя", "Дек"
   ];
 
   const monthIndex = date.getMonth();
