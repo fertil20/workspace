@@ -24,6 +24,7 @@ import ProfileEdit from "../user/profile/ProfileEdit";
 import ForgotPassword from "../user/passwordReset/ForgotPassword";
 import ForgotPasswordReset from "../user/passwordReset/ForgotPasswordReset";
 import Home from "../common/Home";
+import NewUser from "../user/new/NewUser";
 const { Content } = Layout;
 
 
@@ -113,7 +114,9 @@ class App extends Component {
                                 <Route path="/signup" component={Signup}/>
                                 <Route path="/forgotPassword" component={ForgotPassword}/>
                                 <Route path="/resetPassword" component={ForgotPasswordReset}/>
+                                {/*<Route path="/users/new" component={NewUser}/>*/}
                                 <PrivateRoute exact path="/users/:username" authenticated={this.persistentState.getState().isAuthenticated} component={Profile} handleLogout={this.handleLogout}/>
+                                <PrivateRoute exact path="/newUser" authenticated={this.persistentState.getState().isAuthenticated} component={NewUser} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/users/:username/edit" authenticated={this.persistentState.getState().isAuthenticated} component={ProfileEdit} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/poll/new" authenticated={this.persistentState.getState().isAuthenticated} component={NewPoll} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/users" authenticated={this.persistentState.getState().isAuthenticated} component={UsersAdminList} handleLogout={this.handleLogout}/>

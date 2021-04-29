@@ -133,7 +133,6 @@ class ProfileEdit extends Component {
             office: this.state.office.value,
             startAt: this.state.startAt.value,
             endAt: this.state.endAt.value,
-            // newWorktimes: this.state.newWorktimes.value,
             secretNote: this.state.secretNote.value,
             status: this.state.status.value, // Статус работы (0,1,2,3)
             statusTimeStart: this.state.statusTimeStart.value,

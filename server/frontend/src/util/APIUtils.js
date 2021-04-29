@@ -21,6 +21,14 @@ const request = (options) => {
         .then((text) => text.length ? JSON.parse(text) : {})
 };
 
+export function newUser(newUserRequest){
+    return request({
+        url: API_BASE_URL + "/users/new",
+        method: 'POST',
+        body: JSON.stringify(newUserRequest)
+    });
+}
+
 export function forgotPassword(forgotPasswordRequest){
     return request({
         url: API_BASE_URL + "/auth/forgotPassword",

@@ -103,7 +103,7 @@ class UsersAdminList extends Component {
                 <div>
                     <Row>
                         <p className="gray-text">Администрирование</p>
-                        <Button size='sm' className='add-button' href='/signup'>Добавить сотрудника</Button>
+                        <Button size='sm' className='add-button' href='/newUser'>Добавить сотрудника</Button>
                     </Row>
                 </div>
                 <div>

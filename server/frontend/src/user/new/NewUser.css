@@ -1,0 +1,6 @@
+textarea {
+    resize: none;
+}
+textarea.form-control {
+    height: 70px;
+}

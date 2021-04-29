@@ -89,6 +89,7 @@ public class UserController {
     @PostMapping("/new")
     public void createUserProfile(@RequestBody User request) {
         User user = new User();
+        user.setUsername(request.getUsername());
         user.setPassword(request.getPassword()); //todo сгенерить и отправить пароль
         user.setBirthday(request.getBirthday());
         user.setEmail(request.getEmail());
