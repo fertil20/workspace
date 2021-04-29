@@ -41,11 +41,13 @@ class LoginForm extends Component {
                 }).catch(error => {
                     if(error.status === 401) {
                         notification.error({
+                            key: "1",
                             message: 'Workspace App',
                             description: 'Your Username or Password is incorrect. Please try again!'
                         });
                     } else {
                         notification.error({
+                            key: "1",
                             message: 'Workspace App',
                             description: error.message || 'Sorry! Something went wrong. Please try again!'
                         });

@@ -80,8 +80,29 @@ public class UserController {
         user.setStatus(request.getStatus());
         userRepository.save(user);
     }
+
     @PostMapping("/delete/{id}")
     public void deleteUser(@PathVariable(value = "id") Long id) {
         userRepository.deleteById(id);
+    }
+
+    @PostMapping("/new")
+    public void createUserProfile(@RequestBody User request) {
+        User user = new User();
+        user.setPassword(request.getPassword()); //todo сгенерить и отправить пароль
+        user.setBirthday(request.getBirthday());
+        user.setEmail(request.getEmail());
+        user.setPhone(request.getPhone());
+        user.setTg(request.getTg());
+        user.setName(request.getName());
+        user.setAbout(request.getAbout());
+        user.setPosition(request.getPosition());
+        user.setDepartment(request.getDepartment());
+        user.setOffice(request.getOffice());
+        user.setStartAt(request.getStartAt());
+        user.setEndAt(request.getEndAt());
+        user.setSecretNote(request.getSecretNote());
+        user.setStatus(request.getStatus());
+        userRepository.save(user);
     }
 }

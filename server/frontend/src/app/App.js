@@ -9,7 +9,6 @@ import {
 import {getCurrentUser} from '../util/APIUtils';
 import { ACCESS_TOKEN } from '../constants';
 
-import PollList from '../poll/PollList';
 import NewPoll from '../poll/NewPoll';
 import Login from '../user/login/Login';
 import Signup from '../user/signup/Signup';

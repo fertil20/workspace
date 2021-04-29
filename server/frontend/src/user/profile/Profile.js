@@ -14,6 +14,7 @@ class Profile extends Component {
 
     constructor(props) {
         super(props);
+        this._isMounted = false;
         this.state = {
             user: null,
             isLoading: false
@@ -22,24 +23,24 @@ class Profile extends Component {
     }
 
     loadUserProfile(username) {
-        this.setState({
+        this._isMounted && this.setState({
             isLoading: true
         });
 
         getUserProfile(username)
         .then(response => {
-            this.setState({
+            this._isMounted && this.setState({
                 user: response,
                 isLoading: false
             });
         }).catch(error => {
             if(error.status === 404) {
-                this.setState({
+                this._isMounted && this.setState({
                     notFound: true,
                     isLoading: false
                 });
             } else {
-                this.setState({
+                this._isMounted && this.setState({
                     serverError: true,
                     isLoading: false
                 });        
@@ -48,29 +49,20 @@ class Profile extends Component {
     }
 
 
-
     componentDidMount() {
-        const username = this.props.match.params.username;
-        this.loadUserProfile(username);
-/*        this.user = setInterval(
-            () => this.tick(),
-            1000
-        );*/
+        this._isMounted = true;
+        this._isMounted && this.loadUserProfile(this.props.match.params.username);
     }
 
-    componentDidUpdate(nextProps) {
-        if(this.props.match.params.username !== nextProps.match.params.username) {
-            this.loadUserProfile(nextProps.match.params.username);
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.match.params.username !== prevProps.match.params.username) {
+            this.loadUserProfile(prevProps.match.params.username);
         }
     }
-
-
-/*
-    componentWillUnmount() {
-        const username = this.props.match.params.username;
-        this.loadUserProfile(username);
-    }
-*/
 
 
     render() {

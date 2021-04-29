@@ -29,24 +29,24 @@ class UsersAdminList extends Component {
     }
 
     loadAllUsers(id) {
-        this.setState({
+        this._isMounted && this.setState({
             isLoading: true
         });
 
         getAllUsers(id)
             .then(response => {
-                this.setState({
+                this._isMounted && this.setState({
                     user: response,
                     isLoading: false
                 });
             }).catch(error => {
             if(error.status === 404) {
-                this.setState({
+                this._isMounted && this.setState({
                     notFound: true,
                     isLoading: false
                 });
             } else {
-                this.setState({
+                this._isMounted && this.setState({
                     serverError: true,
                     isLoading: false
                 });
@@ -67,19 +67,19 @@ class UsersAdminList extends Component {
     }
 
     componentDidMount() {
-        const id = this.props.match.params.id;
-        this.loadAllUsers(id);
+        this._isMounted = true;
+        this._isMounted && this.loadAllUsers(this.props.match.params.id);
     }
 
-    componentUpdate(nextProps) {
-        if(this.props.match.params.id !== nextProps.match.params.id) {
-            this.loadAllUsers(nextProps.match.params.id);
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.match.params.id !== prevProps.match.params.id) {
+            this.loadUserProfile(prevProps.match.params.id);
         }
     }
-
-/*    componentWillUnmount() {
-        clearInterval(this.props.match.params.id)
-    }*/
 
     render (){
         if(this.state.isLoading) {

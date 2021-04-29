@@ -23,6 +23,7 @@ class ProfileEdit extends Component {
 
     constructor(props) {
         super(props);
+        this._isMounted = false;
         this.state = {
             user: null,
             isLoading: false,
@@ -49,17 +50,17 @@ class ProfileEdit extends Component {
     }
 
     loadUserProfile(username) {
-        this.setState({
+        this._isMounted && this.setState({
             isLoading: true
         });
 
         getUserProfile(username)
             .then(response => {
-                this.setState({
+                this._isMounted && this.setState({
                     user: response,
                     isLoading: false,
                 });
-                this.setState({
+                this._isMounted && this.setState({
                     email: {value: this.state.user.email},
                     phone: {value: this.state.user.phone},
                     tg: {value: this.state.user.tg},
@@ -78,12 +79,12 @@ class ProfileEdit extends Component {
                 })
             }).catch(error => {
             if(error.status === 404) {
-                this.setState({
+                this._isMounted && this.setState({
                     notFound: true,
                     isLoading: false
                 });
             } else {
-                this.setState({
+                this._isMounted && this.setState({
                     serverError: true,
                     isLoading: false
                 });
@@ -92,13 +93,17 @@ class ProfileEdit extends Component {
     }
 
     componentDidMount() {
-        const username = this.props.match.params.username;
-        this.loadUserProfile(username);
+        this._isMounted = true;
+        this._isMounted && this.loadUserProfile(this.props.match.params.username);
     }
 
-    componentDidUpdate(nextProps) {
-        if(this.props.match.params.username !== nextProps.match.params.username) {
-            this.loadUserProfile(nextProps.match.params.username);
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.match.params.username !== prevProps.match.params.username) {
+            this.loadUserProfile(this.props.match.params.username);
         }
     }
 
@@ -169,8 +174,6 @@ class ProfileEdit extends Component {
             const toggle = () => setDropdownOpen(prevState => !prevState);
            let setStatus = {
                 status(state) {
-                    // eslint-disable-next-line
-                    this.state.user.status = state; //todo по-хорошему бы надо пофиксить
                     this.setState({status: {value: state}});
                 }
            }
@@ -257,7 +260,7 @@ class ProfileEdit extends Component {
                                                onChange={(event) => this.handleInputChange(event)}/>
                                         <div style={{height: 10}}/>
                                         <Input type="textarea" name="about" id="editAbout"
-                                               spellcheck={true}
+                                               spellCheck={true}
                                                maxLength={300}
                                                value={this.state.about.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
@@ -312,10 +315,10 @@ class ProfileEdit extends Component {
                                         </div>
                                     </Col>
                                     <div style={{margin:10}}>
-                                    {this.state.user.status === '0' && <TooltipWidgetHome/>}
-                                    {this.state.user.status === '1' && <TooltipWidgetAtWork/>}
-                                    {this.state.user.status === '2' && <TooltipWidgetIll/>}
-                                    {this.state.user.status === '3' && <TooltipWidgetHoliday/>}
+                                    {this.state.status.value === '0' && <TooltipWidgetHome/>}
+                                    {this.state.status.value === '1' && <TooltipWidgetAtWork/>}
+                                    {this.state.status.value === '2' && <TooltipWidgetIll/>}
+                                    {this.state.status.value === '3' && <TooltipWidgetHoliday/>}
                                     </div>
                                 </Row>
                             </Col>
