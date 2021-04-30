@@ -1,6 +1,5 @@
 package com.workspace.server.rest;
 
-import com.workspace.server.exception.AppException;
 import com.workspace.server.exception.ResourceNotFoundException;
 import com.workspace.server.model.Role;
 import com.workspace.server.model.User;
@@ -21,7 +20,6 @@ import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;
 import java.text.ParseException;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,7 +52,7 @@ public class UserController {
     }
 
     @GetMapping("/users/me")
-/*    @PreAuthorize("hasRole('User')")*/
+    @PreAuthorize("hasRole('User')")
     public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
         return new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
     }
@@ -156,8 +154,8 @@ public class UserController {
         String content = "<p>Добро пожаловать!</p>"
                 + "<p>Вы были зарегистрированы в системе и теперь можете перейти к ней по ссылке:</p>"
                 + "<p><a href=\"http://localhost:3000\">Перейти к системе</a></p>"
-                + "<p>Ваш логин: </p>" + username
-                + "<p>Ваш пароль: </p>" + password;
+                + "<p>Ваш логин: " + username + "</p>"
+                + "<p>Ваш пароль: " + password + "</p>";
 
         helper.setSubject(subject);
 
@@ -169,7 +167,7 @@ public class UserController {
     @GetMapping("/roles")
     public List<Role> getAllRoles() {
         return roleRepository.findAll().stream()
-                .map(roles -> new Role(roles.getName()))
+                .map(role -> new Role(role.getName()))
                 .collect(Collectors.toList());
     }
 

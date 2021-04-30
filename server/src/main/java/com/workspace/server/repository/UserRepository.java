@@ -1,7 +1,5 @@
 package com.workspace.server.repository;
 
-import com.workspace.server.dto.UserProfile;
-import com.workspace.server.model.Role;
 import com.workspace.server.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

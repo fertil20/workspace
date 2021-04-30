@@ -1,23 +1,36 @@
 package com.workspace.server.model;
 
-import org.hibernate.annotations.NaturalId;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Collection;
 
 
 @Entity
-@Table(name = "role")
+@Table(name = "roles")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @NotBlank
     @Column(length = 60, unique = true)
     private String name;
 
+    @ManyToMany(mappedBy = "roles")
+    private Collection<User> users;
+/*
+    @ManyToMany
+    @JoinTable(
+            name = "role_privilege",
+            joinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "privilege_id", referencedColumnName = "id"))
+    private Collection<Privilege> privileges;*/
+
+    public Role(Collection<User> users) {
+        this.users = users;
+    }
 
     public Role(String name) {
         this.name = name;
@@ -26,7 +39,6 @@ public class Role {
     public Role() {
 
     }
-
 
     public Long getId() {
         return id;
@@ -42,5 +54,13 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Collection<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Collection<User> users) {
+        this.users = users;
     }
 }

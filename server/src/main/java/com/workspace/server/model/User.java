@@ -2,19 +2,17 @@ package com.workspace.server.model;
 
 import com.workspace.server.model.audit.DateAudit;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.time.Instant;
 import java.time.LocalTime;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @NoArgsConstructor
@@ -117,10 +115,10 @@ public class User extends DateAudit {
     private static final int EXPIRATION = 60 * 24; //todo set timer for token
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_role",
+    @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private Collection<Role> roles;
 
     public User(String name, String position, String department) {
         this.name = name;
