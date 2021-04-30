@@ -36,6 +36,14 @@ export function getAllRoles(){
     })
 }
 
+export function addNewRole(addNewRoleRequest){
+    return request({
+        url: API_BASE_URL + "/roleManager",
+        method: 'POST',
+        body: JSON.stringify(addNewRoleRequest)
+    });
+}
+
 export function forgotPassword(forgotPasswordRequest){
     return request({
         url: API_BASE_URL + "/auth/forgotPassword",

@@ -25,6 +25,8 @@ import ForgotPassword from "../user/passwordReset/ForgotPassword";
 import ForgotPasswordReset from "../user/passwordReset/ForgotPasswordReset";
 import Home from "../common/Home";
 import NewUser from "../user/new/NewUser";
+import RoleManager from "../user/rolemanager/RoleManager";
+import UsersAdminListEdit from "../components/UsersAdminListEdit";
 const { Content } = Layout;
 
 
@@ -116,6 +118,8 @@ class App extends Component {
                                 <Route path="/resetPassword" component={ForgotPasswordReset}/>
                                 <PrivateRoute exact path="/users/:username" authenticated={this.persistentState.getState().isAuthenticated} component={Profile} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/newUser" authenticated={this.persistentState.getState().isAuthenticated} component={NewUser} handleLogout={this.handleLogout}/>
+                                <PrivateRoute exact path="/roleManager" authenticated={this.persistentState.getState().isAuthenticated} component={RoleManager} handleLogout={this.handleLogout}/>
+                                <PrivateRoute exact path="/editUsers" authenticated={this.persistentState.getState().isAuthenticated} component={UsersAdminListEdit} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/users/:username/edit" authenticated={this.persistentState.getState().isAuthenticated} component={ProfileEdit} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/poll/new" authenticated={this.persistentState.getState().isAuthenticated} component={NewPoll} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/users" authenticated={this.persistentState.getState().isAuthenticated} component={UsersAdminList} handleLogout={this.handleLogout}/>

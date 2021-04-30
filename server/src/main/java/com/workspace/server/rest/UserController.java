@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api")
 public class UserController {
 
 
@@ -48,7 +48,7 @@ public class UserController {
     @Autowired
     private JavaMailSender mailSender;
 
-    @GetMapping
+    @GetMapping("/users")
     public List<UserProfile> getAllUsers() {
         return userRepository.findAll().stream()
                 .map(user -> new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), user.getEmail(), user.getPhone(), user.getTg(), user.getAbout(),
@@ -56,25 +56,25 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/me")
+    @GetMapping("/users/me")
     @PreAuthorize("hasRole('USER')")
     public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
         return new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
     }
 
-    @GetMapping("/checkUsernameAvailability")
+    @GetMapping("/users/checkUsernameAvailability")
     public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "username") String username) {
         Boolean isAvailable = !userRepository.existsByUsername(username);
         return new UserIdentityAvailability(isAvailable);
     }
 
-    @GetMapping("/checkEmailAvailability")
+    @GetMapping("/users/checkEmailAvailability")
     public UserIdentityAvailability checkEmailAvailability(@RequestParam(value = "email") String email) {
         Boolean isAvailable = !userRepository.existsByEmail(email);
         return new UserIdentityAvailability(isAvailable);
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/users/{username}")
     public UserProfile getUserProfile(@PathVariable(value = "username") String username) throws ParseException {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
@@ -84,7 +84,7 @@ public class UserController {
                 user.getPosition(), user.getDepartment(), user.getOffice(), user.getBirthday(), user.getSecretNote(), user.getStatus(), user.getStartAt(), user.getEndAt());
     }
 
-    @PostMapping("/{username}/edit")
+    @PostMapping("/users/{username}/edit")
     public void editUserProfile(@PathVariable(value = "username") String username,
                                                        @RequestBody ProfileEditRequest request) {
         User user = userRepository.findByUsername(username)
@@ -104,12 +104,12 @@ public class UserController {
         userRepository.save(user);
     }
 
-    @PostMapping("/delete/{id}")
+    @PostMapping("/users/delete/{id}")
     public void deleteUser(@PathVariable(value = "id") Long id) {
         userRepository.deleteById(id);
     }
 
-    @PostMapping("../newUser")
+    @PostMapping("/newUser")
     public void createUserProfile(@RequestBody User request) throws MessagingException, UnsupportedEncodingException {
         User user = new User();
         String username = request.getUsername();
@@ -168,7 +168,7 @@ public class UserController {
 
         mailSender.send(message);
     }
-    @GetMapping("../roles")
+    @GetMapping("/roles")
     public List<Role> getAllRoles() {
         return roleRepository.findAll().stream()
                 .map(roles -> new Role(roles.getName()))

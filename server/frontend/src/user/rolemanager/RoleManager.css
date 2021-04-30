@@ -1,0 +1,22 @@
+.column1-title{
+    margin-left: 65px;
+    margin-top: 30px;
+    font-weight: bold;
+}
+
+.column2-title{
+    margin-left: 165px;
+    margin-top: 30px;
+    font-weight: bold;
+}
+
+.button-group{
+    margin-left: 25px;
+    margin-top: 10px;
+}
+
+.button-text{
+    margin-top: 5px;
+    outline:0;
+    border: 0;
+}

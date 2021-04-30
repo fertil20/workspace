@@ -12,7 +12,7 @@ import {
     TooltipWidgetIll
 } from "../user/profile/TooltipWidget";
 
-class UsersAdminList extends Component {
+class UsersAdminListEdit extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,6 +23,7 @@ class UsersAdminList extends Component {
         }
         this.loadAllUsers = this.loadAllUsers.bind(this);
         this.SetUserStatus = this.SetUserStatus.bind(this);
+        this.DeleteUser = this.DeleteUser.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.FindUser = this.FindUser.bind(this);
     }
@@ -67,18 +68,18 @@ class UsersAdminList extends Component {
 
     componentDidMount() {
         this._isMounted = true;
-        this._isMounted && this.loadAllUsers();
+        this._isMounted && this.loadAllUsers(this.props.match.params.id);
     }
 
     componentWillUnmount() {
         this._isMounted = false;
     }
 
-/*    componentDidUpdate(prevState) {
-        if(this.state.deleteUserID !== prevState.deleteUserID) {
-            this.loadAllUsers();
+    componentDidUpdate(prevProps) {
+        if(this.props.match.params.id !== prevProps.match.params.id) {
+            this.loadUserProfile(prevProps.match.params.id);
         }
-    }*/
+    }
 
     render (){
         if(this.state.isLoading) {
@@ -107,13 +108,13 @@ class UsersAdminList extends Component {
                 <div>
                     <Form>
                         <Row>
-                        <Input placeholder='Ф.И.О.'
-                               className='search-bar'
-                               id="FIO" name='FIO' type='text'
-                               value={this.state.FIO.value}
-                               onChange={(event) => {this.handleInputChange(event)}}
-                        />
-                        <Button size='sm' className='search-button' onClick={() => this.FindUser(this.state.FIO.value)}><img src={search} width={25} height={25} alt='Search'/></Button>
+                            <Input placeholder='Ф.И.О.'
+                                   className='search-bar'
+                                   id="FIO" name='FIO' type='text'
+                                   value={this.state.FIO.value}
+                                   onChange={(event) => {this.handleInputChange(event)}}
+                            />
+                            <Button size='sm' className='search-button' onClick={() => this.FindUser(this.state.FIO.value)}><img src={search} width={25} height={25} alt='Search'/></Button>
                         </Row>
                     </Form>
                 </div>
@@ -131,21 +132,37 @@ class UsersAdminList extends Component {
                                 this.state.user.map(
                                     user => //todo Пофиксить варнинг
                                         <div>
-                                        <ListGroup horizontal="lg" key={user.id}>
-                                            <ListGroupItem style={{width:250}} key={user.id+'.1'} tag = 'a' href={`/users/${user.username}`}>{user.name}</ListGroupItem>
-                                            <ListGroupItem style={{width:100}} key={user.id+'.2'}>{this.SetUserStatus(user.status)}</ListGroupItem>
-                                            <ListGroupItem style={{width:150}} key={user.id+'.3'}>{user.position}</ListGroupItem>
-                                            <ListGroupItem style={{width:170}} key={user.id+'.4'}>{user.department}</ListGroupItem>
-                                            <ListGroupItem style={{width:300}} key={user.id+'.5'}>{user.email}<br/>{user.phone}<br/>Telegram: @{user.tg}</ListGroupItem>
-                                        </ListGroup>
+                                            <ListGroup horizontal="lg" key={user.id}>
+                                                <ListGroupItem style={{width:250}} key={user.id+'.1'} tag = 'a' href={`/users/${user.username}`}>{user.name}</ListGroupItem>
+                                                <ListGroupItem style={{width:100}} key={user.id+'.2'}>{this.SetUserStatus(user.status)}</ListGroupItem>
+                                                <ListGroupItem style={{width:150}} key={user.id+'.3'}>
+                                                    <Input type='text' name='position' id='position'
+                                                           value={user.position}
+                                                           onChange={(event) => this.handleInputChange(event)}/></ListGroupItem>
+                                                <ListGroupItem style={{width:170}} key={user.id+'.4'}>
+                                                    <Input type='text' name='position' id='position'
+                                                           value={user.department}
+                                                           onChange={(event) => this.handleInputChange(event)}/></ListGroupItem>
+                                                <ListGroupItem style={{width:300}} key={user.id+'.5'}>
+                                                    <Input type='text' name='position' id='position'
+                                                           value={user.email}
+                                                           onChange={(event) => this.handleInputChange(event)}/>
+                                                    <Input type='text' name='position' id='position'
+                                                           value={user.phone}
+                                                           onChange={(event) => this.handleInputChange(event)}/>
+                                                    <Input type='text' name='position' id='position'
+                                                           value={user.tg}
+                                                           onChange={(event) => this.handleInputChange(event)}/></ListGroupItem>
+                                                <Button size='sm' color='danger' style={{height:30, marginTop:30, marginLeft:10}} key={user.id+'.6'} onClick={() => this.DeleteUser(user.id)}>Удалить</Button>
+                                            </ListGroup>
                                         </div>
                                 )
                             }
                         </div>
                     ):null
                 }
-                <Button size="sm" href='/editUsers' style={{marginTop:10, marginLeft:10}} className='add-button'>
-                    Редактировать
+                <Button size="sm" href='/users' style={{marginTop:10, marginLeft:10}} className='add-button'>
+                    Сохранить
                 </Button>
                 <Button size="sm" href='/newUser' style={{marginTop:10, marginLeft:10}} className='add-button'>
                     Добавить сотрудника
@@ -158,6 +175,17 @@ class UsersAdminList extends Component {
         console.log(FIO)
     }
 
+    DeleteUser(userID){
+        this.setState({deleteUserID: userID})
+        deleteUser(userID)
+            .then(response => {
+                alert('Пользователь удалён');
+                this.componentDidMount(UsersAdminListEdit);//todo разобраться с unmount и update
+            })
+            .catch(error => {
+                alert('Что-то пошло не так');
+            });
+    }
     SetUserStatus(userStatus){
         if(userStatus === '0'){
             return <TooltipWidgetHome/>
@@ -174,4 +202,4 @@ class UsersAdminList extends Component {
     }
 }
 
-export default UsersAdminList
+export default UsersAdminListEdit
