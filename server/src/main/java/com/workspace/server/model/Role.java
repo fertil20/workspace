@@ -3,17 +3,19 @@ package com.workspace.server.model;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 
 @Entity
-@Table(name = "roles")
+@Table(name = "role")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NaturalId
-    @Column(length = 60)
+
+    @NotBlank
+    @Column(length = 60, unique = true)
     private String name;
 
 

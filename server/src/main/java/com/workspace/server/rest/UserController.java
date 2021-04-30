@@ -133,10 +133,10 @@ public class UserController {
         user.setSecretNote(request.getSecretNote());
         user.setStatus(request.getStatus());
 
-        Role userRole = roleRepository.findByName("User")
+/*        Role userRole = roleRepository.findByName("User")
                 .orElseThrow(() -> new AppException("User Role not set."));
 
-        user.setRoles(Collections.singleton(userRole));
+        user.setRoles(Collections.singleton(userRole));*/
 
         userRepository.save(user);
 
@@ -165,16 +165,26 @@ public class UserController {
 
         mailSender.send(message);
     }
+
     @GetMapping("/roles")
     public List<Role> getAllRoles() {
         return roleRepository.findAll().stream()
                 .map(roles -> new Role(roles.getName()))
                 .collect(Collectors.toList());
     }
+
     @PostMapping("/roles")
     public void setNewRole(@RequestBody Role request) {
         Role role = new Role();
         role.setName(request.getName());
         roleRepository.save(role);
     }
+
+/*    @GetMapping("/roles/{role}")
+    public List<User> getRoleUsers(@PathVariable String role) {
+        return userRepository.findAll().stream()
+                .map(user -> new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), user.getEmail(), user.getPhone(), user.getTg(), user.getAbout(),
+                        user.getPosition(), user.getDepartment(), user.getOffice(), user.getBirthday(), user.getSecretNote(), user.getStatus(), user.getStartAt(), user.getEndAt()))
+                .collect(Collectors.toList());
+    }*/
 }

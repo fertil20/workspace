@@ -108,12 +108,13 @@ class RoleManager extends Component {
     componentWillUnmount() {
         this._isMounted = false;
     }
-    //
-    // componentDidUpdate(prevProps) {
-    //     if(this.props.match.params.username !== prevProps.match.params.username) {
-    //         this.loadUserProfile(this.props.match.params.username);
-    //     }
-    // }
+/*
+    componentDidUpdate(prevProps) {
+        if(this.props.match.params.toggle !== prevProps.match.params.toggle) {
+            this.loadRoles();
+            this.changeToggle();
+        }
+    }*/
 
     handleInputChange(event) {
         const target = event.target;
@@ -136,11 +137,12 @@ class RoleManager extends Component {
         addNewRole(addNewRoleRequest)
                 .then(response => {
                     alert('Новая роль добавлена.');
-                    this.props.history.push(`/roleManager`);
+                    this.loadRoles()
                 })
                 .catch(error => {
                     alert('Что-то пошло не так.');
                 });
+        this.changeToggle()
     }
 
     // handleSubmit(event) {
@@ -174,7 +176,6 @@ class RoleManager extends Component {
     changeToggle(){
         if (this.state.toggle === true){this.setState({toggle: false})}
         if (this.state.toggle === false){this.setState({toggle: true})}
-        this.setState({role:{value: ''}})
     }
 
 
@@ -217,8 +218,8 @@ class RoleManager extends Component {
                                 </ModalFooter>
                             </Modal>
                         </div>
-                        <div><Button outline color="primary" size='sm' className='button-text'>Администратор</Button></div>
-                        <div><Button outline color="primary" size='sm' className='button-text'>Сотрудник</Button></div>
+{/*                        <div><Button outline color="primary" size='sm' className='button-text'>Администратор</Button></div>
+                        <div><Button outline color="primary" size='sm' className='button-text'>Сотрудник</Button></div>*/}
                         {
                             this.state.roles ? (
                                 <div>

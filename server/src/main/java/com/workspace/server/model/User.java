@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.Instant;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.HashSet;
@@ -53,15 +54,15 @@ public class User extends DateAudit {
     @Size(max = 100)
     private String password;
 
-    @Column(name = "phone")
+    @Column(name = "phone", unique = true)
     @NotBlank
     @Size(max = 50)
-    private String phone="No info";
+    private String phone;
 
     @Column(name = "tg")
     @NotBlank
     @Size(max = 30)
-    private String tg="No info";
+    private String tg;
 
     @Column(name = "about")
     @Size(max = 300)
@@ -70,39 +71,39 @@ public class User extends DateAudit {
     @Column(name = "position")
     @NotBlank
     @Size(max = 50)
-    private String position="No info";
+    private String position;
 
     @Column(name = "department")
     @NotBlank
     @Size(max = 300)
-    private String department="No info";
+    private String department;
 
     @Column(name = "office")
     @NotBlank
     @Size(max = 3)
-    private String office="000";
+    private String office;
 
     @NotBlank
-    @Column(name = "start_at") //todo поменять на LocalTime
-    private LocalTime startAt=LocalTime.parse("08:00");
+    @Column(name = "start_at")
+    private LocalTime startAt;
 
     @NotBlank
     @Column(name = "end_at")
-    private LocalTime endAt=LocalTime.parse("18:00");
+    private LocalTime endAt;
 
-    @Column(name = "birthday") //todo добавить NotBlank
-//    @NotBlank
+    @Column(name = "birthday")
+    @NotBlank
     private Date birthday;
 
     @Column(name = "secret_note")
     @NotBlank
     @Size(max = 300)
-    private String secretNote="No notes";
+    private String secretNote;
 
     @Column(name = "status")
     @NotBlank
     @Size(max = 1)
-    private char status='0';
+    private char status;
 
     @Column(name = "status_date_start")
     private Date statusDateStart;
@@ -116,10 +117,16 @@ public class User extends DateAudit {
     private static final int EXPIRATION = 60 * 24; //todo set timer for token
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles",
+    @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    public User(String name, String position, String department) {
+        this.name = name;
+        this.position = position;
+        this.department = department;
+    }
 
 /*    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_hours",
@@ -133,12 +140,14 @@ public class User extends DateAudit {
             inverseJoinColumns = @JoinColumn(name = "days_id"))
     private Set<WorkDay> workDays = new HashSet<>();*/
 
+/*
     @Override
     public int hashCode() {
 
         return Objects.hash(username, email, phone, tg, about, position,
                 department, office, startAt, endAt, secretNote, status); //todo оно нужно???
     }
+*/
 
 
     public User(String name, String username, String email, String password) {

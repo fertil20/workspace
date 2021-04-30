@@ -62,6 +62,7 @@ class NewUser extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
+        this.setState({isLoading: true})
         const newUserRequest = {
             username: this.state.username.value,
             email: this.state.email.value,
@@ -78,14 +79,16 @@ class NewUser extends Component {
             secretNote: this.state.secretNote.value,
             status: this.state.status.value, // Статус работы (0,1,2,3)
             statusTimeStart: this.state.statusTimeStart.value,
-            statusTimeFinish: this.state.statusTimeFinish.value
+            statusTimeFinish: this.state.statusTimeFinish.value,
         };
         newUser(newUserRequest)
             .then(response => {
+                this.setState({isLoading: false})
                 alert('Новый пользователь создан.');
                 this.props.history.push(`/users`);
             })
             .catch(error => {
+                this.setState({isLoading: false})
                 alert('Что-то пошло не так.');
             });
     }
