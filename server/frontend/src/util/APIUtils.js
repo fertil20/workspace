@@ -38,7 +38,7 @@ export function getAllRoles(){
 
 export function addNewRole(addNewRoleRequest){
     return request({
-        url: API_BASE_URL + "/roleManager",
+        url: API_BASE_URL + "/roles",
         method: 'POST',
         body: JSON.stringify(addNewRoleRequest)
     });

@@ -3,7 +3,6 @@ package com.workspace.server.rest;
 import com.workspace.server.exception.AppException;
 import com.workspace.server.exception.ResourceNotFoundException;
 import com.workspace.server.model.Role;
-import com.workspace.server.model.RoleName;
 import com.workspace.server.model.User;
 import com.workspace.server.dto.*;
 import com.workspace.server.repository.RoleRepository;
@@ -11,8 +10,6 @@ import com.workspace.server.repository.UserRepository;
 import com.workspace.server.security.CurrentUser;
 import com.workspace.server.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -57,7 +54,7 @@ public class UserController {
     }
 
     @GetMapping("/users/me")
-    @PreAuthorize("hasRole('USER')")
+/*    @PreAuthorize("hasRole('User')")*/
     public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
         return new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
     }
@@ -136,7 +133,7 @@ public class UserController {
         user.setSecretNote(request.getSecretNote());
         user.setStatus(request.getStatus());
 
-        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+        Role userRole = roleRepository.findByName("User")
                 .orElseThrow(() -> new AppException("User Role not set."));
 
         user.setRoles(Collections.singleton(userRole));
@@ -173,5 +170,11 @@ public class UserController {
         return roleRepository.findAll().stream()
                 .map(roles -> new Role(roles.getName()))
                 .collect(Collectors.toList());
+    }
+    @PostMapping("/roles")
+    public void setNewRole(@RequestBody Role request) {
+        Role role = new Role();
+        role.setName(request.getName());
+        roleRepository.save(role);
     }
 }
