@@ -6,7 +6,6 @@ import com.workspace.server.dto.ResetPasswordTokenResponse;
 import com.workspace.server.model.User;
 import com.workspace.server.service.ResetPasswordService;
 import net.bytebuddy.utility.RandomString;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

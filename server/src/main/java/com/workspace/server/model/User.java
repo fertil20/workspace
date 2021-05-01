@@ -120,10 +120,10 @@ public class User extends DateAudit {
     @EqualsAndHashCode.Exclude
     private Set<Role> roles;
 
-    public User(String name, String position, String department) {
+    public User(String name, String username, String position) {
         this.name = name;
+        this.username = username;
         this.position = position;
-        this.department = department;
     }
 
 /*    @ManyToMany(fetch = FetchType.LAZY)
@@ -143,7 +143,7 @@ public class User extends DateAudit {
     public int hashCode() {
 
         return Objects.hash(username, email, phone, tg, about, position,
-                department, office, startAt, endAt, secretNote, status); //todo оно нужно???
+                department, office, startAt, endAt, secretNote, status);
     }
 */
 

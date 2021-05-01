@@ -11,7 +11,7 @@ import java.time.Instant;
 @NoArgsConstructor
 public class PasswordResetToken {
 
-    private static final int EXPIRATION = 60 * 24;
+/*    private static final int EXPIRATION = 60 * 24;*/
 
     private String token;
 

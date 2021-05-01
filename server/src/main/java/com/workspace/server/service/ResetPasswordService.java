@@ -3,7 +3,6 @@ package com.workspace.server.service;
 import com.workspace.server.model.PasswordResetToken;
 import com.workspace.server.model.User;
 import com.workspace.server.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,9 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ResetPasswordService {
 
-    @Autowired
-    private UserRepository userRepo;
+    private final UserRepository userRepo;
 
+    public ResetPasswordService(UserRepository userRepo) {
+        this.userRepo = userRepo;
+    }
 
     public void updateResetPasswordToken(String token, String email) throws UsernameNotFoundException {
         User user = userRepo.findUserByEmail(email);
@@ -29,7 +30,7 @@ public class ResetPasswordService {
     }
 
     public User getByResetPasswordToken(String token) {
-        return userRepo.findByResetPasswordToken(token);
+        return userRepo.findByResetPasswordToken_Token(token);
     }
 
     //todo сделать обнуление токена через час
