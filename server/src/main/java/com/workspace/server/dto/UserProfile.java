@@ -3,8 +3,8 @@ package com.workspace.server.dto;
 
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 import java.time.Instant;
 
 @Data
@@ -20,7 +20,7 @@ public class UserProfile {
     private String position;
     private String department;
     private String office;
-    private Date birthday;
+    private LocalDate birthday;
     private String secretNote;
     private char status;
     private LocalTime startAt;
@@ -30,7 +30,7 @@ public class UserProfile {
 
 
     public UserProfile(Long id, String username, String name, Instant joinedAt, String email, String phone, String tg,
-                       String about, String position, String department, String office, Date birthday, String secretNote, char status, LocalTime startAt, LocalTime endAt) {
+                       String about, String position, String department, String office, LocalDate birthday, String secretNote, char status, LocalTime startAt, LocalTime endAt) {
         this.id = id;
         this.username = username;
         this.name = name;

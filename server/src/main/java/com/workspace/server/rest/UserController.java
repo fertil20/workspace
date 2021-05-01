@@ -20,9 +20,7 @@ import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;
 import java.text.ParseException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -184,5 +182,16 @@ public class UserController {
         return userRepository.findByRolesIn(role).stream()
                 .map(user -> new User(user.getName(), user.getPosition(), user.getDepartment()))
                 .collect(Collectors.toList());
+    }
+
+    @PostMapping("/roles/{roleName}/addUser/{userName}")
+    @PreAuthorize("hasRole('Admin')")
+/*    @PreAuthorize("hasPermission('')")*/
+    public void addUserToRole(@PathVariable String roleName, @PathVariable String userName) {
+        Role role = roleRepository.getOne(roleName);
+        User user = userRepository.findByUsername(userName)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", userName));
+        user.getRoles().add(role);
+        userRepository.save(user);
     }
 }

@@ -25,7 +25,7 @@ import javax.validation.Valid;
 public class AuthController {
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    AuthenticationManager authenticationManager; //todo убрать Autowired
 
     @Autowired
     UserRepository userRepository;

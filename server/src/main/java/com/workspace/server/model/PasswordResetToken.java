@@ -1,7 +1,10 @@
 package com.workspace.server.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.time.Instant;
 
 @Entity
 public class PasswordResetToken {
@@ -14,12 +17,9 @@ public class PasswordResetToken {
 
     private String token;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "user_id")
-    private User user;
+    private Instant expiryDate;
 
-    private Date expiryDate;
-
-    public PasswordResetToken() {
+    public PasswordResetToken(String token) {
+        this.token = token;
     }
 }

@@ -9,8 +9,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -91,7 +92,7 @@ public class User extends DateAudit {
 
     @Column(name = "birthday")
     @NotBlank
-    private Date birthday;
+    private LocalDate birthday;
 
     @Column(name = "secret_note")
     @NotBlank
@@ -104,21 +105,20 @@ public class User extends DateAudit {
     private char status;
 
     @Column(name = "status_date_start")
-    private Date statusDateStart;
+    private LocalDate statusDateStart;
 
     @Column(name = "status_date_finish")
-    private Date statusDateFinish;
+    private LocalDate statusDateFinish;
 
-    @Column(name = "reset_password_token")
-    @Size (max = 30)
-    private String resetPasswordToken;
-    private static final int EXPIRATION = 60 * 24; //todo set timer for token
+    @Embedded
+    private PasswordResetToken resetPasswordToken;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<Role> roles;
+            inverseJoinColumns = @JoinColumn(name = "role_name"))
+    @EqualsAndHashCode.Exclude
+    private Set<Role> roles;
 
     public User(String name, String position, String department) {
         this.name = name;

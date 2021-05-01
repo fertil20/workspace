@@ -11,13 +11,13 @@ VALUES ('06:00-14:00'), ('07:00-15:00'), ('08:00-16:00'), ('09:00-17:00'), ('10:
        ('11:00-19:00'), ('12:00-20:00'), ('13:00-21:00'), ('14:00-22:00');
 INSERT INTO working_days(weekday)
 VALUES ('ПН'), ('ВТ'), ('СР'), ('ЧТ'), ('ПТ'), ('СБ'), ('ВС');*/
-INSERT INTO users_roles (user_id, role_id)
-VALUES ('1', '1'),
-       ('1', '2'),
-       ('2', '1'),
-       ('2', '2'),
-       ('3', '1'),
-       ('3', '2');
+INSERT INTO users_roles (user_id, role_name)
+VALUES ('1', 'ROLE_User'),
+       ('1', 'ROLE_Admin'),
+       ('2', 'ROLE_User'),
+       ('2', 'ROLE_Admin'),
+       ('3', 'ROLE_User'),
+       ('3', 'ROLE_Admin');
 /*INSERT INTO user_hours(user_id, hours_id)
 VALUES ('1', '5'),
        ('1', '7'),

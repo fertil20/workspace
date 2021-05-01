@@ -1,8 +1,10 @@
 package com.workspace.server.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.Collection;
 import java.util.Set;
 
 
@@ -18,7 +20,9 @@ public class Role {
     private String name;
 
     @ManyToMany(mappedBy = "roles")
-    private Collection<User> users;
+    @EqualsAndHashCode.Exclude
+    private Set<User> users;
+
 /*
     @ManyToMany
     @JoinTable(

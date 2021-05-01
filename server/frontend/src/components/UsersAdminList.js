@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {deleteUser, getAllUsers} from "../util/APIUtils";
+import {getAllUsers} from "../util/APIUtils";
 import NotFound from "../common/NotFound";
 import ServerError from "../common/ServerError";
 import {ListGroup, ListGroupItem, Button, Row, Input, Form} from 'reactstrap';
@@ -11,7 +11,7 @@ import {
     TooltipWidgetHome,
     TooltipWidgetIll
 } from "../user/profile/TooltipWidget";
-
+//todo пофиксить отображение одинаковых статусов
 class UsersAdminList extends Component {
     constructor(props) {
         super(props);

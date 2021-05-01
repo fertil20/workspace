@@ -183,7 +183,11 @@ class UsersAdminListEdit extends Component {
                 this.componentDidMount(UsersAdminListEdit);//todo разобраться с unmount и update
             })
             .catch(error => {
-                alert('Что-то пошло не так');
+                if (error.status === 403) {
+                    alert('Упс, кажется у вас недостаточно прав');
+                } else {
+                    alert('Что-то пошло не так');
+                }
             });
     }
     SetUserStatus(userStatus){

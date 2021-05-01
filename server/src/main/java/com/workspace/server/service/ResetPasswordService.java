@@ -1,5 +1,6 @@
 package com.workspace.server.service;
 
+import com.workspace.server.model.PasswordResetToken;
 import com.workspace.server.model.User;
 import com.workspace.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class ResetPasswordService {
     public void updateResetPasswordToken(String token, String email) throws UsernameNotFoundException {
         User user = userRepo.findUserByEmail(email);
         if (user != null) {
-            user.setResetPasswordToken(token);
+            user.setResetPasswordToken(new PasswordResetToken(token));
             userRepo.save(user);
         } else {
             throw new UsernameNotFoundException("Could not find any user with the email " + email);
