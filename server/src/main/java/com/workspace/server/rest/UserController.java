@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -131,7 +131,7 @@ public class UserController {
         user.setSecretNote(request.getSecretNote());
         user.setStatus(request.getStatus());
 
-        Role role = roleRepository.findByName("ROLE_User");
+        Role role = roleRepository.getOne("ROLE_User");
 
         user.setRoles(Collections.singleton(role));
 
@@ -178,8 +178,8 @@ public class UserController {
     }
 
     @GetMapping("/roles/{role}")
-    public List<User> getRoleUsers(@PathVariable Collection<Collection<Role>> role) {
-        return userRepository.findByRolesIn(role).stream()
+    public List<User> getRoleUsers(@PathVariable String role) {
+        return roleRepository.getOne(role).getUsers().stream()
                 .map(user -> new User(user.getName(), user.getPosition(), user.getDepartment()))
                 .collect(Collectors.toList());
     }

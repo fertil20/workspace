@@ -22,11 +22,14 @@ import java.io.UnsupportedEncodingException;
 @RequestMapping("/api/auth")
 public class ResetPasswordController {
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
+    private final ResetPasswordService userService;
 
-    @Autowired
-    private ResetPasswordService userService;
+    public ResetPasswordController(JavaMailSender mailSender,
+                                   ResetPasswordService userService) {
+        this.mailSender = mailSender;
+        this.userService = userService;
+    }
 
     @PostMapping("/forgotPassword")
     public void processForgotPassword(@Valid @RequestBody ForgotPasswordRequest request) throws MessagingException, UnsupportedEncodingException {
@@ -67,7 +70,7 @@ public class ResetPasswordController {
     public ResetPasswordTokenResponse showResetPasswordForm(@Valid @RequestParam(value = "token") String token) throws UsernameNotFoundException {
         User user = userService.getByResetPasswordToken(token);
         if (user!=null) {
-            return new ResetPasswordTokenResponse(user.getResetPasswordToken());
+            return new ResetPasswordTokenResponse(user.getResetPasswordToken().getToken());
         }
         else {
             throw new UsernameNotFoundException("Could not find any user with the token " + token);
