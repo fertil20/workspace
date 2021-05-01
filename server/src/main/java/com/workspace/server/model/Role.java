@@ -3,6 +3,7 @@ package com.workspace.server.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
+import java.util.Set;
 
 
 @Entity

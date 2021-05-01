@@ -230,7 +230,6 @@ class ProfileEdit extends Component {
                                                        required
                                                        pattern="[+][7] [(][0-9]{3}[)] [0-9]{3}-[0-9]{2}-[0-9]{2}"
                                                        onChange={(event) => this.handleInputChange(event)}/>
-                                                    <span className="validity"/>
                                                 <div style={{height: 10}}/>
                                                 <Input type="text" name="tg" id="tg" placeholder={"telegram"}
                                                        value={this.state.tg.value}

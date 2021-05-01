@@ -106,6 +106,9 @@ function NavBarLogged(props){
                                 <DropdownItem href="/users">
                                     Users
                                 </DropdownItem>
+                                <DropdownItem href="/roleManager">
+                                    Role Manager
+                                </DropdownItem>
                                 <DropdownItem  onClick={props.handleMenuClick} href="/login">
                                     Logout
                                 </DropdownItem>

@@ -20,6 +20,8 @@ import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;
 import java.text.ParseException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -131,10 +133,9 @@ public class UserController {
         user.setSecretNote(request.getSecretNote());
         user.setStatus(request.getStatus());
 
-/*        Role userRole = roleRepository.findByName("User")
-                .orElseThrow(() -> new AppException("User Role not set."));
+        Role role = roleRepository.findByName("ROLE_User");
 
-        user.setRoles(Collections.singleton(userRole));*/
+        user.setRoles(Collections.singleton(role));
 
         userRepository.save(user);
 
@@ -178,11 +179,10 @@ public class UserController {
         roleRepository.save(role);
     }
 
-/*    @GetMapping("/roles/{role}")
-    public List<User> getRoleUsers(@PathVariable String role) {
-        return userRepository.findAll().stream()
-                .map(user -> new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), user.getEmail(), user.getPhone(), user.getTg(), user.getAbout(),
-                        user.getPosition(), user.getDepartment(), user.getOffice(), user.getBirthday(), user.getSecretNote(), user.getStatus(), user.getStartAt(), user.getEndAt()))
+    @GetMapping("/roles/{role}")
+    public List<User> getRoleUsers(@PathVariable Collection<Collection<Role>> role) {
+        return userRepository.findByRolesIn(role).stream()
+                .map(user -> new User(user.getName(), user.getPosition(), user.getDepartment()))
                 .collect(Collectors.toList());
-    }*/
+    }
 }

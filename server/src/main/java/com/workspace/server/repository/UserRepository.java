@@ -1,5 +1,6 @@
 package com.workspace.server.repository;
 
+import com.workspace.server.model.Role;
 import com.workspace.server.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -25,5 +26,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByResetPasswordToken(String token);
 
-    Collection<User> findByRolesIn(Set<User> userRoles);
+/*    Collection<User> findByRolesIn(Set<User> roles);*/
+
+    Collection<User> findByRolesIn(Collection<Collection<Role>> roles);
 }

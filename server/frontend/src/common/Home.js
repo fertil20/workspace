@@ -2,9 +2,10 @@ import {Component} from "react";
 import hello1 from "../media/hello1.jpg";
 import hello2 from "../media/hello2.jpg";
 import hello3 from "../media/hello3.jpg";
+import hello4 from "../media/hello4.jpg";
 import './Home.css';
 
-const randomImg = (Math.floor(Math.random() * 3 + 1));
+const randomImg = (Math.floor(Math.random() * 4 + 1));
 
 export default class Home extends Component {
     render () {
@@ -24,6 +25,12 @@ export default class Home extends Component {
             return (
                 <div>
                     <img src={hello3} id="hello" width={500} height={500} alt='Hello!' className="home"/>
+                </div>
+            )
+        if (randomImg === 4)
+            return (
+                <div>
+                    <img src={hello4} id="hello" width={500} height={500} alt='Hello!' className="home"/>
                 </div>
             )
     }

@@ -15,6 +15,7 @@ import {TooltipWidgetHome,TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidg
 import React, {Component, useState} from "react";
 import {checkEmailAvailability, checkUsernameAvailability, newUser} from "../../util/APIUtils";
 import {EMAIL_MAX_LENGTH, USERNAME_MAX_LENGTH, USERNAME_MIN_LENGTH} from "../../constants";
+import FormItem from "@ant-design/compatible/es/form/FormItem";
 
 
 class NewUser extends Component {
@@ -45,6 +46,9 @@ class NewUser extends Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.validateUsernameAvailability = this.validateUsernameAvailability.bind(this);
+        this.validateEmailAvailability = this.validateEmailAvailability.bind(this);
+        this.isFormInvalid = this.isFormInvalid.bind(this);
     }
 
     handleInputChange(event) {
@@ -96,7 +100,7 @@ class NewUser extends Component {
         if(!email) {
             return {
                 validateStatus: 'error',
-                errorMsg: 'Email may not be empty'
+                errorMsg: 'Email не может быть пустым'
             }
         }
 
@@ -104,14 +108,14 @@ class NewUser extends Component {
         if(!EMAIL_REGEX.test(email)) {
             return {
                 validateStatus: 'error',
-                errorMsg: 'Email not valid'
+                errorMsg: 'Email введён неверно'
             }
         }
 
         if(email.length > EMAIL_MAX_LENGTH) {
             return {
                 validateStatus: 'error',
-                errorMsg: `Email is too long (Maximum ${EMAIL_MAX_LENGTH} characters allowed)`
+                errorMsg: `Email слишком длинный (Максимум - ${EMAIL_MAX_LENGTH} знаков)`
             }
         }
 
@@ -125,12 +129,12 @@ class NewUser extends Component {
         if(username.length < USERNAME_MIN_LENGTH) {
             return {
                 validateStatus: 'error',
-                errorMsg: `Username is too short (Minimum ${USERNAME_MIN_LENGTH} characters needed.)`
+                errorMsg: `Имя пользовтеля слишком короткое (Минимум - ${USERNAME_MIN_LENGTH} знаков.)`
             }
         } else if (username.length > USERNAME_MAX_LENGTH) {
             return {
                 validationStatus: 'error',
-                errorMsg: `Username is too long (Maximum ${USERNAME_MAX_LENGTH} characters allowed.)`
+                errorMsg: `Имя пользовтеля слишком длинное (Максимум - ${USERNAME_MAX_LENGTH} знаков.)`
             }
         } else {
             return {
@@ -178,7 +182,7 @@ class NewUser extends Component {
                         username: {
                             value: usernameValue,
                             validateStatus: 'error',
-                            errorMsg: 'This username is already taken'
+                            errorMsg: 'Это имя пользователя уже занято'
                         }
                     });
                 }
@@ -211,7 +215,8 @@ class NewUser extends Component {
         this.setState({
             email: {
                 value: emailValue,
-                validateStatus: 'validating'
+                validateStatus: 'validating',
+                errorMsg: null
             }
         });
 
@@ -221,14 +226,16 @@ class NewUser extends Component {
                     this.setState({
                         email: {
                             value: emailValue,
-                            validateStatus: 'error'
+                            validateStatus: 'success',
+                            errorMsg: null
                         }
                     });
                 } else {
                     this.setState({
                         email: {
                             value: emailValue,
-                            validateStatus: 'success'
+                            validateStatus: 'error',
+                            errorMsg: 'Этот email уже зарегистрирован'
                         }
                     });
                 }
@@ -237,10 +244,17 @@ class NewUser extends Component {
             this.setState({
                 email: {
                     value: emailValue,
-                    validateStatus: 'validating',
+                    validateStatus: 'success',
+                    errorMsg: null
                 }
             });
         });
+    }
+
+    isFormInvalid() {
+        return !(this.state.username.validateStatus === 'success' &&
+            this.state.email.validateStatus === 'success'
+        );
     }
 
 
@@ -315,7 +329,35 @@ class NewUser extends Component {
                                         </Col>
                                         <Col>
                                             <FormGroup style={{marginTop:20}}>
-                                                <Input type="text" name="username" id="username" placeholder="drobovik123"
+                                                <FormItem hasFeedback
+                                                          validateStatus={this.state.username.validateStatus}
+                                                          help={this.state.username.errorMsg}>
+                                                    <Input
+                                                        type="text"
+                                                        required
+                                                        name="username"
+                                                        autoComplete="off"
+                                                        placeholder="drobovik123"
+                                                        value={this.state.username.value}
+                                                        onBlur={this.validateUsernameAvailability}
+                                                        onChange={(event) => this.handleInputChange(event, this.validateUsername)} />
+                                                </FormItem>
+                                                <div style={{height: 10}}/>
+                                                <FormItem
+                                                    hasFeedback
+                                                    validateStatus={this.state.email.validateStatus}
+                                                    help={this.state.email.errorMsg}>
+                                                    <Input
+                                                        name="email"
+                                                        type="email"
+                                                        required
+                                                        autoComplete="off"
+                                                        placeholder="sophie@example.com"
+                                                        value={this.state.email.value}
+                                                        onBlur={this.validateEmailAvailability}
+                                                        onChange={(event) => this.handleInputChange(event, this.validateEmail)} />
+                                                </FormItem> {/*todo надо фиксить формочки!*/}
+                                                {/*<Input type="text" name="username" id="username" placeholder="drobovik123"
                                                        value={this.state.username.value}
                                                        required
                                                        onChange={(event) => {this.handleInputChange(event)}}/>
@@ -323,14 +365,13 @@ class NewUser extends Component {
                                                 <Input type="email" name="email" id="email" placeholder="sophie@example.com"
                                                        value={this.state.email.value}
                                                        required
-                                                       onChange={(event) => {this.handleInputChange(event)}}/>
+                                                       onChange={(event) => {this.handleInputChange(event)}}/>*/}
                                                 <div style={{height: 10}}/>
                                                 <Input type="tel" name="phone" id="phone" placeholder={"+7 (905) 226-23-58"}
                                                        value={this.state.phone.value}
                                                        required
                                                        pattern="[+][7] [(][0-9]{3}[)] [0-9]{3}-[0-9]{2}-[0-9]{2}"
                                                        onChange={(event) => this.handleInputChange(event)}/>
-                                                <span className="validity"/>
                                                 <div style={{height: 10}}/>
                                                 <Input type="text" name="tg" id="tg" placeholder={"telegram"}
                                                        value={this.state.tg.value}
@@ -406,7 +447,7 @@ class NewUser extends Component {
                                                    value={this.state.secretNote.value}
                                                    onChange={(event) => this.handleInputChange(event)}/>
                                             <div style={{marginTop:20}}>
-                                                <Button color="primary" size="sm">
+                                                <Button color="primary" size="sm" disabled={this.isFormInvalid()}>
                                                     Добавить пользователя
                                                 </Button>
                                             </div>

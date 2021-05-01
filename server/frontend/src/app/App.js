@@ -104,6 +104,7 @@ class App extends Component {
             <Layout className="app-container">
                 <AppHeader isAuthenticated={this.persistentState.getState().isAuthenticated}
                            currentUser={this.persistentState.getState().currentUser}
+/*                           privilege={this.persistentState.getState().currentUser.role.privilege}*/
                            onLogout={this.handleLogout} />
 
                 <Content className="app-content">

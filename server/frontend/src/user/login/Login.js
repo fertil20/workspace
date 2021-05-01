@@ -5,6 +5,7 @@ import { ACCESS_TOKEN } from '../../constants';
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
 import { Input, Button, notification } from 'antd';
+import {Link} from "react-router-dom";
 // import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 const FormItem = Form.Item;
 
@@ -91,7 +92,7 @@ class LoginForm extends Component {
                 </FormItem>
                 <FormItem>
                     <Button type="primary" htmlType="submit" size="large" className="login-form-button">Войти</Button>
-                    <a  className="forgot-password" href={'/forgotPassword'}>Забыл пароль</a>
+                    <Link className="forgot-password" to={'/forgotPassword'}>Забыл пароль</Link>
                 </FormItem>
             </Form>
         );
