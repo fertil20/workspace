@@ -64,7 +64,7 @@ public class NewUserController {
         user.setSecretNote(request.getSecretNote());
         user.setStatus(request.getStatus());
 
-        Role role = roleRepository.getOne("ROLE_User"); //todo убрать префиксы с ролей
+        Role role = roleRepository.getOne("Пользователь");
 
         user.setRoles(Collections.singleton(role));
 

@@ -113,7 +113,7 @@ public class User extends DateAudit {
     @Embedded
     private PasswordResetToken resetPasswordToken;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_name"))

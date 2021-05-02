@@ -4,8 +4,6 @@ import com.workspace.server.exception.ResourceNotFoundException;
 import com.workspace.server.model.User;
 import com.workspace.server.dto.*;
 import com.workspace.server.repository.UserRepository;
-import com.workspace.server.security.CurrentUser;
-import com.workspace.server.security.UserPrincipal;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,23 +28,6 @@ public class UserController {
                 .map(user -> new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), user.getEmail(), user.getPhone(), user.getTg(), user.getAbout(),
                         user.getPosition(), user.getDepartment(), user.getOffice(), user.getBirthday(), user.getSecretNote(), user.getStatus(), user.getStartAt(), user.getEndAt()))
                 .collect(Collectors.toList());
-    }
-
-    @GetMapping("/me")
-    public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-        return new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
-    }
-
-    @GetMapping("/checkUsernameAvailability")
-    public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "username") String username) {
-        Boolean isAvailable = !userRepository.existsByUsername(username);
-        return new UserIdentityAvailability(isAvailable);
-    }
-
-    @GetMapping("/checkEmailAvailability")
-    public UserIdentityAvailability checkEmailAvailability(@RequestParam(value = "email") String email) {
-        Boolean isAvailable = !userRepository.existsByEmail(email);
-        return new UserIdentityAvailability(isAvailable);
     }
 
     @GetMapping("/{username}")
@@ -78,11 +59,5 @@ public class UserController {
         user.setSecretNote(request.getSecretNote());
         user.setStatus(request.getStatus());
         userRepository.save(user);
-    }
-
-    @PostMapping("/delete/{id}")
-    @PreAuthorize("hasAuthority('Manage_Users')")
-    public void deleteUser(@PathVariable(value = "id") Long id) {
-        userRepository.deleteById(id);
     }
 }

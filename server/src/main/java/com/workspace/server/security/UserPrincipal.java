@@ -116,4 +116,10 @@ public class UserPrincipal implements UserDetails {
 
         return Objects.hash(id);
     }
+
+    public Set<String> getPrivileges() {
+        return authorities.stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toSet());
+    }
 }

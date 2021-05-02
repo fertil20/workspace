@@ -3,11 +3,8 @@ package com.workspace.server.config;
 import com.workspace.server.service.CustomUserDetailsService;
 import com.workspace.server.security.JwtAuthenticationEntryPoint;
 import com.workspace.server.security.JwtAuthenticationFilter;
-import com.workspace.server.service.ResetPasswordService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -92,7 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 /*                .antMatchers("/api/users/checkUsernameAvailability", "/api/users/checkEmailAvailability")
                     .permitAll()*/
                 .anyRequest()
-                    .authenticated(); //todo запретить редактирование прав у юзера и админа
+                    .authenticated();
 
         // Add our custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

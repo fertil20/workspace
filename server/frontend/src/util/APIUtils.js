@@ -69,7 +69,7 @@ export function forgotPasswordResetPost(password, token){ //Возвращает
 
 export function deleteUser(deleteUserRequest){ // Возвращает ID пользователя
     return request({
-        url: API_BASE_URL + "/users/delete/" + deleteUserRequest,
+        url: API_BASE_URL + "/deleteUsers/" + deleteUserRequest,
         method: 'POST'
     });
 }
@@ -126,14 +126,14 @@ export function profileEdit(profileEditRequest, username){
 
 export function checkUsernameAvailability(username) {
     return request({
-        url: API_BASE_URL + "/users/checkUsernameAvailability?username=" + username,
+        url: API_BASE_URL + "/checkUsernameAvailability?username=" + username,
         method: 'GET'
     });
 }
 
 export function checkEmailAvailability(email) {
     return request({
-        url: API_BASE_URL + "/users/checkEmailAvailability?email=" + email,
+        url: API_BASE_URL + "/checkEmailAvailability?email=" + email,
         method: 'GET'
     });
 }
@@ -144,7 +144,7 @@ export function getCurrentUser() {
     }
 
     return request({
-        url: API_BASE_URL + "/users/me",
+        url: API_BASE_URL + "/me",
         method: 'GET'
     });
 }

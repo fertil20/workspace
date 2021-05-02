@@ -133,7 +133,7 @@ class RoleManager extends Component {
         event.preventDefault();
 
         const addNewRoleRequest = {
-            name: "ROLE_" + this.state.role.value
+            name: this.state.role.value
         };
         addNewRole(addNewRoleRequest)
                 .then(response => {
@@ -227,7 +227,7 @@ class RoleManager extends Component {
                                     {
                                         this.state.roles.map(
                                             roles => //todo Пофиксить варнинг
-                                                <div><Button outline color="primary" size='sm' className='button-text'>{formatRole(roles.name)}</Button></div>
+                                                <div><Button outline color="primary" size='sm' className='button-text'>{roles.name}</Button></div>
                                         )
                                     }
                                 </div>
