@@ -1,5 +1,6 @@
 package com.workspace.server.model;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -21,15 +22,9 @@ public class Role {
     @EqualsAndHashCode.Exclude
     private Set<User> users;
 
-/*
-    @ManyToMany
-    @JoinTable(
-            name = "role_privilege",
-            joinColumns = @JoinColumn(
-                    name = "role_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "privilege_id", referencedColumnName = "id"))
-    private Collection<Privilege> privileges;*/
+    @Convert(converter = PrivilegesConverter.class)
+    @EqualsAndHashCode.Exclude
+    private Set<String> privileges;
 
     public Role(String name) {
         this.name = name;

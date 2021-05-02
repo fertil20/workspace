@@ -9,10 +9,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/roles")
+@PreAuthorize("hasAuthority('Manage_Roles')")
 public class RoleController {
 
     private final UserRepository userRepository;
@@ -51,14 +53,24 @@ public class RoleController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/{roleName}/addUser/{username}")
-    @PreAuthorize("hasRole('Admin')")
-    /*    @PreAuthorize("hasPermission('')")*/
-    public void addUserToRole(@PathVariable String roleName, @PathVariable String username) {
-        Role role = roleRepository.getOne(roleName);
+    @PostMapping("/{role}/addUser/{username}")
+    public void addUserToRole(@PathVariable String role, @PathVariable String username) {
+        Role roleName = roleRepository.getOne(role);
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
-        user.getRoles().add(role);
+        user.getRoles().add(roleName);
         userRepository.save(user);
+    }
+
+    @GetMapping("/{role}/privileges")
+    public Set<String> getRolePrivileges(@PathVariable String role) {
+        return roleRepository.getOne(role).getPrivileges();
+    }
+
+    @PostMapping("/{role}/privileges/edit")
+    public void addPrivilegeToRole(@PathVariable String role, @RequestBody Set<String> privileges) {
+        Role roleName = roleRepository.getOne(role);
+        roleName.setPrivileges(privileges);
+        roleRepository.save(roleName);
     }
 }

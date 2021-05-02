@@ -89,12 +89,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .antMatchers("/api/auth/**")
                     .permitAll()
-                .antMatchers("/api/users/checkUsernameAvailability", "/api/users/checkEmailAvailability")
-                    .permitAll()
-                .antMatchers("/api/users/delete", "/api/users/delete/**")
-                    .hasRole("Admin")
+/*                .antMatchers("/api/users/checkUsernameAvailability", "/api/users/checkEmailAvailability")
+                    .permitAll()*/
                 .anyRequest()
-                    .authenticated();
+                    .authenticated(); //todo запретить редактирование прав у юзера и админа
 
         // Add our custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

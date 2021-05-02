@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
+@PreAuthorize("hasAuthority('View')")
 public class UserController {
 
     private final UserRepository userRepository;
@@ -32,7 +33,6 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    @PreAuthorize("hasRole('User')")
     public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
         return new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
     }
@@ -60,6 +60,7 @@ public class UserController {
     }
 
     @PostMapping("/{username}/edit")
+    @PreAuthorize("hasAuthority('Edit_Users')")
     public void editUserProfile(@PathVariable(value = "username") String username,
                                                        @RequestBody ProfileEditRequest request) {
         User user = userRepository.findByUsername(username)
@@ -80,6 +81,7 @@ public class UserController {
     }
 
     @PostMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('Manage_Users')")
     public void deleteUser(@PathVariable(value = "id") Long id) {
         userRepository.deleteById(id);
     }

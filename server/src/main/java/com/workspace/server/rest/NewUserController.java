@@ -6,6 +6,7 @@ import com.workspace.server.repository.RoleRepository;
 import com.workspace.server.repository.UserRepository;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +37,7 @@ public class NewUserController {
     }
 
     @PostMapping("/newUser")
+    @PreAuthorize("hasAuthority('Manage_Users')")
     public void createUserProfile(@RequestBody User request) throws MessagingException, UnsupportedEncodingException {
         User user = new User();
         String username = request.getUsername();
@@ -62,7 +64,7 @@ public class NewUserController {
         user.setSecretNote(request.getSecretNote());
         user.setStatus(request.getStatus());
 
-        Role role = roleRepository.getOne("ROLE_User");
+        Role role = roleRepository.getOne("ROLE_User"); //todo убрать префиксы с ролей
 
         user.setRoles(Collections.singleton(role));
 

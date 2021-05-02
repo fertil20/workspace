@@ -7,28 +7,32 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UserPrincipal implements UserDetails {
 
-    private Long id;
+    private final Long id;
 
-    private String name;
+    private final String name;
 
-    private String username;
-
-    @JsonIgnore
-    private String email;
+    private final String username;
 
     @JsonIgnore
-    private String password;
+    private final String email;
 
-    private Collection<? extends GrantedAuthority> authorities;
+    @JsonIgnore
+    private final String password;
 
-    public UserPrincipal(Long id, String name, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    private final Set<GrantedAuthority> authorities;
+
+    public UserPrincipal(Long id,
+                         String name,
+                         String username,
+                         String email,
+                         String password,
+                         Set<GrantedAuthority> authorities) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -38,9 +42,10 @@ public class UserPrincipal implements UserDetails {
     }
 
     public static UserPrincipal create(User user) {
-        List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
-                new SimpleGrantedAuthority(role.getName())
-        ).collect(Collectors.toList());
+        Set<GrantedAuthority> authorities = user.getRoles().stream()
+                .flatMap(role -> role.getPrivileges().stream())
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toSet());
 
         return new UserPrincipal(
                 user.getId(),
@@ -48,8 +53,7 @@ public class UserPrincipal implements UserDetails {
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
-                authorities
-        );
+                authorities);
     }
 
     public Long getId() {
