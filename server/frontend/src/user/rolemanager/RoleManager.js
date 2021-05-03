@@ -118,7 +118,7 @@ class RoleManager extends Component {
         event.preventDefault();
 
         const addNewRoleRequest = {
-            name: "ROLE_" + this.state.role.value
+            name: this.state.role.value
         };
         addNewRole(addNewRoleRequest)
                 .then(response => {
@@ -245,6 +245,7 @@ class RoleManager extends Component {
     changeToggle(){
         if (this.state.toggle === true){this.setState({toggle: false})}
         if (this.state.toggle === false){this.setState({toggle: true})}
+        this.setState({role:{value:''}})
     }
 
     changeToggleDropDown(){
@@ -299,7 +300,7 @@ class RoleManager extends Component {
                                     {
                                         this.state.roles.map(
                                             roles =>
-                                                <div><Button outline color="primary" size='sm' className='button-text' onClick={() => this.showUsersByRole(roles.name)}>{formatRole(roles.name)}</Button></div>
+                                                <div><Button outline color="primary" size='sm' className='button-text' onClick={() => this.showUsersByRole(roles.name)}>{roles.name}</Button></div>
                                         )
                                     }
                                 </div>

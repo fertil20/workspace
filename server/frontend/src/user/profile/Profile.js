@@ -8,6 +8,7 @@ import NotFound from '../../common/NotFound';
 import ServerError from '../../common/ServerError';
 import {Row, Col, Button} from 'reactstrap';
 import {TooltipWidgetHome,TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidgetIll} from './TooltipWidget'
+import NavigationPanel from "../../common/NavigationPanel";
 
 
 class Profile extends Component {
@@ -88,40 +89,53 @@ class Profile extends Component {
                      {
                        this.state.user ? (
                 <Row >
-                    <Col sm={{ size: 4 }} style={{backgroundColor: 'white',borderRadius:10,height:500}}>
+                    <NavigationPanel/>
+                    <Col sm={{ size: 4.4 }} style={{backgroundColor: 'white',borderRadius:10,height:500,marginRight:30}}>
                         <div style={{backgroundColor: 'white', margin: 20,borderRadius:10,height:300,width:300}}>
                             <Avatar className="user-avatar-circle" style={{ backgroundColor: getAvatarColor(this.state.user.name)}}>
                                 {this.state.user.name.toUpperCase()}
                             </Avatar>
                         </div>
                         <Row>
-                            <Col>
-                                <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>E-mail:</div>
-                                <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Рабочий номер:</div>
-                                <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Telegram:</div>
+                            <Col >
+                                <div className='profile-text1'>E-mail:</div>
+                                <div className='profile-text1'>Рабочий номер:</div>
+                                <div className='profile-text1'>Telegram:</div>
                             </Col>
-                            <Col>
-                                <div style={{height: 50}}>{this.state.user.email}</div>
-                                <div style={{height: 50}}>{this.state.user.phone}</div>
-                                <div style={{height: 50}}>@{this.state.user.tg}</div>
+                            <Col >
+                                <div className='profile-text2'>{this.state.user.email}</div>
+                                <div className='profile-text2'>{this.state.user.phone}</div>
+                                <div className='profile-text2'>@{this.state.user.tg}</div>
                             </Col>
                         </Row>
                     </Col>
-                    <Col sm={{ size: 6, offset: 1}} style={{backgroundColor: 'white',borderRadius:10,height:500}}>
+                    <Col sm={{ size: 6.6}} style={{backgroundColor: 'white',borderRadius:10,height:500, width:465}}>
                         <Row>
-                            <Col>
-                                <div style={{color: 'gray', marginTop:20, fontWeight: 'bold',height:50}}>Ф.И.О:</div>
-                                <div style={{color: 'gray', marginTop:20, fontWeight: 'bold',height:50}}>О себе:</div>
-                                <div style={{color: 'gray', fontWeight: 'bold',height:50}}>Должность:</div>
-                                <div style={{color: 'gray', fontWeight: 'bold',height:50}}>Департамент:</div>
-                                <div style={{color: 'gray', fontWeight: 'bold',height:50}}>Офис:</div>
-                                <div style={{color: 'gray', fontWeight: 'bold',height:50}}>Рабочие часы:</div>
-                                <div style={{color: 'gray', fontWeight: 'bold',height:50}}>В компании с:</div>
-                                <div style={{color: 'gray', fontWeight: 'bold',height:50}}>Дата рождения:</div>
-                                <div style={{color: 'gray', fontWeight: 'bold',height:50}}>Секретная заметка:</div>
+                            <Col sm={{ size: 'auto'}}>
+                                <div className='profile-text1' style={{marginTop:20,width:50}}>Ф.И.О:</div>
+                                <div className='profile-text1' style={{marginTop:20}}>О себе:</div>
+                                <div className='profile-text1'>Должность:</div>
+                                <div className='profile-text1'>Департамент:</div>
+                                <div className='profile-text1'>Офис:</div>
+                                <div className='profile-text1'>Рабочие часы:</div>
+                                <div className='profile-text1'>В компании с:</div>
+                                <div className='profile-text1'>Дата рождения:</div>
+                                <div className='profile-text1'>Секретная заметка:</div>
                             </Col>
-                            <Col sm={{ size: 7,offset:0}}>
-                                <div style={{marginTop:20,height:50}}>{this.state.user.name}</div>
+                            <Col >
+                                <Row>
+                                    <Col >
+                                    <div style={{marginTop:20,height:50,width:200}}>{this.state.user.name}</div>
+                                    </Col>
+                                    <Col>
+                                    <div style={{marginTop:20}}>
+                                        {this.state.user.status === '0' && <TooltipWidgetHome/>}
+                                        {this.state.user.status === '1' && <TooltipWidgetAtWork/>}
+                                        {this.state.user.status === '2' && <TooltipWidgetIll/>}
+                                        {this.state.user.status === '3' && <TooltipWidgetHoliday/>}
+                                    </div>
+                                    </Col>
+                                </Row>
                                 <div style={{marginTop:20,height:50}}>{this.state.user.about}</div>
                                 <div style={{height:50}}>{this.state.user.position}</div>
                                 <div style={{height:50}}>{this.state.user.department}</div>
@@ -136,12 +150,6 @@ class Profile extends Component {
                                     </Button>
                                 </div>
                             </Col>
-                            <div style={{margin:10}}>
-                            {this.state.user.status === '0' && <TooltipWidgetHome/>}
-                            {this.state.user.status === '1' && <TooltipWidgetAtWork/>}
-                            {this.state.user.status === '2' && <TooltipWidgetIll/>}
-                            {this.state.user.status === '3' && <TooltipWidgetHoliday/>}
-                            </div>
                         </Row>
                     </Col>
                 </Row>

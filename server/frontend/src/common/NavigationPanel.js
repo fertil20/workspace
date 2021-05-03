@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {Col} from 'reactstrap';
 import './NavigationPanel.css'
-import {getUserProfile} from "../util/APIUtils";
 
 export default class NavigationPanel extends Component{
 
@@ -20,7 +19,7 @@ export default class NavigationPanel extends Component{
                 <a href='/' className='navigation-link-red'><div className='row-navigation'>Бронирование переговорных</div></a>
                 <a href='/editUsers' ><div className='row-navigation'>Управление сотрудниками</div></a>
                 <a href='/roleManager'><div className='row-navigation'>Управление ролями</div></a>
-                <a href='/' className='navigation-link-red'><div className='row-navigation'>О компании</div></a>
+                <a href='/about' ><div className='row-navigation'>О компании</div></a>
                 <a href='/' className='navigation-link-red'><div className='row-navigation'>Новости</div></a>
             </Col>
         )

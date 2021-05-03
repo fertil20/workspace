@@ -17,6 +17,7 @@ import {Avatar} from "antd";
 import React, {Component, useState} from "react";
 import {getUserProfile, profileEdit} from "../../util/APIUtils";
 import './ProfileEdit.css';
+import NavigationPanel from "../../common/NavigationPanel";
 
 
 class ProfileEdit extends Component {
@@ -206,56 +207,70 @@ class ProfileEdit extends Component {
                     this.state.user ? (
                         <Form onSubmit={this.handleSubmit}>
                         <Row >
-                            <Col sm={{ size: 4 }} style={{backgroundColor: 'white',borderRadius:10,height:500}}>
+                            <NavigationPanel/>
+                            <Col sm={{ size: 4.4 }} style={{backgroundColor: 'white',borderRadius:10,height:500,marginRight:30}}>
                                 <div style={{backgroundColor: 'white', margin: 20,borderRadius:10,height:300,width:300}}>
                                     <Avatar className="user-avatar-circle" style={{ backgroundColor: getAvatarColor(this.state.user.name)}}>
                                         {this.state.user.name.toUpperCase()}
                                     </Avatar>
                                 </div>
                                 <Row>
-                                    <Col>
-                                        <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>E-mail:</div>
-                                        <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Рабочий номер:</div>
-                                        <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Telegram:</div>
+                                    <Col sm={{size:'auto'}}>
+                                        <div className='profile-text1'>E-mail:</div>
+                                        <div className='profile-text1'>Рабочий номер:</div>
+                                        <div className='profile-text1'>Telegram:</div>
                                     </Col>
                                     <Col>
-                                            <FormGroup>
+                                            <FormGroup className='profile-form'>
                                                 <Input type="email" name="email" id="email" placeholder="sophie@example.com"
                                                        value={this.state.email.value}
-                                                       required
+                                                       required style={{width:165}}
                                                        onChange={(event) => {this.handleInputChange(event)}}/>
                                                 <div style={{height: 10}}/>
                                                 <Input type="tel" name="phone" id="phone" placeholder={"+7 (905) 226-23-58"}
                                                        value={this.state.phone.value}
-                                                       required
+                                                       required style={{width:165}}
                                                        pattern="[+][7] [(][0-9]{3}[)] [0-9]{3}-[0-9]{2}-[0-9]{2}"
                                                        onChange={(event) => this.handleInputChange(event)}/>
                                                 <div style={{height: 10}}/>
                                                 <Input type="text" name="tg" id="tg" placeholder={"telegram"}
-                                                       value={this.state.tg.value}
+                                                       value={this.state.tg.value} style={{width:165}}
                                                        onChange={(event) => this.handleInputChange(event)}/>
                                             </FormGroup>
                                     </Col>
                                 </Row>
                             </Col>
-                            <Col sm={{ size: 6, offset: 1}} style={{backgroundColor: 'white',borderRadius:10,height:500}}>
+                            <Col sm={{ size: 6.6}} style={{backgroundColor: 'white',borderRadius:10,height:500, width:465}}>
                                 <Row>
-                                    <Col>
-                                        <div style={{color: 'gray', marginTop:20, fontWeight: 'bold',height: 50}}>Ф.И.О:</div>
-                                        <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>О себе:</div>
-                                        <div style={{color: 'gray', marginTop:30, fontWeight: 'bold',height: 50}}>Должность:</div>
-                                        <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Департамент:</div>
-                                        <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Офис:</div>
-                                        <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Рабочие часы:</div>
-                                        <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>В компании с:</div>
-                                        <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Дата рождения:</div>
-                                        <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Секретная заметка:</div>
+                                    <Col sm={{ size: 'auto'}}>
+                                        <div style={{marginTop:20}} className='profile-text1'>Ф.И.О:</div>
+                                        <div className='profile-text1'>О себе:</div>
+                                        <div className='profile-text1' style={{marginTop:30}}>Должность:</div>
+                                        <div className='profile-text1'>Департамент:</div>
+                                        <div className='profile-text1'>Офис:</div>
+                                        <div className='profile-text1'>Рабочие часы:</div>
+                                        <div className='profile-text1'>В компании с:</div>
+                                        <div className='profile-text1'>Дата рождения:</div>
+                                        <div className='profile-text1'>Секретная заметка:</div>
                                     </Col>
                                     <Col sm={{ size: 7}}>
                                         <div style={{height: 10}}/>
+                                        <Row>
+                                            <Col >
                                         <Input type="text" name="name" id="editName" placeholder={"Попов Валерий Александрович"}
-                                               value={this.state.name.value}
+                                               value={this.state.name.value} style={{width:155}}
                                                onChange={(event) => this.handleInputChange(event)}/>
+                                            </Col>
+                                            <Col sm={{ width:30}}>
+                                        <div style={{marginTop:5, width:30,paddingRight:5}}>
+                                            {this.state.status.value === '0' && <TooltipWidgetHome/>}
+                                            {this.state.status.value === '1' && <TooltipWidgetAtWork/>}
+                                            {this.state.status.value === '2' && <TooltipWidgetIll/>}
+                                            {this.state.status.value === '3' && <TooltipWidgetHoliday/>}
+                                        </div>
+                                            </Col>
+                                            <Col sm={{ width:30}}><DropdownStatus/></Col>
+                                        </Row>
                                         <div style={{height: 10}}/>
                                         <Input type="textarea" name="about" id="editAbout"
                                                spellCheck={true}
@@ -279,19 +294,19 @@ class ProfileEdit extends Component {
                                         {/*       onChange={(event) => this.handleInputChange(event)}/>*/}
                                         <div style={{height: 10}}/>
                                         <Row>
-                                            <Col sm={{size:2}}>
+                                            <Col sm={{size:'auto'}}>
                                                 <div>
-                                                <Input type="time" name="startAt" id="startAt" style={{width:115}}
+                                                <Input type="time" name="startAt" id="startAt" style={{width:100}}
                                                        value={formatTime(this.state.startAt.value)}
                                                        required
                                                        pattern="[0-9]{2}:[0-9]{2}"
                                                        onChange={(event) => this.handleInputChange(event)}/>
                                                 </div>
                                             </Col>
-                                            <Col sm={{size:2,offset:3}}>—</Col>
-                                            <Col sm={{offset:0}}>
+                                            <Col sm={{size:1.5}}>-</Col>
+                                            <Col sm={{size:'auto'}}>
                                                 <div >
-                                                <Input type="time" name="endAt" id="endAt" style={{width:115}}
+                                                <Input type="time" name="endAt" id="endAt" style={{width:100}}
                                                        value={formatTime(this.state.endAt.value)}
                                                        required
                                                        pattern="[0-9]{2}:[0-9]{2}"
@@ -310,18 +325,14 @@ class ProfileEdit extends Component {
                                             <Button color="primary" size="sm">
                                                 Сохранить
                                             </Button>
+
                                         </div>
                                     </Col>
-                                    <div style={{margin:10}}>
-                                    {this.state.status.value === '0' && <TooltipWidgetHome/>}
-                                    {this.state.status.value === '1' && <TooltipWidgetAtWork/>}
-                                    {this.state.status.value === '2' && <TooltipWidgetIll/>}
-                                    {this.state.status.value === '3' && <TooltipWidgetHoliday/>}
-                                    </div>
+
                                 </Row>
                             </Col>
                             <div style={{margin:10}}>
-                            <DropdownStatus/>
+
                             </div>
                         </Row>
                         </Form>

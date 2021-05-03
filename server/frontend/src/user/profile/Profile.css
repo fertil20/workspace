@@ -70,3 +70,14 @@
     }    
 }
 
+.profile-text1{
+    font-weight: bold;
+    height: 50px;
+    margin-left:5px;
+    color:gray;
+}
+
+.profile-text2 {
+    height: 50px;
+}
+

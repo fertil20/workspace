@@ -27,7 +27,10 @@ import Home from "../common/Home";
 import NewUser from "../user/new/NewUser";
 import RoleManager from "../user/rolemanager/RoleManager";
 import UsersAdminListEdit from "../components/UsersAdminListEdit";
-import NavigationPanel from "../common/NavigationPanel";
+import AboutCompany from "../common/about/AboutCompany";
+import AboutCompanyEdit from "../common/about/AboutCompanyEdit";
+import NewEmployee from "../common/about/NewEmployee";
+import NewEmployeeEdit from "../common/about/NewEmployeeEdit";
 const { Content } = Layout;
 
 
@@ -121,6 +124,10 @@ class App extends Component {
                                 <PrivateRoute exact path="/newUser" authenticated={this.persistentState.getState().isAuthenticated} component={NewUser} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/roleManager" authenticated={this.persistentState.getState().isAuthenticated} component={RoleManager} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/editUsers" authenticated={this.persistentState.getState().isAuthenticated} component={UsersAdminListEdit} handleLogout={this.handleLogout}/>
+                                <PrivateRoute exact path="/about" authenticated={this.persistentState.getState().isAuthenticated} component={AboutCompany} handleLogout={this.handleLogout}/>
+                                <PrivateRoute exact path="/about/edit" authenticated={this.persistentState.getState().isAuthenticated} component={AboutCompanyEdit} handleLogout={this.handleLogout}/>
+                                <PrivateRoute exact path="/about/newEmployee" authenticated={this.persistentState.getState().isAuthenticated} component={NewEmployee} handleLogout={this.handleLogout}/>
+                                <PrivateRoute exact path="/about/newEmployee/edit" authenticated={this.persistentState.getState().isAuthenticated} component={NewEmployeeEdit} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/users/:username/edit" authenticated={this.persistentState.getState().isAuthenticated} component={ProfileEdit} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/poll/new" authenticated={this.persistentState.getState().isAuthenticated} component={NewPoll} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/users" authenticated={this.persistentState.getState().isAuthenticated} component={UsersAdminList} handleLogout={this.handleLogout}/>
