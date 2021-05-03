@@ -25,7 +25,7 @@ public class Role {
 
     @Convert(converter = PrivilegesConverter.class)
     @EqualsAndHashCode.Exclude
-    private Set<String> privileges = new HashSet<>();
+    private Set<String> privileges;
 
     public Role(String name) {
         this.name = name;

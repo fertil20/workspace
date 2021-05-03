@@ -131,7 +131,7 @@ class RoleManager extends Component {
         this.changeToggle()
     }
 
-    addUserToRoleByUsername(roleName,username){
+    addUserToRoleByUsername(roleName,username) {
         this.setState({toggleDropDown: false})
         addUserToRole(roleName,username)
             .then(response => {

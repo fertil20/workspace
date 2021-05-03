@@ -11,7 +11,7 @@ public class PrivilegesConverter implements AttributeConverter<Set<String>, Stri
     @Override
     public String convertToDatabaseColumn(Set<String> strings) {
         if (strings == null) {
-            return "";
+            return "No";
         } else {
             return String.join(",", strings);
         }
