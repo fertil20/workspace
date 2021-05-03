@@ -4,8 +4,6 @@ import com.workspace.server.exception.ResourceNotFoundException;
 import com.workspace.server.model.User;
 import com.workspace.server.dto.*;
 import com.workspace.server.repository.UserRepository;
-import com.workspace.server.security.CurrentUser;
-import com.workspace.server.security.UserPrincipal;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +13,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
+@PreAuthorize("hasAuthority('View')")
 public class UserController {
 
     private final UserRepository userRepository;
@@ -31,24 +30,6 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/me")
-    @PreAuthorize("hasRole('User')")
-    public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-        return new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
-    }
-
-    @GetMapping("/checkUsernameAvailability")
-    public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "username") String username) {
-        Boolean isAvailable = !userRepository.existsByUsername(username);
-        return new UserIdentityAvailability(isAvailable);
-    }
-
-    @GetMapping("/checkEmailAvailability")
-    public UserIdentityAvailability checkEmailAvailability(@RequestParam(value = "email") String email) {
-        Boolean isAvailable = !userRepository.existsByEmail(email);
-        return new UserIdentityAvailability(isAvailable);
-    }
-
     @GetMapping("/{username}")
     public UserProfile getUserProfile(@PathVariable(value = "username") String username) throws ParseException {
         User user = userRepository.findByUsername(username)
@@ -60,6 +41,7 @@ public class UserController {
     }
 
     @PostMapping("/{username}/edit")
+    @PreAuthorize("hasAuthority('Edit_Users')")
     public void editUserProfile(@PathVariable(value = "username") String username,
                                                        @RequestBody ProfileEditRequest request) {
         User user = userRepository.findByUsername(username)
@@ -77,10 +59,5 @@ public class UserController {
         user.setSecretNote(request.getSecretNote());
         user.setStatus(request.getStatus());
         userRepository.save(user);
-    }
-
-    @PostMapping("/delete/{id}")
-    public void deleteUser(@PathVariable(value = "id") Long id) {
-        userRepository.deleteById(id);
     }
 }

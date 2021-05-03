@@ -1,14 +1,18 @@
 package com.workspace.server.dto;
 
+import java.util.Set;
+
 public class UserSummary {
     private Long id;
     private String username;
     private String name;
+    private Set<String> privileges;
 
-    public UserSummary(Long id, String username, String name) {
+    public UserSummary(Long id, String username, String name, Set<String> privileges) {
         this.id = id;
         this.username = username;
         this.name = name;
+        this.privileges = privileges;
     }
 
     public Long getId() {
@@ -33,5 +37,13 @@ public class UserSummary {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<String> getPrivileges() {
+        return privileges;
+    }
+
+    public void setPrivileges(Set<String> privileges) {
+        this.privileges = privileges;
     }
 }

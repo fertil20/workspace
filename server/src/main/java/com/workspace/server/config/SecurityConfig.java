@@ -3,11 +3,8 @@ package com.workspace.server.config;
 import com.workspace.server.service.CustomUserDetailsService;
 import com.workspace.server.security.JwtAuthenticationEntryPoint;
 import com.workspace.server.security.JwtAuthenticationFilter;
-import com.workspace.server.service.ResetPasswordService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -89,10 +86,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .antMatchers("/api/auth/**")
                     .permitAll()
-                .antMatchers("/api/users/checkUsernameAvailability", "/api/users/checkEmailAvailability")
-                    .permitAll()
-                .antMatchers("/api/users/delete", "/api/users/delete/**")
-                    .hasRole("Admin")
+/*                .antMatchers("/api/users/checkUsernameAvailability", "/api/users/checkEmailAvailability")
+                    .permitAll()*/
                 .anyRequest()
                     .authenticated();
 
