@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -24,7 +25,7 @@ public class Role {
 
     @Convert(converter = PrivilegesConverter.class)
     @EqualsAndHashCode.Exclude
-    private Set<String> privileges;
+    private Set<String> privileges = new HashSet<>();
 
     public Role(String name) {
         this.name = name;
