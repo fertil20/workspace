@@ -3,18 +3,38 @@ import ServerError from '../../common/ServerError';
 import {
     Row,
     Col,
-    Button, Modal, ModalHeader, ModalBody, ModalFooter,
-    FormGroup,
-    Form,
+    Button,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
     Input,
-    Dropdown, DropdownToggle, DropdownMenu, DropdownItem, ListGroup, ListGroupItem
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    ListGroup,
+    ListGroupItem,
+    ButtonDropdown,
+    NavItem,
+    Nav,
+    NavLink,
+    TabContent, TabPane, FormGroup, Form
 } from 'reactstrap';
-import React, {Component, useState} from "react";
-import {addNewRole, getAllRoles, getAllUsers, getUserProfile, profileEdit} from "../../util/APIUtils";
+import classnames from 'classnames';
+import React, {Component} from "react";
+import {
+    addNewRole, addUserToRole,
+    getAllRoles,
+    getRoleUsers,
+    getUsersWithoutRole,
+} from "../../util/APIUtils";
 import './RoleManager.css';
 import {formatRole} from "../../util/Helpers";
+import NavigationPanel from "../../common/NavigationPanel";
 
-
+let UsersByRole = ''
+let UsersWithoutRole = ''
+let CurrentRole = ''
 class RoleManager extends Component {
 
     constructor(props) {
@@ -25,13 +45,20 @@ class RoleManager extends Component {
             isLoading: false,
             role: {value: ''},
             toggle: false,
-            roles: ''
+            roles: '',
+            usersByRole: '',
+            toggleDropDown: false,
+            activeTab: '1',
+            setActiveTab: '1'
         }
         this.loadRoles = this.loadRoles.bind(this);
-        //this.handleSubmit = this.handleSubmit.bind(this);
+        this.showUsersByRole = this.showUsersByRole.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.changeToggle = this.changeToggle.bind(this);
         this.roleAddSubmit = this.roleAddSubmit.bind(this);
+        this.changeToggleDropDown = this.changeToggleDropDown.bind(this);
+        this.getUsersWithoutRole = this.getUsersWithoutRole.bind(this);
+        this.addUserToRoleByUsername = this.addUserToRoleByUsername.bind(this);
     }
 
     loadRoles(){
@@ -58,49 +85,7 @@ class RoleManager extends Component {
             }
         });
     }
-    // loadUserProfile(username) {
-    //     this._isMounted && this.setState({
-    //         isLoading: true
-    //     });
-    //
-    //     getUserProfile(username)
-    //         .then(response => {
-    //             this._isMounted && this.setState({
-    //                 user: response,
-    //                 isLoading: false,
-    //             });
-    //             this._isMounted && this.setState({
-    //                 email: {value: this.state.user.email},
-    //                 phone: {value: this.state.user.phone},
-    //                 tg: {value: this.state.user.tg},
-    //                 name: {value: this.state.user.name},
-    //                 about: {value: this.state.user.about},
-    //                 position: {value: this.state.user.position},
-    //                 department: {value: this.state.user.department},
-    //                 office: {value: this.state.user.office},
-    //                 startAt: {value: this.state.user.startAt},
-    //                 endAt: {value: this.state.user.endAt},
-    //                 //newWorktimes: {value: this.state.user.newWorktimes},
-    //                 secretNote: {value: this.state.user.secretNote},
-    //                 status: {value: this.state.user.status},
-    //                 statusTimeStart: {value: this.state.statusTimeStart},
-    //                 statusTimeFinish: {value: this.state.statusTimeFinish}
-    //             })
-    //         }).catch(error => {
-    //         if(error.status === 404) {
-    //             this._isMounted && this.setState({
-    //                 notFound: true,
-    //                 isLoading: false
-    //             });
-    //         } else {
-    //             this._isMounted && this.setState({
-    //                 serverError: true,
-    //                 isLoading: false
-    //             });
-    //         }
-    //     });
-    // }
-    //
+
     componentDidMount() {
         this._isMounted = true;
         this._isMounted && this.loadRoles();
@@ -146,37 +131,125 @@ class RoleManager extends Component {
         this.changeToggle()
     }
 
-    // handleSubmit(event) {
-    //     event.preventDefault();
-    //
-    //     const profileEditRequest = {
-    //         email: this.state.email.value,
-    //         phone: this.state.phone.value,
-    //         tg: this.state.tg.value,
-    //         name: this.state.name.value,
-    //         about: this.state.about.value,
-    //         position: this.state.position.value,
-    //         department: this.state.department.value,
-    //         office: this.state.office.value,
-    //         startAt: this.state.startAt.value,
-    //         endAt: this.state.endAt.value,
-    //         secretNote: this.state.secretNote.value,
-    //         status: this.state.status.value, // Статус работы (0,1,2,3)
-    //         statusTimeStart: this.state.statusTimeStart.value,
-    //         statusTimeFinish: this.state.statusTimeFinish.value
-    //     };
-    //     profileEdit(profileEditRequest, this.state.user.username)
-    //         .then(response => {
-    //             alert('Данные успешно изменены.');
-    //             this.props.history.push(`/users/${this.state.user.username}`);
-    //         })
-    //         .catch(error => {
-    //             alert('Что-то пошло не так.');
-    //         });
-    // }
+    addUserToRoleByUsername(roleName,username){
+        this.setState({toggleDropDown: false})
+        addUserToRole(roleName,username)
+            .then(response => {
+                this._isMounted && this.setState({
+                    isLoading: false
+                });
+                this.showUsersByRole(roleName)
+            })
+            .catch(error => {
+                if(error.status === 404) {
+                    this._isMounted && this.setState({
+                        notFound: true,
+                        isLoading: false
+                    });
+                    alert('Что-то пошло не так')
+                } else {
+                    this._isMounted && this.setState({
+                        serverError: true,
+                        isLoading: false
+                    });
+                }
+            });
+    }
+
+    getUsersWithoutRole(roleName){
+        this.setState({toggleDropDown: false})
+        getUsersWithoutRole(roleName)
+            .then(response => {
+                this._isMounted && this.setState({
+                    users: response,
+                    isLoading: false
+                });
+                console.log(this.state.users)
+                UsersWithoutRole = <div>
+                    {
+                        this.state.users ? (
+                        <DropdownMenu>
+                                {
+                                    this.state.users.map(
+                                        users =>
+                                            <DropdownItem onClick={() => this.addUserToRoleByUsername(roleName,users.username)}>{users.name}</DropdownItem>
+                                    )
+                                }
+                        </DropdownMenu>
+                        ):null
+                    }
+                </div>
+                this.setState({})
+            })
+            .catch(error => {
+                if(error.status === 404) {
+                    this._isMounted && this.setState({
+                        notFound: true,
+                        isLoading: false
+                    });
+                    alert('Что-то пошло не так')
+                } else {
+                    this._isMounted && this.setState({
+                        serverError: true,
+                        isLoading: false
+                    });
+                }
+            });
+    }
+
+    showUsersByRole(roleName){
+        this.getUsersWithoutRole(roleName);
+        CurrentRole = roleName;
+        getRoleUsers(roleName)
+            .then(response => {
+                this._isMounted && this.setState({
+                    usersByRole: response,
+                    isLoading: false
+                });
+                UsersByRole = <div>
+                    {
+                        this.state.usersByRole ? (
+                            <div>
+                                {
+                                    this.state.usersByRole.map(
+                                        usersByRole =>
+                                            <ListGroup horizontal="lg" style={{border:0,marginLeft:15}}>
+                                                <ListGroupItem style={{width:205}}  tag = 'a' href={`/users/${usersByRole.username}`}>{usersByRole.name}</ListGroupItem>
+                                                <ListGroupItem style={{width:205}} >{usersByRole.position}</ListGroupItem>
+                                                <ListGroupItem style={{width:100}} ><Button size='sm' color='danger'>Удалить</Button></ListGroupItem>
+                                            </ListGroup>
+                                    )
+                                }
+                            </div>
+                        ):null
+                    }
+                </div>
+                this.setState({})
+            })
+            .catch(error => {
+            if(error.status === 404) {
+                this._isMounted && this.setState({
+                    notFound: true,
+                    isLoading: false
+                });
+                alert('Что-то пошло не так')
+            } else {
+                this._isMounted && this.setState({
+                    serverError: true,
+                    isLoading: false
+                });
+            }
+        });
+    }
+
     changeToggle(){
         if (this.state.toggle === true){this.setState({toggle: false})}
         if (this.state.toggle === false){this.setState({toggle: true})}
+    }
+
+    changeToggleDropDown(){
+        if (this.state.toggleDropDown === true){this.setState({toggleDropDown: false})}
+        if (this.state.toggleDropDown === false){this.setState({toggleDropDown: true})}
     }
 
 
@@ -201,7 +274,8 @@ class RoleManager extends Component {
         return (
             <div className="profile"  >
                 <Row>
-                    <Col sm={{ size: 3 }} style={{backgroundColor: 'white',borderRadius:10,height:500}}>
+                    <NavigationPanel/>
+                    <Col sm={{ size: 3.3 }} style={{backgroundColor: 'white',borderRadius:10,height:285}}>
                         <div className="column1-title">Группа доступа</div>
                         <Button outline color="primary" size='sm' className="button-group" onClick={this.changeToggle}>+ Добавить группу доступа</Button>
                         <div>
@@ -219,23 +293,55 @@ class RoleManager extends Component {
                                 </ModalFooter>
                             </Modal>
                         </div>
-{/*                        <div><Button outline color="primary" size='sm' className='button-text'>Администратор</Button></div>
-                        <div><Button outline color="primary" size='sm' className='button-text'>Сотрудник</Button></div>*/}
                         {
                             this.state.roles ? (
                                 <div>
                                     {
                                         this.state.roles.map(
-                                            roles => //todo Пофиксить варнинг
-                                                <div><Button outline color="primary" size='sm' className='button-text'>{formatRole(roles.name)}</Button></div>
+                                            roles =>
+                                                <div><Button outline color="primary" size='sm' className='button-text' onClick={() => this.showUsersByRole(roles.name)}>{formatRole(roles.name)}</Button></div>
                                         )
                                     }
                                 </div>
                             ):null
                         }
                     </Col>
-                    <Col sm={{ size: 5 ,offset:1}} style={{backgroundColor: 'white',borderRadius:10,height:500}}>
-                        <div className="column2-title">Пользователи</div>
+                    <Col sm={{ size: 5.6}} style={{backgroundColor: 'white',borderRadius:10,height:500,marginLeft:30}}>
+                        <Nav tabs>
+                            <NavItem style={{width:270}}>
+                                <NavLink className={classnames({ active: this.state.activeTab === '1' })} onClick={() => this.setState({activeTab: '1'})} style={{cursor:'pointer'}}>
+                                    <div className="column2-title">Пользователи</div>
+                                </NavLink>
+                            </NavItem>
+                            <NavItem style={{width:270}}>
+                                <NavLink className={classnames({ active: this.state.activeTab === '2' })} onClick={() => this.setState({activeTab: '2'})} style={{cursor:'pointer'}}>
+                                    <div className="column2-title">Права доступа</div>
+                                </NavLink>
+                            </NavItem>
+                        </Nav>
+                            <TabContent activeTab={this.state.activeTab}>
+                                <TabPane tabId="1">
+                                    <ButtonDropdown isOpen={this.state.toggleDropDown} toggle={this.changeToggleDropDown} style={{marginBottom:10, marginRight:340}}>
+                                        <DropdownToggle caret outline color="primary" size='sm' className='button-text'>
+                                            + Добавить пользователя
+                                        </DropdownToggle>
+                                        {UsersWithoutRole}
+                                    </ButtonDropdown>
+                                    {UsersByRole}
+                                </TabPane>
+                                <TabPane tabId="2">
+                                    <Row>
+                                        <Col >
+                                            <div className='role-column1'>Управление пользователями <Input className='role-checkbox' type ='checkbox'/></div>
+                                            <div className='role-column'>Управление ролями<Input className='role-checkbox' type ='checkbox'/></div>
+                                            <div className='role-column'>Просмотр карточки сотрудника<Input className='role-checkbox' type ='checkbox'/></div>
+                                            <div className='role-column'>Редактирование карточек сотрудников<Input className='role-checkbox' type ='checkbox'/></div>
+                                            <div className='role-column'>Курирование новостей<Input className='role-checkbox' type ='checkbox'/></div>
+                                            <div className='role-column'>Редактирование контента "О компании"<Input className='role-checkbox' type ='checkbox'/></div>
+                                        </Col>
+                                    </Row>
+                                </TabPane>
+                            </TabContent>
                     </Col>
                 </Row>
             </div>

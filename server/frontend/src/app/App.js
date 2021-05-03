@@ -27,6 +27,7 @@ import Home from "../common/Home";
 import NewUser from "../user/new/NewUser";
 import RoleManager from "../user/rolemanager/RoleManager";
 import UsersAdminListEdit from "../components/UsersAdminListEdit";
+import NavigationPanel from "../common/NavigationPanel";
 const { Content } = Layout;
 
 
