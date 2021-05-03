@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {deleteUser, getAllUsers} from "../util/APIUtils";
 import NotFound from "../common/NotFound";
 import ServerError from "../common/ServerError";
-import {ListGroup, ListGroupItem, Button, Row, Input, Form} from 'reactstrap';
+import {ListGroup, ListGroupItem, Button, Row, Input, Form, Col} from 'reactstrap';
 import "./UsersAdminList.css";
 import search from '../media/search.png'
 import {
@@ -11,6 +11,7 @@ import {
     TooltipWidgetHome,
     TooltipWidgetIll
 } from "../user/profile/TooltipWidget";
+import NavigationPanel from "../common/NavigationPanel";
 
 class UsersAdminListEdit extends Component {
     constructor(props) {
@@ -100,14 +101,12 @@ class UsersAdminListEdit extends Component {
 
         return (
             <div>
-                <div>
-                    <Row>
-                        <p className="gray-text">Администрирование</p>
-                    </Row>
-                </div>
+                <Row>
+                    <NavigationPanel/>
+                    <Col sm={{ size: 4.4 }} style={{backgroundColor: 'white',borderRadius:10,height:'auto',paddingBottom:20}}>
                 <div>
                     <Form>
-                        <Row>
+                        <Row style={{width:865}}>
                             <Input placeholder='Ф.И.О.'
                                    className='search-bar'
                                    id="FIO" name='FIO' type='text'
@@ -121,29 +120,30 @@ class UsersAdminListEdit extends Component {
                 {
                     this.state.user ? (
                         <div>
-                            <ListGroup horizontal className='table-top-line' key={"TABLE"}>
-                                <ListGroupItem style={{width:250}} key={"FIO"}>Фио</ListGroupItem>
-                                <ListGroupItem style={{width:100}} key={"STATUS"}>Статус</ListGroupItem>
+                            <ListGroup horizontal className='table-top-line' key={"TABLE"} style={{marginLeft:5}}>
+                                <ListGroupItem style={{width:200}} key={"FIO"}>Фио</ListGroupItem>
+                                <ListGroupItem style={{width:70}} key={"STATUS"}><div style={{marginLeft:-10}}>Статус</div></ListGroupItem>
                                 <ListGroupItem style={{width:150}} key={"POSITION"}>Должность</ListGroupItem>
-                                <ListGroupItem style={{width:170}} key={"DEPARTMENT"}>Департамент</ListGroupItem>
-                                <ListGroupItem style={{width:300}} key={"CONTACTS"}>Контактная информация</ListGroupItem>
+                                <ListGroupItem style={{width:160}} key={"DEPARTMENT"}>Департамент</ListGroupItem>
+                                <ListGroupItem style={{width:230}} key={"CONTACTS"}>Контактная информация</ListGroupItem>
                             </ListGroup>
                             {
                                 this.state.user.map(
                                     user => //todo Пофиксить варнинг
                                         <div>
-                                            <ListGroup horizontal="lg" key={user.id}>
-                                                <ListGroupItem style={{width:250}} key={user.id+'.1'} tag = 'a' href={`/users/${user.username}`}>{user.name}</ListGroupItem>
-                                                <ListGroupItem style={{width:100}} key={user.id+'.2'}>{this.SetUserStatus(user.status)}</ListGroupItem>
+                                            <ListGroup horizontal="lg" key={user.id} style={{marginLeft:5}}>
+                                                <ListGroupItem style={{width:200}} key={user.id+'.1'} tag = 'a' href={`/users/${user.username}`}>{user.name}
+                                                </ListGroupItem>
+                                                <ListGroupItem style={{width:70}} key={user.id+'.2'}>{this.SetUserStatus(user.status)}</ListGroupItem>
                                                 <ListGroupItem style={{width:150}} key={user.id+'.3'}>
                                                     <Input type='text' name='position' id='position'
                                                            value={user.position}
                                                            onChange={(event) => this.handleInputChange(event)}/></ListGroupItem>
-                                                <ListGroupItem style={{width:170}} key={user.id+'.4'}>
+                                                <ListGroupItem style={{width:160}} key={user.id+'.4'}>
                                                     <Input type='text' name='position' id='position'
                                                            value={user.department}
                                                            onChange={(event) => this.handleInputChange(event)}/></ListGroupItem>
-                                                <ListGroupItem style={{width:300}} key={user.id+'.5'}>
+                                                <ListGroupItem style={{width:230}} key={user.id+'.5'}>
                                                     <Input type='text' name='position' id='position'
                                                            value={user.email}
                                                            onChange={(event) => this.handleInputChange(event)}/>
@@ -152,8 +152,10 @@ class UsersAdminListEdit extends Component {
                                                            onChange={(event) => this.handleInputChange(event)}/>
                                                     <Input type='text' name='position' id='position'
                                                            value={user.tg}
-                                                           onChange={(event) => this.handleInputChange(event)}/></ListGroupItem>
-                                                <Button size='sm' color='danger' style={{height:30, marginTop:30, marginLeft:10}} key={user.id+'.6'} onClick={() => this.DeleteUser(user.id)}>Удалить</Button>
+                                                           onChange={(event) => this.handleInputChange(event)}/>
+                                                    <Button size='sm' color='danger' style={{height:30, marginTop:5}} key={user.id+'.6'} onClick={() => this.DeleteUser(user.id)}>Удалить сотрудника</Button>
+                                                </ListGroupItem>
+
                                             </ListGroup>
                                         </div>
                                 )
@@ -167,6 +169,8 @@ class UsersAdminListEdit extends Component {
                 <Button size="sm" href='/newUser' style={{marginTop:10, marginLeft:10}} className='add-button'>
                     Добавить сотрудника
                 </Button>
+                    </Col>
+                </Row>
             </div>
         )
     }

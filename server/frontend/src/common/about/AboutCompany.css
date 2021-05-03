@@ -1,0 +1,19 @@
+.company-about-text{
+    font-style: normal;
+    font-weight: normal;
+    line-height: 20px;
+    color: #2C2C2C;
+    margin-bottom: 20px;
+}
+
+.office{
+    color: #919FA2;
+    margin-bottom: 10px;
+}
+
+.company-button{
+    height: 30px;
+    width: 200px;
+    background: #5380B7;
+    border-radius: 10px;
+}

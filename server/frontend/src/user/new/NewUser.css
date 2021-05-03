@@ -4,3 +4,24 @@ textarea {
 textarea.form-control {
     height: 70px;
 }
+
+.profile-text1{
+    font-weight: bold;
+    height: 50px;
+    margin-left:5px;
+    color:gray;
+}
+
+.profile-form{
+    width:170px;
+}
+
+.profile-title{
+    text-align: center;
+    font-size: 20px;
+    width:340px;
+    font-weight: bold;
+    color:#2C2C2C;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

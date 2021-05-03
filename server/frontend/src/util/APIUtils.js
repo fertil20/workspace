@@ -29,6 +29,27 @@ export function newUser(newUserRequest){
     });
 }
 
+export function getRoleUsers(roleName){
+    return request({
+        url: API_BASE_URL + "/roles/" + roleName,
+        method: 'GET',
+    });
+}
+
+export function addUserToRole(roleName, username){
+    return request({
+        url: API_BASE_URL + "/roles/" + roleName+ "/addUser/" + username,
+        method: 'POST',
+    });
+}
+
+export function getUsersWithoutRole(roleName){
+    return request({
+        url: API_BASE_URL + "/roles/" + roleName + "/addUser",
+        method: 'GET',
+    });
+}
+
 export function getAllRoles(){
     return request({
         url: API_BASE_URL + "/roles",

@@ -16,6 +16,7 @@ import React, {Component, useState} from "react";
 import {checkEmailAvailability, checkUsernameAvailability, newUser} from "../../util/APIUtils";
 import {EMAIL_MAX_LENGTH, USERNAME_MAX_LENGTH, USERNAME_MIN_LENGTH} from "../../constants";
 import FormItem from "@ant-design/compatible/es/form/FormItem";
+import NavigationPanel from "../../common/NavigationPanel";
 
 
 class NewUser extends Component {
@@ -129,12 +130,12 @@ class NewUser extends Component {
         if(username.length < USERNAME_MIN_LENGTH) {
             return {
                 validateStatus: 'error',
-                errorMsg: `Имя пользовтеля слишком короткое (Минимум - ${USERNAME_MIN_LENGTH} знаков.)`
+                errorMsg: `(Минимум - ${USERNAME_MIN_LENGTH} знаков.)`
             }
         } else if (username.length > USERNAME_MAX_LENGTH) {
             return {
                 validationStatus: 'error',
-                errorMsg: `Имя пользовтеля слишком длинное (Максимум - ${USERNAME_MAX_LENGTH} знаков.)`
+                errorMsg: `(Максимум - ${USERNAME_MAX_LENGTH} знаков.)`
             }
         } else {
             return {
@@ -182,7 +183,7 @@ class NewUser extends Component {
                         username: {
                             value: usernameValue,
                             validateStatus: 'error',
-                            errorMsg: 'Это имя пользователя уже занято'
+                            errorMsg: 'Имя пользователя занято'
                         }
                     });
                 }
@@ -314,26 +315,29 @@ class NewUser extends Component {
                 {
                         <Form onSubmit={this.handleSubmit}>
                             <Row >
-                                <Col sm={{ size: 4 }} style={{backgroundColor: 'white',borderRadius:10,height:500}}>
+                                <NavigationPanel/>
+                                <Col sm={{ size: 4.4 }} style={{backgroundColor: 'white',borderRadius:10,height:500,marginRight:30}}>
                                     {/*<div style={{backgroundColor: 'white', margin: 20,borderRadius:10,height:300,width:300}}>*/}
                                     {/*    /!*<Avatar className="user-avatar-circle" style={{ backgroundColor: getAvatarColor(this.state.user.name)}}>*!/*/}
                                     {/*    /!*    {this.state.user.name.toUpperCase()}*!/*/}
                                     {/*    /!*</Avatar>*!/*/}
                                     {/*</div>*/}
+                                    <div className='profile-title'>Новый пользователь</div>
                                     <Row>
-                                        <Col>
-                                            <div style={{color: 'gray', fontWeight: 'bold',height: 50,marginTop:20}}>Username:</div>
-                                            <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>E-mail:</div>
-                                            <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Рабочий номер:</div>
-                                            <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Telegram:</div>
+                                        <Col >
+                                            <div style={{marginTop:25}} className='profile-text1'>Username:</div>
+                                            <div style={{marginTop:15}} className='profile-text1'>E-mail:</div>
+                                            <div style={{marginTop:45}} className='profile-text1'>Рабочий номер:</div>
+                                            <div className='profile-text1'>Telegram:</div>
                                         </Col>
                                         <Col>
                                             <FormGroup style={{marginTop:20}}>
                                                 <FormItem hasFeedback
                                                           validateStatus={this.state.username.validateStatus}
-                                                          help={this.state.username.errorMsg}>
+                                                          help={this.state.username.errorMsg}
+                                                          style={{height:50}}>
                                                     <Input
-                                                        type="text"
+                                                        type="text" className='profile-form'
                                                         required
                                                         name="username"
                                                         autoComplete="off"
@@ -344,15 +348,16 @@ class NewUser extends Component {
                                                 </FormItem>
                                                 <div style={{height: 10}}/>
                                                 <FormItem
-                                                    hasFeedback
+                                                    hasFeedback className='profile-form'
                                                     validateStatus={this.state.email.validateStatus}
-                                                    help={this.state.email.errorMsg}>
+                                                    help={this.state.email.errorMsg}
+                                                    style={{height:80}}>
                                                     <Input
                                                         name="email"
                                                         type="email"
                                                         required
                                                         autoComplete="off"
-                                                        placeholder="sophie@example.com"
+                                                        placeholder="sophie@exmpl.com"
                                                         value={this.state.email.value}
                                                         onBlur={this.validateEmailAvailability}
                                                         onChange={(event) => this.handleInputChange(event, this.validateEmail)} />
@@ -369,35 +374,50 @@ class NewUser extends Component {
                                                 <div style={{height: 10}}/>
                                                 <Input type="tel" name="phone" id="phone" placeholder={"+7 (905) 226-23-58"}
                                                        value={this.state.phone.value}
-                                                       required
+                                                       required className='profile-form'
                                                        pattern="[+][7] [(][0-9]{3}[)] [0-9]{3}-[0-9]{2}-[0-9]{2}"
                                                        onChange={(event) => this.handleInputChange(event)}/>
                                                 <div style={{height: 10}}/>
                                                 <Input type="text" name="tg" id="tg" placeholder={"telegram"}
-                                                       value={this.state.tg.value}
+                                                       value={this.state.tg.value} className='profile-form'
                                                        onChange={(event) => this.handleInputChange(event)}/>
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                </Col>
-                                <Col sm={{ size: 6, offset: 1}} style={{backgroundColor: 'white',borderRadius:10,height:500}}>
+                                </Col >
+                                <Col sm={{ size: 6.6}} style={{backgroundColor: 'white',borderRadius:10,height:500, width:465}}>
                                     <Row>
-                                        <Col>
-                                            <div style={{color: 'gray', marginTop:20, fontWeight: 'bold',height: 50}}>Ф.И.О:</div>
-                                            <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>О себе:</div>
-                                            <div style={{color: 'gray', marginTop:30, fontWeight: 'bold',height: 50}}>Должность:</div>
-                                            <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Департамент:</div>
-                                            <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Офис:</div>
-                                            <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Рабочие часы:</div>
-                                            <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Дата рождения:</div>
-                                            <div style={{color: 'gray', fontWeight: 'bold',height: 50}}>Секретная заметка:</div>
+                                        <Col sm={{ size: 'auto'}}>
+                                            <div className='profile-text1' style={{marginTop:15}}>Ф.И.О:</div>
+                                            <div className='profile-text1'>О себе:</div>
+                                            <div className='profile-text1' style={{marginTop:45}}>Должность:</div>
+                                            <div className='profile-text1'>Департамент:</div>
+                                            <div className='profile-text1'>Офис:</div>
+                                            <div className='profile-text1'>Рабочие часы:</div>
+                                            <div className='profile-text1'>Дата рождения:</div>
+                                            <div className='profile-text1'>Секретная заметка:</div>
                                         </Col>
                                         <Col sm={{ size: 7}}>
                                             <div style={{height: 10}}/>
-                                            <Input type="text" name="name" id="editName" placeholder={"Попов Валерий Александрович"}
-                                                   required
+                                            <Row>
+                                                <Col>
+                                            <Input type="text" name="name" id="editName" placeholder={"Иванов Иван Иванович"}
+                                                   required style={{width:155}}
                                                    value={this.state.name.value}
                                                    onChange={(event) => this.handleInputChange(event)}/>
+                                                </Col>
+                                                <Col sm={{ width:30}}>
+                                                    <div style={{marginTop:5, width:30,paddingRight:5}}>
+                                                        {this.state.status.value === '0' && <TooltipWidgetHome/>}
+                                                        {this.state.status.value === '1' && <TooltipWidgetAtWork/>}
+                                                        {this.state.status.value === '2' && <TooltipWidgetIll/>}
+                                                        {this.state.status.value === '3' && <TooltipWidgetHoliday/>}
+                                                    </div>
+                                                </Col>
+                                                <Col sm={{ width:30}}>
+                                                    <DropdownStatus/>
+                                                </Col>
+                                            </Row>
                                             <div style={{height: 10}}/>
                                             <Input type="textarea" name="about" id="editAbout"
                                                    spellCheck={true}
@@ -420,7 +440,7 @@ class NewUser extends Component {
                                             <Row>
                                                 <Col sm={{size:2}}>
                                                     <div>
-                                                        <Input type="time" name="startAt" id="startAt" style={{width:115}}
+                                                        <Input type="time" name="startAt" id="startAt" style={{width:100}}
                                                                value={formatTime(this.state.startAt.value)}
                                                                required
                                                                pattern="[0-9]{2}:[0-9]{2}"
@@ -430,7 +450,7 @@ class NewUser extends Component {
                                                 <Col sm={{size:2,offset:3}}>—</Col>
                                                 <Col sm={{offset:0}}>
                                                     <div >
-                                                        <Input type="time" name="endAt" id="endAt" style={{width:115}}
+                                                        <Input type="time" name="endAt" id="endAt" style={{width:100}}
                                                                value={formatTime(this.state.endAt.value)}
                                                                required
                                                                pattern="[0-9]{2}:[0-9]{2}"
@@ -442,7 +462,7 @@ class NewUser extends Component {
                                             <Input type="date" name="birthday" id="birthday"
                                                    value={this.state.birthday.value}
                                                    onChange={(event) => this.handleInputChange(event)}/>
-                                            <div style={{height: 25}}/>
+                                            <div style={{height: 15}}/>
                                             <Input type="text" name="secretNote" id="editSecretNote"
                                                    value={this.state.secretNote.value}
                                                    onChange={(event) => this.handleInputChange(event)}/>
@@ -450,19 +470,14 @@ class NewUser extends Component {
                                                 <Button color="primary" size="sm" disabled={this.isFormInvalid()}>
                                                     Добавить пользователя
                                                 </Button>
+                                                <div style={{margin:10}}>
+
+                                                </div>
                                             </div>
                                         </Col>
-                                        <div style={{margin:10}}>
-                                            {this.state.status.value === '0' && <TooltipWidgetHome/>}
-                                            {this.state.status.value === '1' && <TooltipWidgetAtWork/>}
-                                            {this.state.status.value === '2' && <TooltipWidgetIll/>}
-                                            {this.state.status.value === '3' && <TooltipWidgetHoliday/>}
-                                        </div>
+
                                     </Row>
                                 </Col>
-                                <div style={{margin:10}}>
-                                    <DropdownStatus/>
-                                </div>
                             </Row>
                         </Form>
                 }

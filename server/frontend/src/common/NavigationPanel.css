@@ -1,0 +1,16 @@
+.row-navigation{
+    margin-top:5px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.col-navigation{
+    background-color: white;
+    border-radius:10px;
+    height:285px;
+    margin-right:30px;
+}
+
+.navigation-link-red{
+    color:red;
+}

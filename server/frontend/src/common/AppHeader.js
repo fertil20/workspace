@@ -13,6 +13,8 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
+    Row,
+    Col
 } from 'reactstrap';
 
 
@@ -47,76 +49,56 @@ const NavBarNotLogged = () => {
     const toggle = () => setIsOpen(!isOpen);
 
         return (
-            <div>
-                <Navbar color="light" light expand="md">
-                    <NavbarBrand href="/">WSpace</NavbarBrand>
-                    <NavbarToggler onClick={toggle}/>
-                    <Collapse isOpen={isOpen} navbar style={{marginLeft: 950}}>
-                        <Nav>
-                            <UncontrolledDropdown nav inNavbar>
-                                <DropdownToggle nav caret>
-                                    ···
-                                </DropdownToggle>
-                                <DropdownMenu right>
-                                    <DropdownItem href="/login">
-                                        Login
-                                    </DropdownItem>
-                                    <DropdownItem href="/signup">
-                                        Sign Up
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
-                        </Nav>
-                    </Collapse>
-                </Navbar>
+            <div className='nav-bar-container'>
+                <Row >
+                    <Col></Col>
+                    <Col>
+                        <a href="/" style={{textDecoration: "none"}}><div  className='main-title'>Workspace</div></a>
+                    </Col>
+                    <Col>
+                    </Col>
+                </Row>
             </div>
         );
 }
 
-
-const Navconst = () => {
-}
 function NavBarLogged(props){
 
     return (
-        <div >
-            <Navbar  color="light" light expand="md" >
-                <NavbarBrand href="/">WSpace</NavbarBrand>
-                <NavbarToggler onClick={Navconst.toggle}/>
-                <Collapse isOpen={Navconst.isOpen} navbar style={{marginLeft: 950}}>
-                    <Nav>
-                        <UncontrolledDropdown nav inNavbar>
-                            <DropdownToggle nav caret>
-                                ···
-                            </DropdownToggle>
-                            <DropdownMenu right >
-                                    <div style={{textAlign:'center'}}>{props.currentUser.username}</div>
-                                    <div style={{textAlign:'center'}}> @{props.currentUser.username}</div>
-                                <DropdownItem divider />
-                                <DropdownItem href="/">
-                                    Home
-                                </DropdownItem>
-                                <DropdownItem href="/poll/new">
-                                    Poll
-                                </DropdownItem>
-                                <DropdownItem divider />
-                                <DropdownItem href={`/users/${props.currentUser.username}`}>
-                                    Profile
-                                </DropdownItem>
-                                <DropdownItem href="/users">
-                                    Users
-                                </DropdownItem>
-                                <DropdownItem href="/roleManager">
-                                    Role Manager
-                                </DropdownItem>
-                                <DropdownItem  onClick={props.handleMenuClick} href="/login">
-                                    Logout
-                                </DropdownItem>
-                            </DropdownMenu>
-                        </UncontrolledDropdown>
-                    </Nav>
-                </Collapse>
-            </Navbar>
+        <div className='nav-bar-container'>
+            <Row >
+                <Col></Col>
+                <Col>
+            <a href="/" style={{textDecoration: "none"}}><div  className='main-title'>Workspace</div></a>
+                </Col>
+                <Col>
+            <div className='caret-css'>
+                <UncontrolledDropdown>
+                    <DropdownToggle nav caret>
+                        {props.currentUser.name}
+                    </DropdownToggle>
+                    <DropdownMenu right >
+                        <div style={{textAlign:'center'}}>{props.currentUser.username}</div>
+                        <div style={{textAlign:'center'}}> @{props.currentUser.username}</div>
+                        <DropdownItem divider />
+                        <DropdownItem href="/">
+                            Главная
+                        </DropdownItem>
+                        <DropdownItem href="/poll/new">
+                            Новости
+                        </DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem href={`/users/${props.currentUser.username}`}>
+                            Профиль
+                        </DropdownItem>
+                        <DropdownItem  onClick={props.handleMenuClick} href="/login">
+                            Выйти
+                        </DropdownItem>
+                    </DropdownMenu>
+                </UncontrolledDropdown>
+            </div>
+                </Col>
+            </Row>
         </div>
     )
 }

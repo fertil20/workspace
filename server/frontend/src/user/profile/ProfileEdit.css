@@ -30,3 +30,14 @@ textarea {
 textarea.form-control {
     height: 70px;
 }
+
+.profile-text1{
+    font-weight: bold;
+    height: 50px;
+    margin-left:5px;
+    color:gray;
+}
+
+.profile-form{
+    margin-right: 10px;
+}
