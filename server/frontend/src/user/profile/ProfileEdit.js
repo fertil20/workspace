@@ -102,11 +102,11 @@ class ProfileEdit extends Component {
         this._isMounted = false;
     }
 
-    componentDidUpdate(prevProps) {
-        if(this.props.match.params.username !== prevProps.match.params.username) {
-            this.loadUserProfile(this.props.match.params.username);
-        }
-    }
+    // componentDidUpdate(prevProps) {
+    //     if(this.props.match.params.username !== prevProps.match.params.username) {
+    //         this.loadUserProfile(this.props.match.params.username);
+    //     }
+    // }
 
     handleInputChange(event) {
         const target = event.target;

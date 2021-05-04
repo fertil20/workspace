@@ -23,18 +23,19 @@ import {
 import classnames from 'classnames';
 import React, {Component} from "react";
 import {
-    addNewRole, addUserToRole,
-    getAllRoles,
+    addNewRole, addUserToRole, deleteRole, deleteUserFromRole, editRolePrivileges,
+    getAllRoles, getRolePrivileges,
     getRoleUsers,
     getUsersWithoutRole,
 } from "../../util/APIUtils";
 import './RoleManager.css';
-import {formatRole} from "../../util/Helpers";
 import NavigationPanel from "../../common/NavigationPanel";
 
 let UsersByRole = ''
 let UsersWithoutRole = ''
 let CurrentRole = ''
+let CheckBoxAble = true
+
 class RoleManager extends Component {
 
     constructor(props) {
@@ -49,7 +50,8 @@ class RoleManager extends Component {
             usersByRole: '',
             toggleDropDown: false,
             activeTab: '1',
-            setActiveTab: '1'
+            setActiveTab: '1',
+            rolePrivileges: [],
         }
         this.loadRoles = this.loadRoles.bind(this);
         this.showUsersByRole = this.showUsersByRole.bind(this);
@@ -59,6 +61,11 @@ class RoleManager extends Component {
         this.changeToggleDropDown = this.changeToggleDropDown.bind(this);
         this.getUsersWithoutRole = this.getUsersWithoutRole.bind(this);
         this.addUserToRoleByUsername = this.addUserToRoleByUsername.bind(this);
+        this.getListOfRolePrivileges = this.getListOfRolePrivileges.bind(this);
+        this.handleCheckBoxState = this.handleCheckBoxState.bind(this);
+        this.loadRolePrivileges = this.loadRolePrivileges.bind(this);
+        this.deleteUserFromRoleByUsername = this.deleteUserFromRoleByUsername.bind(this);
+        this.deleteRoleByRoleName = this.deleteRoleByRoleName.bind(this);
     }
 
     loadRoles(){
@@ -156,6 +163,30 @@ class RoleManager extends Component {
             });
     }
 
+    deleteUserFromRoleByUsername(roleName,username){
+        deleteUserFromRole(roleName,username)
+            .then(response => {
+                this._isMounted && this.setState({
+                    isLoading: false
+                });
+                this.showUsersByRole(roleName);
+            })
+            .catch(error => {
+                if(error.status === 404) {
+                    this._isMounted && this.setState({
+                        notFound: true,
+                        isLoading: false
+                    });
+                    alert('Что-то пошло не так')
+                } else {
+                    this._isMounted && this.setState({
+                        serverError: true,
+                        isLoading: false
+                    });
+                }
+            });
+    }
+
     getUsersWithoutRole(roleName){
         this.setState({toggleDropDown: false})
         getUsersWithoutRole(roleName)
@@ -164,7 +195,6 @@ class RoleManager extends Component {
                     users: response,
                     isLoading: false
                 });
-                console.log(this.state.users)
                 UsersWithoutRole = <div>
                     {
                         this.state.users ? (
@@ -197,8 +227,32 @@ class RoleManager extends Component {
             });
     }
 
+    getListOfRolePrivileges(roleName){
+        getRolePrivileges(roleName)
+            .then(response => {
+                this._isMounted && this.setState({
+                    rolePrivileges: response,
+                    isLoading: false
+                });
+                this.loadRolePrivileges(this.state.rolePrivileges);
+            })
+
+    }
+
+    loadRolePrivileges(rolePrivileges){
+        document.querySelector('.manageUsersCheckbox').checked = !!rolePrivileges.includes('Manage_Users');
+        document.querySelector('.manageRolesCheckbox').checked = !!rolePrivileges.includes('Manage_Roles');
+        document.querySelector('.viewSecretCheckbox').checked = !!rolePrivileges.includes('View_Secret');
+        document.querySelector('.editUsersCheckbox').checked = !!rolePrivileges.includes('Edit_Users');
+        document.querySelector('.manageNewsCheckbox').checked = !!rolePrivileges.includes('Manage_News');
+        document.querySelector('.editAboutCheckbox').checked = !!rolePrivileges.includes('Edit_About');
+    }
+
     showUsersByRole(roleName){
         this.getUsersWithoutRole(roleName);
+        this.getListOfRolePrivileges(roleName);
+        if((roleName === 'Администратор') ||(roleName === 'Пользователь')){CheckBoxAble=false}else{CheckBoxAble=true}
+        console.log(CheckBoxAble)
         CurrentRole = roleName;
         getRoleUsers(roleName)
             .then(response => {
@@ -216,7 +270,8 @@ class RoleManager extends Component {
                                             <ListGroup horizontal="lg" style={{border:0,marginLeft:15}}>
                                                 <ListGroupItem style={{width:205}}  tag = 'a' href={`/users/${usersByRole.username}`}>{usersByRole.name}</ListGroupItem>
                                                 <ListGroupItem style={{width:205}} >{usersByRole.position}</ListGroupItem>
-                                                <ListGroupItem style={{width:100}} ><Button size='sm' color='danger'>Удалить</Button></ListGroupItem>
+                                                {((roleName === 'Пользователь') || (roleName ==='Администратор')) && <ListGroupItem style={{width:100}} ><Button disabled size='sm' color='danger'>Удалить</Button></ListGroupItem>}
+                                                {(roleName !== 'Пользователь') && (roleName !== 'Администратор') && <ListGroupItem style={{width:100}} ><Button size='sm' color='danger' onClick={()=>{this.deleteUserFromRoleByUsername(roleName,usersByRole.username)}}>Удалить</Button></ListGroupItem>}
                                             </ListGroup>
                                     )
                                 }
@@ -240,6 +295,62 @@ class RoleManager extends Component {
                 });
             }
         });
+    }
+
+    deleteRoleByRoleName(roleName){
+        deleteRole(roleName)
+            .then(response =>{
+                CurrentRole = ''
+                UsersByRole = ''
+                this.loadRoles()
+                }
+            )
+            .catch(error => {
+                if(error.status === 404) {
+                    this._isMounted && this.setState({
+                        notFound: true,
+                        isLoading: false
+                    });
+                    alert('Что-то пошло не так')
+                } else {
+                    this._isMounted && this.setState({
+                        serverError: true,
+                        isLoading: false
+                    });
+                }
+            });
+    }
+
+    handleCheckBoxState(event){
+        const target = event.target;
+        const inputName = target.name;
+        if(event.target.checked){
+            this.state.rolePrivileges.push(inputName)
+        }
+        else{
+            let index = this.state.rolePrivileges.indexOf(inputName)
+            if (index !== -1) {
+                this.state.rolePrivileges.splice(index, 1);
+            }
+        }
+        console.log(this.state.rolePrivileges)
+        editRolePrivileges(this.state.rolePrivileges,CurrentRole)
+            .then(response => {
+            })
+            .catch(error => {
+                if(error.status === 404) {
+                    this._isMounted && this.setState({
+                        notFound: true,
+                        isLoading: false
+                    });
+                    alert('Что-то пошло не так')
+                } else {
+                    this._isMounted && this.setState({
+                        serverError: true,
+                        isLoading: false
+                    });
+                }
+            });
     }
 
     changeToggle(){
@@ -300,7 +411,15 @@ class RoleManager extends Component {
                                     {
                                         this.state.roles.map(
                                             roles =>
-                                                <div><Button outline color="primary" size='sm' className='button-text' onClick={() => this.showUsersByRole(roles.name)}>{roles.name}</Button></div>
+                                                <Row>
+                                                    <Col>
+                                                <Button outline color="primary" size='sm' className='button-text' onClick={() => this.showUsersByRole(roles.name)}>{roles.name}</Button>
+                                                    </Col>
+                                                    <Col>
+                                                        {((roles.name === 'Пользователь') || (roles.name === 'Администратор'))&& <Button disabled size='sm' outline color='danger' className='button-text'>Удалить</Button>}
+                                                        {((roles.name !== 'Пользователь') && (roles.name !== 'Администратор'))&& <Button size='sm' outline color='danger' className='button-text' onClick={()=> this.deleteRoleByRoleName(roles.name)}>Удалить</Button>}
+                                                    </Col>
+                                                </Row>
                                         )
                                     }
                                 </div>
@@ -323,24 +442,56 @@ class RoleManager extends Component {
                             <TabContent activeTab={this.state.activeTab}>
                                 <TabPane tabId="1">
                                     <ButtonDropdown isOpen={this.state.toggleDropDown} toggle={this.changeToggleDropDown} style={{marginBottom:10, marginRight:340}}>
-                                        <DropdownToggle caret outline color="primary" size='sm' className='button-text'>
+                                        {((CurrentRole === 'Пользователь') || (CurrentRole ==='Администратор')) && <DropdownToggle disabled caret outline color="primary" size='sm' className='button-text'>
                                             + Добавить пользователя
-                                        </DropdownToggle>
+                                        </DropdownToggle>}
+                                        {((CurrentRole !== 'Пользователь') && (CurrentRole !=='Администратор')) && <DropdownToggle caret outline color="primary" size='sm' className='button-text'>
+                                            + Добавить пользователя
+                                        </DropdownToggle>}
                                         {UsersWithoutRole}
                                     </ButtonDropdown>
+                                    {CurrentRole === '' && <div style={{margin:10,fontWeight:"bold"}}>Выберите группу доступа</div>}
+                                    {CurrentRole !== '' && <div style={{margin:10,fontWeight:"bold"}}>Пользователи с группой доступа <a style={{color:'#5380B7'}}>{CurrentRole}</a></div>}
                                     {UsersByRole}
                                 </TabPane>
                                 <TabPane tabId="2">
+                                    {CurrentRole === '' && <div style={{margin:10,fontWeight:"bold"}}>Выберите группу доступа</div>}
+                                    {CurrentRole !== '' && <div style={{margin:10,fontWeight:"bold"}}>Права группы доступа <a style={{color:'#5380B7'}}>{CurrentRole}</a></div>}
+                                    {CurrentRole !=='' &&
                                     <Row>
                                         <Col >
-                                            <div className='role-column1'>Управление пользователями <Input className='role-checkbox' type ='checkbox'/></div>
-                                            <div className='role-column'>Управление ролями<Input className='role-checkbox' type ='checkbox'/></div>
-                                            <div className='role-column'>Просмотр карточки сотрудника<Input className='role-checkbox' type ='checkbox'/></div>
-                                            <div className='role-column'>Редактирование карточек сотрудников<Input className='role-checkbox' type ='checkbox'/></div>
-                                            <div className='role-column'>Курирование новостей<Input className='role-checkbox' type ='checkbox'/></div>
-                                            <div className='role-column'>Редактирование контента "О компании"<Input className='role-checkbox' type ='checkbox'/></div>
+                                            <div className='role-column1'>Управление пользователями
+                                                <Input disabled={!CheckBoxAble} className='manageUsersCheckbox' type ='checkbox'  style={{right:25}} name='Manage_Users'
+                                                       onChange={(event)=> {this.handleCheckBoxState(event)}}
+                                                />
+                                            </div>
+                                            <div className='role-column'>Управление ролями
+                                                <Input disabled={!CheckBoxAble} className='manageRolesCheckbox' type ='checkbox' style={{right:25}} name='Manage_Roles'
+                                                       onChange={(event)=> {this.handleCheckBoxState(event)}}
+                                                />
+                                            </div>
+                                            <div className='role-column'>Просмотр карточки сотрудника
+                                                <Input disabled={!CheckBoxAble} className='viewSecretCheckbox' type ='checkbox' style={{right:25}} name='View_Secret'
+                                                       onChange={(event)=> {this.handleCheckBoxState(event)}}
+                                                />
+                                            </div>
+                                            <div className='role-column'>Редактирование карточек сотрудников
+                                                <Input disabled={!CheckBoxAble} className='editUsersCheckbox' type ='checkbox' style={{right:25}} name='Edit_Users'
+                                                       onChange={(event)=> {this.handleCheckBoxState(event)}}
+                                                />
+                                            </div>
+                                            <div className='role-column'>Курирование новостей
+                                                <Input disabled={!CheckBoxAble} className='manageNewsCheckbox' type ='checkbox' style={{right:25}} name='Manage_News'
+                                                       onChange={(event)=> {this.handleCheckBoxState(event)}}
+                                                />
+                                            </div>
+                                            <div className='role-column'>Редактирование контента "О компании"
+                                                <Input disabled={!CheckBoxAble} className='editAboutCheckbox' type ='checkbox' style={{right:25}} name='Edit_About'
+                                                       onChange={(event)=> {this.handleCheckBoxState(event)}}
+                                                />
+                                            </div>
                                         </Col>
-                                    </Row>
+                                    </Row>}
                                 </TabPane>
                             </TabContent>
                     </Col>

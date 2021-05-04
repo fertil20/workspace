@@ -43,6 +43,35 @@ export function addUserToRole(roleName, username){
     });
 }
 
+export function deleteRole(roleName){
+    return request({
+        url: API_BASE_URL + "/roles" +"/deleteRole/" + roleName,
+        method: 'POST',
+    });
+}
+
+export function deleteUserFromRole(roleName, username){
+    return request({
+        url: API_BASE_URL + "/roles/" + roleName+ "/deleteUser/" + username,
+        method: 'POST',
+    });
+}
+
+export function editRolePrivileges(editRolePrivilegesRequest,roleName){
+    return request({
+        url: API_BASE_URL + "/roles/" + roleName + '/privileges/edit',
+        method: 'POST',
+        body: JSON.stringify(editRolePrivilegesRequest)
+    });
+}
+
+export function getRolePrivileges(roleName){
+    return request({
+        url: API_BASE_URL + "/roles/" + roleName + "/privileges",
+        method: 'GET',
+    });
+}
+
 export function getUsersWithoutRole(roleName){
     return request({
         url: API_BASE_URL + "/roles/" + roleName + "/addUser",

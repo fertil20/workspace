@@ -31,8 +31,10 @@ import AboutCompany from "../common/about/AboutCompany";
 import AboutCompanyEdit from "../common/about/AboutCompanyEdit";
 import NewEmployee from "../common/about/NewEmployee";
 import NewEmployeeEdit from "../common/about/NewEmployeeEdit";
+import NavigationPanel from "../common/NavigationPanel";
 const { Content } = Layout;
 
+let isLoading = false
 
 class App extends Component {
     constructor(props) {
@@ -40,7 +42,7 @@ class App extends Component {
         this.persistentState = new PersistentState(this, "app", {
             currentUser: null,
             isAuthenticated: false,
-            isLoading: false
+            // isLoading: false
         })
         this.handleLogout = this.handleLogout.bind(this);
         this.loadCurrentUser = this.loadCurrentUser.bind(this);
@@ -54,26 +56,33 @@ class App extends Component {
     }
 
     loadCurrentUser() {
-        this.persistentState.setState({
-            isLoading: true
-        })
+        // this.persistentState.setState({
+        //     isLoading: true
+        // })
+        isLoading = true
         getCurrentUser()
             .then(response => {
                 this.persistentState.setState({
                     currentUser: response,
                     isAuthenticated: true,
-                    isLoading: false
+                    // isLoading: false
                 });
+                isLoading = false
             }).catch(error => {
-            this.persistentState.setState({
-                isLoading: false
-            });
+            // this.persistentState.setState({
+            //     // isLoading: false
+            // });
+            isLoading = false
         });
     }
 
     componentDidMount() {
         this.loadCurrentUser();
     }
+
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     if(this.persistentState.getState().currentUser !== prevState.currentUser){this.render()}
+    // }
 
     handleLogout() {
         localStorage.removeItem(ACCESS_TOKEN);
@@ -97,19 +106,18 @@ class App extends Component {
     }
 
     render() {
-        if(this.persistentState.getState().isLoading) {
-            return <div className="text-center">
-                <div className="spinner-border" role="status">
-                    <span className="sr-only">Loading...</span>
-                </div>
-            </div>
-        }
+        // if(!isLoading) {
+        //     return <div className="text-center">
+        //         <div className="spinner-border" role="status">
+        //             <span className="sr-only">Loading...</span>
+        //         </div>
+        //     </div>
+        // }
         return (
             <Layout className="app-container">
                 <AppHeader isAuthenticated={this.persistentState.getState().isAuthenticated}
                            currentUser={this.persistentState.getState().currentUser}
                            onLogout={this.handleLogout} />
-
                 <Content className="app-content">
                     <div className="container">
                         <BrowserRouter>
@@ -131,7 +139,7 @@ class App extends Component {
                                 <PrivateRoute exact path="/users/:username/edit" authenticated={this.persistentState.getState().isAuthenticated} component={ProfileEdit} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/poll/new" authenticated={this.persistentState.getState().isAuthenticated} component={NewPoll} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/users" authenticated={this.persistentState.getState().isAuthenticated} component={UsersAdminList} handleLogout={this.handleLogout}/>
-                                <Route component={NotFound}/>
+                                <Route component={NotFound} />
                             </Switch>
                         </BrowserRouter>
                     </div>

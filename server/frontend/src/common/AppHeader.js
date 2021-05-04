@@ -30,6 +30,7 @@ class AppHeader extends Component {
     }
 
     render() {
+
 //        let menuItems;
         if(this.props.currentUser) {
           return(
