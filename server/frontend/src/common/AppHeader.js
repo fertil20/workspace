@@ -34,7 +34,7 @@ class AppHeader extends Component {
 //        let menuItems;
         if(this.props.currentUser) {
           return(
-            <NavBarLogged currentUser={this.props.currentUser} handleMenuClick={this.handleMenuClick}/>
+            <NavBarLogged className='header-of-app' currentUser={this.props.currentUser} handleMenuClick={this.handleMenuClick}/>
           )
         } else {
           return(
@@ -85,7 +85,7 @@ function NavBarLogged(props){
                         <DropdownItem href="/">
                             Главная
                         </DropdownItem>
-                        <DropdownItem href="/poll/new">
+                        <DropdownItem href="/news">
                             Новости
                         </DropdownItem>
                         <DropdownItem divider />

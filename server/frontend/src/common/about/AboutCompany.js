@@ -11,6 +11,13 @@ let OfficePhoneText = '+7(812)-578-85-44 +7(812)-543-56-65'
 
 export default class AboutCompany extends Component{
 
+    constructor(props) {
+        super(props);
+        this.state ={
+            CurUser: JSON.parse(localStorage.getItem('app'))
+        }
+    }
+
     render() {
         return(
             <Row>
@@ -28,7 +35,7 @@ export default class AboutCompany extends Component{
                                     <div style={{height:'auto'}}>{OfficePhoneText}</div>
                                 </Col>
                             </Row>
-                            <Button style={{marginRight:50}} size='sm' className='company-button' href='/about/edit'>Редактировать</Button>
+                            {this.state.CurUser.currentUser.privileges.includes('Edit_About') && <Button style={{marginRight:50}} size='sm' className='company-button' href='/about/edit'>Редактировать</Button>}
                             <Button size='sm' className='company-button' href='/about/newEmployee'>Новый сотрудник</Button>
                         </div>
                     </div>

@@ -17,6 +17,7 @@ class UsersAdminList extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            CurUser: JSON.parse(localStorage.getItem('app')),
             user: null,
             isLoading: false,
             deleteUserID: '',
@@ -143,12 +144,14 @@ class UsersAdminList extends Component {
                         </div>
                     ):null
                 }
-                <Button size="sm" href='/editUsers' style={{marginTop:10, marginLeft:10}} className='add-button'>
-                    Редактировать
-                </Button>
-                <Button size="sm" href='/newUser' style={{marginTop:10, marginLeft:10}} className='add-button'>
-                    Добавить сотрудника
-                </Button>
+                        {this.state.CurUser.currentUser.privileges.includes('Manage_Users') && <div>
+                            <Button size="sm" href='/editUsers' style={{marginTop:10, marginLeft:10}} className='add-button'>
+                                Редактировать
+                            </Button>
+                            <Button size="sm" href='/newUser' style={{marginTop:10, marginLeft:10}} className='add-button'>
+                                Добавить сотрудника
+                            </Button>
+                        </div>}
                     </Col>
                 </Row>
             </div>

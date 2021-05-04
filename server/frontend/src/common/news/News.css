@@ -1,0 +1,52 @@
+.news-title{
+    font-weight: bold;
+    font-size: 20px;
+    padding-left: 20px;
+    padding-top: 5px;
+}
+
+.news-date{
+    padding-left: 20px;
+    color: #919FA2;
+}
+
+.news-image{
+    width:200px;
+    height: 260px;
+    border-radius: 10px;
+}
+
+.news-text{
+    font-style: normal;
+    font-weight: normal;
+    line-height: 19px;
+}
+
+.news-edit-button{
+    margin-left: 20px;
+    margin-right: 30px;
+    height: 30px;
+    width: 150px;
+    background: #5380B7;
+    border-radius: 10px;
+}
+
+.news-delete-button{
+    height: 30px;
+    width: 150px;
+    border-radius: 10px;
+}
+
+.news-small{
+    border-bottom: 5px #C4C4C4;
+    color: #919FA2;
+}
+
+.news-add-button{
+    margin-left: 30px;
+    height: 30px;
+    width: 150px;
+    float: bottom;
+    background: #5380B7;
+    border-radius: 10px;
+}

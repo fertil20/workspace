@@ -17,6 +17,7 @@ class Profile extends Component {
         super(props);
         this._isMounted = false;
         this.state = {
+            CurUser: JSON.parse(localStorage.getItem('app')),
             user: null,
             isLoading: false
         }
@@ -120,7 +121,7 @@ class Profile extends Component {
                                 <div className='profile-text1'>Рабочие часы:</div>
                                 <div className='profile-text1'>В компании с:</div>
                                 <div className='profile-text1'>Дата рождения:</div>
-                                <div className='profile-text1'>Секретная заметка:</div>
+                                {this.state.CurUser.currentUser.privileges.includes('View_Secret') && <div className='profile-text1'>Секретная заметка:</div>}
                             </Col>
                             <Col >
                                 <Row>
@@ -143,11 +144,12 @@ class Profile extends Component {
                                 <div style={{height:50}}>{formatTime(this.state.user.startAt)}-{formatTime(this.state.user.endAt)}</div>
                                 <div style={{height:50}}>{formatDate(this.state.user.joinedAt)}</div>
                                 <div style={{height:50}}>{formatDate(this.state.user.birthday)}</div>
-                                <div style={{height:50}}>{this.state.user.secretNote}</div>
+                                {this.state.CurUser.currentUser.privileges.includes('View_Secret') && <div style={{height:50}}>{this.state.user.secretNote}</div>}
                                 <div style={{marginTop:15}}>
+                                    {(this.state.CurUser.currentUser.privileges.includes('Edit_Users') || this.state.user.username === this.state.CurUser.currentUser.username) &&
                                     <Button color="primary" size="sm" href={`/users/${this.state.user.username}/edit`}>
                                         Редактировать
-                                    </Button>
+                                    </Button>}
                                 </div>
                             </Col>
                         </Row>
