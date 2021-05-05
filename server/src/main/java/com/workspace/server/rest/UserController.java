@@ -71,7 +71,7 @@ public class UserController {
             user.setOffice(request.getOffice());
             user.setStartAt(request.getStartAt());
             user.setEndAt(request.getEndAt());
-//            user.setBirthday(request.getBirthday); //todo сделать редактирование др (вначале нужно на фронте, иначе забагуется)
+            user.setBirthday(request.getBirthday());
             user.setSecretNote(request.getSecretNote());
             user.setStatus(request.getStatus());
             userRepository.save(user);

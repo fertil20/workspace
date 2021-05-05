@@ -33,7 +33,7 @@ export default class ForgotPassword extends Component {
     }
 
     handleSubmit(event) {
-        event.preventDefault();
+        event.preventDefault(); //todo сделать handleSubmit вместо onClick
 
         /*        const forgotPasswordRequest = {
                     email: this.state.email.value,

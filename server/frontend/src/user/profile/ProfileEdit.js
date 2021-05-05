@@ -18,14 +18,16 @@ import React, {Component, useState} from "react";
 import {getUserProfile, profileEdit} from "../../util/APIUtils";
 import './ProfileEdit.css';
 import NavigationPanel from "../../common/NavigationPanel";
+import {Redirect} from "react-router-dom";
 
-
+//todo не забыть сделать редирект при попытке зайти на (чужой){username}/edit, если CurrentUser.authorities != Edit_Users
 class ProfileEdit extends Component {
 
     constructor(props) {
         super(props);
         this._isMounted = false;
         this.state = {
+            CurUser: JSON.parse(localStorage.getItem('app')),
             user: null,
             isLoading: false,
             username: {value: ''},
@@ -39,6 +41,7 @@ class ProfileEdit extends Component {
             office:{value:''},
             startAt:{value:''},
             endAt:{value:''},
+            birthday:{value:''},
             // newWorktimes:{value:''},
             secretNote:{value:''},
             status:{value:''},
@@ -72,6 +75,7 @@ class ProfileEdit extends Component {
                     office: {value: this.state.user.office},
                     startAt: {value: this.state.user.startAt},
                     endAt: {value: this.state.user.endAt},
+                    birthday: {value: this.state.user.birthday},
                     //newWorktimes: {value: this.state.user.newWorktimes},
                     secretNote: {value: this.state.user.secretNote},
                     status: {value: this.state.user.status},
@@ -134,6 +138,7 @@ class ProfileEdit extends Component {
             office: this.state.office.value,
             startAt: this.state.startAt.value,
             endAt: this.state.endAt.value,
+            birthday: this.state.birthday.value,
             secretNote: this.state.secretNote.value,
             status: this.state.status.value, // Статус работы (0,1,2,3)
             statusTimeStart: this.state.statusTimeStart.value,
@@ -166,6 +171,11 @@ class ProfileEdit extends Component {
 
         if(this.state.serverError) {
             return <ServerError />;
+        }
+
+        if ((!this.state.CurUser.currentUser.privileges.includes('Edit_Users'))
+            && (this.state.CurUser.currentUser.username !== this.props.match.params.username)) {
+            return <Redirect to={"/users/" + this.props.match.params.username}/>
         }
 
 
@@ -315,9 +325,11 @@ class ProfileEdit extends Component {
                                             </Col>
                                         </Row>
                                         <div style={{marginTop:15, height:20}}>{formatDate(this.state.user.joinedAt)}</div>
-                                        <div style={{height: 15}}/>
-                                        <div style={{marginTop:15, height:20}}>{formatDate(this.state.user.birthday)}</div>
                                         <div style={{height: 25}}/>
+                                        <Input type="date" name="birthday" id="birthday"
+                                               value={this.state.birthday.value}
+                                               onChange={(event) => this.handleInputChange(event)}/>
+                                        <div style={{height: 15}}/>
                                         <Input type="text" name="secretNote" id="editSecretNote"
                                                value={this.state.secretNote.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
