@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import {Col} from 'reactstrap';
 import './NavigationPanel.css';
-import {PersistentState} from "../util/PersistentState";
+import Calendar from 'react-calendar'
+import 'react-calendar/dist/Calendar.css';
 
 export default class NavigationPanel extends Component{
 
@@ -26,6 +27,7 @@ export default class NavigationPanel extends Component{
                 <a href='/roleManager'><div className='row-navigation'>Управление ролями</div></a>
                 <a href='/about' ><div className='row-navigation'>О компании</div></a>
                 <a href='/news'><div className='row-navigation'>Новости</div></a>
+                <Calendar className='calendar'/>
             </Col>
         )}
         else{

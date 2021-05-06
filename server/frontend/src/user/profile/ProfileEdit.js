@@ -75,8 +75,7 @@ class ProfileEdit extends Component {
                     office: {value: this.state.user.office},
                     startAt: {value: this.state.user.startAt},
                     endAt: {value: this.state.user.endAt},
-                    birthday: {value: this.state.user.birthday},
-                    //newWorktimes: {value: this.state.user.newWorktimes},
+                    birthday:{value: this.state.user.birthday},
                     secretNote: {value: this.state.user.secretNote},
                     status: {value: this.state.user.status},
                     statusTimeStart: {value: this.state.statusTimeStart},
@@ -261,15 +260,17 @@ class ProfileEdit extends Component {
                                         <div className='profile-text1'>Рабочие часы:</div>
                                         <div className='profile-text1'>В компании с:</div>
                                         <div className='profile-text1'>Дата рождения:</div>
-                                        <div className='profile-text1'>Секретная заметка:</div>
+                                        {this.state.CurUser.currentUser.privileges.includes('Edit_Users') && <div className='profile-text1'>Секретная заметка:</div>}
                                     </Col>
                                     <Col sm={{ size: 7}}>
                                         <div style={{height: 10}}/>
                                         <Row>
-                                            <Col >
-                                        <Input type="text" name="name" id="editName" placeholder={"Попов Валерий Александрович"}
-                                               value={this.state.name.value} style={{width:155}}
-                                               onChange={(event) => this.handleInputChange(event)}/>
+                                            <Col >{this.state.CurUser.currentUser.privileges.includes('Edit_Users') &&
+                                            <Input type="text" name="name" id="editName" placeholder={"Попов Валерий Александрович"}
+                                                   value={this.state.name.value} style={{width:155}}
+                                                   onChange={(event) => this.handleInputChange(event)}/>}
+                                                {!this.state.CurUser.currentUser.privileges.includes('Edit_Users') &&
+                                                <div style={{marginBottom:10,height:30}}>{this.state.user.name}</div>}
                                             </Col>
                                             <Col sm={{ width:30}}>
                                         <div style={{marginTop:5, width:30,paddingRight:5}}>
@@ -287,21 +288,21 @@ class ProfileEdit extends Component {
                                                maxLength={300}
                                                value={this.state.about.value}
                                                onChange={(event) => this.handleInputChange(event)}/>
-                                        <div style={{height: 25}}/>
-                                        <Input type="text" name="position" id="editPosition"
+                                        <div style={{height: 20}}/>
+                                        {this.state.CurUser.currentUser.privileges.includes('Edit_Users') && <Input type="text" name="position" id="editPosition"
                                                value={this.state.position.value}
-                                               onChange={(event) => this.handleInputChange(event)}/>
+                                               onChange={(event) => this.handleInputChange(event)}/>}
+                                        {!this.state.CurUser.currentUser.privileges.includes('Edit_Users') && <div style={{height:40}}>{this.state.user.position}</div>}
                                         <div style={{height: 10}}/>
-                                        <Input type="text" name="department" id="editDepartment"
+                                        {this.state.CurUser.currentUser.privileges.includes('Edit_Users') &&  <Input type="text" name="department" id="editDepartment"
                                                value={this.state.department.value}
-                                               onChange={(event) => this.handleInputChange(event)}/>
+                                               onChange={(event) => this.handleInputChange(event)}/>}
+                                        {!this.state.CurUser.currentUser.privileges.includes('Edit_Users') && <div style={{height:40}}>{this.state.user.department}</div>}
                                         <div style={{height: 10}}/>
-                                        <Input type="text" name="office" id="editOffice"
+                                        {this.state.CurUser.currentUser.privileges.includes('Edit_Users') &&  <Input type="text" name="office" id="editOffice"
                                                value={this.state.office.value}
-                                               onChange={(event) => this.handleInputChange(event)}/>
-                                        {/*<Input type="worktimes" name="newWorktimes" id="editWorktimes"*/}
-                                        {/*       value={this.state.newWorktimes.value}*/}
-                                        {/*       onChange={(event) => this.handleInputChange(event)}/>*/}
+                                               onChange={(event) => this.handleInputChange(event)}/>}
+                                        {!this.state.CurUser.currentUser.privileges.includes('Edit_Users') && <div style={{height:35}}>{this.state.user.office}</div>}
                                         <div style={{height: 10}}/>
                                         <Row>
                                             <Col sm={{size:'auto'}}>
@@ -324,15 +325,18 @@ class ProfileEdit extends Component {
                                                 </div>
                                             </Col>
                                         </Row>
-                                        <div style={{marginTop:15, height:20}}>{formatDate(this.state.user.joinedAt)}</div>
-                                        <div style={{height: 25}}/>
+                                        <div style={{marginTop:20, height:20}}>{formatDate(this.state.user.joinedAt)}</div>
+                                        <div style={{height: 15}}/>
+                                        {this.state.CurUser.currentUser.privileges.includes('Edit_Users') &&
                                         <Input type="date" name="birthday" id="birthday"
                                                value={this.state.birthday.value}
-                                               onChange={(event) => this.handleInputChange(event)}/>
-                                        <div style={{height: 15}}/>
-                                        <Input type="text" name="secretNote" id="editSecretNote"
+                                               onChange={(event) => this.handleInputChange(event)}/>}
+                                        {!this.state.CurUser.currentUser.privileges.includes('Edit_Users') &&
+                                        <div style={{marginTop:15, height:20}}>{formatDate(this.state.user.birthday)}</div>}
+                                        <div style={{height: 25}}/>
+                                        {this.state.CurUser.currentUser.privileges.includes('Edit_Users') && <Input type="text" name="secretNote" id="editSecretNote"
                                                value={this.state.secretNote.value}
-                                               onChange={(event) => this.handleInputChange(event)}/>
+                                               onChange={(event) => this.handleInputChange(event)}/>}
                                         <div style={{marginTop:20}}>
                                             <Button color="primary" size="sm">
                                                 Сохранить

@@ -13,6 +13,8 @@ import {
 } from "../user/profile/TooltipWidget";
 import NavigationPanel from "../common/NavigationPanel";
 
+let userStatus = ''
+
 class UsersAdminListEdit extends Component {
     constructor(props) {
         super(props);
@@ -26,7 +28,7 @@ class UsersAdminListEdit extends Component {
         this.SetUserStatus = this.SetUserStatus.bind(this);
         this.DeleteUser = this.DeleteUser.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.FindUser = this.FindUser.bind(this);
+        this.setUserStatus = this.setUserStatus.bind(this);
     }
 
     loadAllUsers(id) {
@@ -65,6 +67,13 @@ class UsersAdminListEdit extends Component {
                 value: inputValue,
             }
         });
+    }
+
+    setUserStatus(Status){
+        if(Status === '0'){userStatus = 'работает дома'}
+        if(Status === '1'){userStatus = 'работает в офисе'}
+        if(Status === '2'){userStatus = 'на больничном'}
+        if(Status === '3'){userStatus = 'в отпуске'}
     }
 
     componentDidMount() {
@@ -107,13 +116,13 @@ class UsersAdminListEdit extends Component {
                 <div>
                     <Form>
                         <Row style={{width:865}}>
-                            <Input placeholder='Ф.И.О.'
+                            <Input placeholder='Поиск'
                                    className='search-bar'
                                    id="FIO" name='FIO' type='text'
                                    value={this.state.FIO.value}
                                    onChange={(event) => {this.handleInputChange(event)}}
                             />
-                            <Button size='sm' className='search-button' onClick={() => this.FindUser(this.state.FIO.value)}><img src={search} width={25} height={25} alt='Search'/></Button>
+                            <img src={search} width={25} height={25} alt='Search' className='search-image'/>
                         </Row>
                     </Form>
                 </div>
@@ -130,6 +139,14 @@ class UsersAdminListEdit extends Component {
                             {
                                 this.state.user.map(
                                     user => //todo Пофиксить варнинг
+                                        ( this.setUserStatus(user.status) ||
+                                            (user.name.indexOf(this.state.FIO.value) !== -1)
+                                            || (user.position.indexOf(this.state.FIO.value) !== -1)
+                                            || (user.department.indexOf(this.state.FIO.value) !== -1)
+                                            || (user.email.indexOf(this.state.FIO.value) !== -1)
+                                            || (user.tg.indexOf(this.state.FIO.value) !== -1)
+                                            || (user.phone.indexOf(this.state.FIO.value) !== -1)
+                                            || (userStatus.indexOf(this.state.FIO.value) !== -1))  &&
                                         <div>
                                             <ListGroup horizontal="lg" key={user.id} style={{marginLeft:5}}>
                                                 <ListGroupItem style={{width:200}} key={user.id+'.1'} tag = 'a' href={`/users/${user.username}`}>{user.name}

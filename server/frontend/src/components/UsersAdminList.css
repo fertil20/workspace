@@ -23,13 +23,11 @@
     margin-bottom: 30px;
 }
 
-.search-button{
-    height: 35px;
-    margin-top:51px;
-    margin-left:10px;
-    background: #5380B7;
-    border-radius: 10px;
-}
 
 .table-top-line{
+}
+
+.search-image{
+    margin-top: 55px;
+    margin-left: 5px;
 }
