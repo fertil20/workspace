@@ -245,8 +245,8 @@ class ProfileEdit extends Component {
                                                     value={this.state.phone.value}
                                                     style={{width:165, height:40}}
                                                     onChange={event => this.setState({phone: {value: event }})}/>
-                                                {(this.state.phone.value && isPossiblePhoneNumber(this.state.phone.value))
-                                                    ? <a> </a> : <a>Проверьте правильность номера</a>}
+                                                {/*{(this.state.phone.value && isPossiblePhoneNumber(this.state.phone.value))
+                                                    ? <a> </a> : <a>Проверьте правильность номера</a>}*/}
                                                 {/*                                                <Input type="tel" name="phone" id="phone" placeholder={"+7 (905) 226-23-58"}
                                                        value={this.state.phone.value}
                                                        required
