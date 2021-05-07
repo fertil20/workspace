@@ -34,15 +34,13 @@ import NewEmployeeEdit from "../common/about/NewEmployeeEdit";
 import News from "../common/news/News";
 const { Content } = Layout;
 
-let isLoading = false
-
 class App extends Component {
     constructor(props) {
         super(props);
         this.persistentState = new PersistentState(this, "app", {
             currentUser: null,
             isAuthenticated: false,
-            // isLoading: false
+            isLoading: false
         })
         this.handleLogout = this.handleLogout.bind(this);
         this.loadCurrentUser = this.loadCurrentUser.bind(this);
@@ -56,23 +54,24 @@ class App extends Component {
     }
 
     loadCurrentUser() {
-        // this.persistentState.setState({
-        //     isLoading: true
-        // })
-        isLoading = true
+        this.persistentState.setState({
+            currentUser: this.persistentState.getState().currentUser,
+            isAuthenticated: this.persistentState.getState().isAuthenticated,
+            isLoading: true
+         })
         getCurrentUser()
             .then(response => {
                 this.persistentState.setState({
                     currentUser: response,
                     isAuthenticated: true,
-                    // isLoading: false
+                    isLoading: false
                 });
-                isLoading = false
             }).catch(error => {
-            // this.persistentState.setState({
-            //     // isLoading: false
-            // });
-            isLoading = false
+             this.persistentState.setState({
+                 currentUser: this.persistentState.getState().currentUser,
+                 isAuthenticated: this.persistentState.getState().isAuthenticated,
+                 isLoading: false
+             });
         });
     }
 
@@ -106,13 +105,13 @@ class App extends Component {
     }
 
     render() {
-        // if(!isLoading) {
-        //     return <div className="text-center">
-        //         <div className="spinner-border" role="status">
-        //             <span className="sr-only">Loading...</span>
-        //         </div>
-        //     </div>
-        // }
+        if(this.persistentState.getState().isLoading) {
+            return <div className="text-center">
+                <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
+            </div>
+        }
         return (
             <Layout className="app-container">
                 <AppHeader isAuthenticated={this.persistentState.getState().isAuthenticated}

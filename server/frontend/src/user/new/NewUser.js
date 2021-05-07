@@ -17,6 +17,7 @@ import {checkEmailAvailability, checkUsernameAvailability, newUser} from "../../
 import {EMAIL_MAX_LENGTH, USERNAME_MAX_LENGTH, USERNAME_MIN_LENGTH} from "../../constants";
 import FormItem from "@ant-design/compatible/es/form/FormItem";
 import NavigationPanel from "../../common/NavigationPanel";
+import PhoneInput, {isPossiblePhoneNumber} from "react-phone-number-input";
 
 
 class NewUser extends Component {
@@ -130,12 +131,12 @@ class NewUser extends Component {
         if(username.length < USERNAME_MIN_LENGTH) {
             return {
                 validateStatus: 'error',
-                errorMsg: `(Минимум - ${USERNAME_MIN_LENGTH} знаков.)`
+                errorMsg: `(Минимум - ${USERNAME_MIN_LENGTH} знака)`
             }
         } else if (username.length > USERNAME_MAX_LENGTH) {
             return {
                 validationStatus: 'error',
-                errorMsg: `(Максимум - ${USERNAME_MAX_LENGTH} знаков.)`
+                errorMsg: `(Максимум - ${USERNAME_MAX_LENGTH} знака)`
             }
         } else {
             return {
@@ -362,21 +363,22 @@ class NewUser extends Component {
                                                         onBlur={this.validateEmailAvailability}
                                                         onChange={(event) => this.handleInputChange(event, this.validateEmail)} />
                                                 </FormItem> {/*todo надо фиксить формочки!*/}
-                                                {/*<Input type="text" name="username" id="username" placeholder="drobovik123"
-                                                       value={this.state.username.value}
-                                                       required
-                                                       onChange={(event) => {this.handleInputChange(event)}}/>
                                                 <div style={{height: 10}}/>
-                                                <Input type="email" name="email" id="email" placeholder="sophie@example.com"
-                                                       value={this.state.email.value}
-                                                       required
-                                                       onChange={(event) => {this.handleInputChange(event)}}/>*/}
-                                                <div style={{height: 10}}/>
-                                                <Input type="tel" name="phone" id="phone" placeholder={"+7 (905) 226-23-58"}
+{/*                                                <Input type="tel" name="phone" id="phone" placeholder={"+7 (905) 226-23-58"}
                                                        value={this.state.phone.value}
                                                        required className='profile-form'
                                                        pattern="[+][7] [(][0-9]{3}[)] [0-9]{3}-[0-9]{2}-[0-9]{2}"
-                                                       onChange={(event) => this.handleInputChange(event)}/>
+                                                       onChange={(event) => this.handleInputChange(event)}/>*/}
+                                                <PhoneInput
+                                                    international
+                                                    countryCallingCodeEditable={false}
+                                                    placeholder="+7 905 226 23 58"
+                                                    defaultCountry="RU"
+                                                    value={this.state.phone.value}
+                                                    style={{width:170, height:40}}
+                                                    onChange={event => this.setState({phone: {value: event }})}/>
+                                                {(this.state.phone.value && isPossiblePhoneNumber(this.state.phone.value))
+                                                    ? <a> </a> : <a>Проверьте правильность номера</a>} //todo из-за надписи съезжает вся колонка!
                                                 <div style={{height: 10}}/>
                                                 <Input type="text" name="tg" id="tg" placeholder={"telegram"}
                                                        value={this.state.tg.value} className='profile-form'
@@ -385,7 +387,7 @@ class NewUser extends Component {
                                         </Col>
                                     </Row>
                                 </Col >
-                                <Col sm={{ size: 6.6}} style={{backgroundColor: 'white',borderRadius:10,height:500, width:465}}>
+                                <Col sm={{ size: 6.6}} style={{backgroundColor: 'white',borderRadius:10, height:500, width:465}}>
                                     <Row>
                                         <Col sm={{ size: 'auto'}}>
                                             <div className='profile-text1' style={{marginTop:15}}>Ф.И.О:</div>
@@ -467,7 +469,8 @@ class NewUser extends Component {
                                                    value={this.state.secretNote.value}
                                                    onChange={(event) => this.handleInputChange(event)}/>
                                             <div style={{marginTop:20}}>
-                                                <Button color="primary" size="sm" disabled={this.isFormInvalid()}>
+                                                <Button color="primary" size="sm" disabled={!(this.state.phone.value && isPossiblePhoneNumber(this.state.phone.value))
+                                                || this.isFormInvalid()}>
                                                     Добавить пользователя
                                                 </Button>
                                                 <div style={{margin:10}}>

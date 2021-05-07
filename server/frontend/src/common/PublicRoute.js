@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 import {
     Route,
@@ -24,4 +25,4 @@ const PublicRoute = ({ component: Component, authenticated, ...rest }) => (
 );
 
 
-export default PublicRoute
+export default PublicRoute*/

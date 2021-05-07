@@ -9,6 +9,8 @@ import ServerError from '../../common/ServerError';
 import {Row, Col, Button} from 'reactstrap';
 import {TooltipWidgetHome,TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidgetIll} from './TooltipWidget'
 import NavigationPanel from "../../common/NavigationPanel";
+import formatPhoneNumber from "react-phone-number-input/modules/libphonenumber/formatPhoneNumber";
+import {formatPhoneNumberIntl} from "react-phone-number-input";
 
 
 class Profile extends Component {
@@ -105,7 +107,7 @@ class Profile extends Component {
                             </Col>
                             <Col >
                                 <div className='profile-text2'>{this.state.user.email}</div>
-                                <div className='profile-text2'>{this.state.user.phone}</div>
+                                <div className='profile-text2'>{formatPhoneNumberIntl(this.state.user.phone)}</div>
                                 <div className='profile-text2'>@{this.state.user.tg}</div>
                             </Col>
                         </Row>

@@ -163,7 +163,7 @@ class UsersAdminList extends Component {
                     ):null
                 }
                         {this.state.CurUser.currentUser.privileges.includes('Manage_Users') && <div>
-                            <Button size="sm" href='/editUsers' style={{marginTop:10, marginLeft:10}} className='add-button'>
+                            <Button size="sm" href='/manageUsers' style={{marginTop:10, marginLeft:10}} className='add-button'>
                                 Редактировать
                             </Button>
                             <Button size="sm" href='/newUser' style={{marginTop:10, marginLeft:10}} className='add-button'>
