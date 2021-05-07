@@ -378,7 +378,7 @@ class NewUser extends Component {
                                                     style={{width:170, height:40}}
                                                     onChange={event => this.setState({phone: {value: event }})}/>
                                                 {/*{(this.state.phone.value && isPossiblePhoneNumber(this.state.phone.value))
-                                                    ? <a> </a> : <a> </a>}*/} //todo из-за надписи съезжает вся колонка!
+                                                    ? <a> </a> : <a> </a>}*/}
                                                 <div style={{height: 10}}/>
                                                 <Input type="text" name="tg" id="tg" placeholder={"telegram"}
                                                        value={this.state.tg.value} className='profile-form'
