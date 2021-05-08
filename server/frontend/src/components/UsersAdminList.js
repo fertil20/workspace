@@ -113,7 +113,7 @@ class UsersAdminList extends Component {
             <div>
                 <Row>
                     <NavigationPanel/>
-                    <Col sm={{ size: 4.4 }} style={{backgroundColor: 'white',borderRadius:10,height:'auto',paddingBottom:20}}>
+                    <Col sm={{size: 4.4}} style={{backgroundColor:'white', borderRadius:10, height:'auto', paddingBottom:20}}>
                 <div>
                     <Form>
                         <Row style={{width:865}}>
@@ -141,7 +141,7 @@ class UsersAdminList extends Component {
                                 this.state.user.map(
                                     user => //todo Пофиксить варнинг
 
-                                            ( this.setUserStatus(user.status) ||
+                                            (this.setUserStatus(user.status) ||
                                                 (user.name.indexOf(this.state.FIO.value) !== -1)
                                             || (user.position.indexOf(this.state.FIO.value) !== -1)
                                             || (user.department.indexOf(this.state.FIO.value) !== -1)
@@ -174,10 +174,6 @@ class UsersAdminList extends Component {
                 </Row>
             </div>
         )
-    }
-
-    FindUser(FIO){
-        console.log(FIO)
     }
 
     SetUserStatus(userStatus){

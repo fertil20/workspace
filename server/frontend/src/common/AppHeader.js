@@ -92,7 +92,7 @@ function NavBarLogged(props){
                         <DropdownItem href={`/users/${props.currentUser.username}`}>
                             Профиль
                         </DropdownItem>
-                        <DropdownItem  onClick={props.handleMenuClick} href="/login">
+                        <DropdownItem onClick={props.handleMenuClick} href="/login">
                             Выйти
                         </DropdownItem>
                     </DropdownMenu>

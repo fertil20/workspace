@@ -61,27 +61,35 @@ class App extends Component {
          })
         getCurrentUser()
             .then(response => {
-                this.persistentState.setState({
+                this._isMounted && this.persistentState.setState({
                     currentUser: response,
                     isAuthenticated: true,
                     isLoading: false
                 });
-            }).catch(error => {
-             this.persistentState.setState({
+            })
+            .catch(error => {
+            this._isMounted && this.persistentState.setState({
                  currentUser: this.persistentState.getState().currentUser,
                  isAuthenticated: this.persistentState.getState().isAuthenticated,
                  isLoading: false
-             });
-        });
+            });
+            });
     }
 
     componentDidMount() {
         this.loadCurrentUser();
+        this._isMounted = true;
     }
 
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     if(this.persistentState.getState().currentUser !== prevState.currentUser){this.render()}
-    // }
+/*    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.match.params.username !== prevProps.match.params.username) {
+            this.loadCurrentUser(this.props.match.params.username)
+        }
+    }*/
+
+/*    componentWillUnmount() {
+        this._isMounted = false;
+    }*/
 
     handleLogout() {
         localStorage.removeItem(ACCESS_TOKEN);
@@ -99,8 +107,8 @@ class App extends Component {
         //   message: 'React App',
         //   description: "You're successfully logged in.",
         // });
-        alert("You're successfully logged in.")
         this.loadCurrentUser();
+        alert("You're successfully logged in.")
         this.props.history.push("/");
     }
 
