@@ -32,6 +32,8 @@ import AboutCompanyEdit from "../common/about/AboutCompanyEdit";
 import NewEmployee from "../common/about/NewEmployee";
 import NewEmployeeEdit from "../common/about/NewEmployeeEdit";
 import News from "../common/news/News";
+import birthdayPage from "../common/birthday/birthdayPage";
+import MeetingRoomBook from "../common/MeetingRoomBook/MeetingRoomBook";
 const { Content } = Layout;
 
 class App extends Component {
@@ -135,6 +137,8 @@ class App extends Component {
                                 <Route path="/signup" component={Signup}/>
                                 <Route path="/forgotPassword" component={ForgotPassword}/>
                                 <Route path="/resetPassword" component={ForgotPasswordReset}/>
+                                <PrivateRoute exact path="/birthday" authenticated={this.persistentState.getState().isAuthenticated} component={birthdayPage} handleLogout={this.handleLogout}/>
+                                <PrivateRoute exact path="/meeting" authenticated={this.persistentState.getState().isAuthenticated} component={MeetingRoomBook} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/news" authenticated={this.persistentState.getState().isAuthenticated} component={News} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/users/:username" authenticated={this.persistentState.getState().isAuthenticated} component={Profile} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/newUser" authenticated={this.persistentState.getState().isAuthenticated} component={NewUser} handleLogout={this.handleLogout}/>

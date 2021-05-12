@@ -1,0 +1,20 @@
+.time-block-booked{
+    text-align: center;
+    width:230px;
+}
+
+.time-block-empty{
+    text-align: center;
+    width:230px;
+}
+
+.user-list{
+    padding-top:10px;
+    height: 250px;
+    overflow-y: scroll;
+}
+
+.user-element{
+    border-bottom: 2px;
+    border-bottom: 1px solid #C4C4C4;
+}
