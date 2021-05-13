@@ -1,21 +1,21 @@
 import React, {Component} from 'react';
-import {deleteUser, getAllUsers} from "../util/APIUtils";
-import NotFound from "../common/NotFound";
-import ServerError from "../common/ServerError";
+import {deleteUser, getAllUsers} from "../../util/APIUtils";
+import NotFound from "../../common/NotFound";
+import ServerError from "../../common/ServerError";
 import {ListGroup, ListGroupItem, Button, Row, Input, Form, Col} from 'reactstrap';
-import "./UsersAdminList.css";
-import search from '../media/search.png'
+import "./UsersList.css";
+import search from '../../media/search.png'
 import {
     TooltipWidgetAtWork,
     TooltipWidgetHoliday,
     TooltipWidgetHome,
     TooltipWidgetIll
-} from "../user/profile/TooltipWidget";
-import NavigationPanel from "../common/NavigationPanel";
+} from "../../user/profile/TooltipWidget";
+import NavigationPanel from "../navigation/NavigationPanel";
 
 let userStatus = ''
 
-class UsersAdminListEdit extends Component {
+class UsersListEdit extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -201,7 +201,7 @@ class UsersAdminListEdit extends Component {
         deleteUser(userID)
             .then(response => {
                 alert('Пользователь удалён');
-                this.componentDidMount(UsersAdminListEdit);//todo разобраться с unmount и update
+                this.componentDidMount(UsersListEdit);//todo разобраться с unmount и update
             })
             .catch(error => {
                 if (error.status === 403) {
@@ -227,4 +227,4 @@ class UsersAdminListEdit extends Component {
     }
 }
 
-export default UsersAdminListEdit
+export default UsersListEdit

@@ -40,11 +40,16 @@ public class Meeting {
     @NotBlank
     private byte timeOfEnd;
 
+    @Column
+    @NotBlank
+    private String organizerName;
+
     @ManyToMany(mappedBy = "meetings")
     @EqualsAndHashCode.Exclude
     private Set<User> users;
 
     @ManyToOne
+//    @JoinColumn(name = "rooms_id")
     @EqualsAndHashCode.Exclude
     private MeetingRoom meetingRoom;
 

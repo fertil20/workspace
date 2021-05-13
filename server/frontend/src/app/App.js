@@ -13,27 +13,27 @@ import NewPoll from '../poll/NewPoll';
 import Login from '../user/login/Login';
 import Signup from '../user/signup/Signup';
 import Profile from '../user/profile/Profile';
-import AppHeader from '../common/AppHeader';
+import AppHeader from '../components/header/AppHeader';
 import NotFound from '../common/NotFound';
 import PrivateRoute from '../common/PrivateRoute';
-import UsersAdminList from '../components/UsersAdminList';
+import UsersList from '../components/usersList/UsersList';
 
 import { Layout, notification } from 'antd';
 import {PersistentState} from "../util/PersistentState";
 import ProfileEdit from "../user/profile/ProfileEdit";
 import ForgotPassword from "../user/passwordReset/ForgotPassword";
 import ForgotPasswordReset from "../user/passwordReset/ForgotPasswordReset";
-import Home from "../common/Home";
+import Home from "../components/home/Home";
 import NewUser from "../user/new/NewUser";
 import RoleManager from "../user/rolemanager/RoleManager";
-import UsersAdminListEdit from "../components/UsersAdminListEdit";
-import AboutCompany from "../common/about/AboutCompany";
-import AboutCompanyEdit from "../common/about/AboutCompanyEdit";
-import NewEmployee from "../common/about/NewEmployee";
-import NewEmployeeEdit from "../common/about/NewEmployeeEdit";
-import News from "../common/news/News";
-import birthdayPage from "../common/birthday/birthdayPage";
-import MeetingRoomBook from "../common/MeetingRoomBook/MeetingRoomBook";
+import UsersListEdit from "../components/usersList/UsersListEdit";
+import AboutCompany from "../components/about/AboutCompany";
+import AboutCompanyEdit from "../components/about/AboutCompanyEdit";
+import NewEmployee from "../components/about/NewEmployee";
+import NewEmployeeEdit from "../components/about/NewEmployeeEdit";
+import News from "../components/news/News";
+import birthdayPage from "../components/birthday/birthdayPage";
+import MeetingRoomBook from "../components/meetingRoomBook/MeetingRoomBook";
 const { Content } = Layout;
 
 class App extends Component {
@@ -143,14 +143,14 @@ class App extends Component {
                                 <PrivateRoute exact path="/users/:username" authenticated={this.persistentState.getState().isAuthenticated} component={Profile} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/newUser" authenticated={this.persistentState.getState().isAuthenticated} component={NewUser} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/roleManager" authenticated={this.persistentState.getState().isAuthenticated} component={RoleManager} handleLogout={this.handleLogout}/>
-                                <PrivateRoute exact path="/manageUsers" authenticated={this.persistentState.getState().isAuthenticated} component={UsersAdminListEdit} handleLogout={this.handleLogout}/>
+                                <PrivateRoute exact path="/manageUsers" authenticated={this.persistentState.getState().isAuthenticated} component={UsersListEdit} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/about" authenticated={this.persistentState.getState().isAuthenticated} component={AboutCompany} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/about/edit" authenticated={this.persistentState.getState().isAuthenticated} component={AboutCompanyEdit} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/about/newEmployee" authenticated={this.persistentState.getState().isAuthenticated} component={NewEmployee} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/about/newEmployee/edit" authenticated={this.persistentState.getState().isAuthenticated} component={NewEmployeeEdit} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/users/:username/edit" authenticated={this.persistentState.getState().isAuthenticated} component={ProfileEdit} handleLogout={this.handleLogout}/>
                                 <PrivateRoute exact path="/poll/new" authenticated={this.persistentState.getState().isAuthenticated} component={NewPoll} handleLogout={this.handleLogout}/>
-                                <PrivateRoute exact path="/users" authenticated={this.persistentState.getState().isAuthenticated} component={UsersAdminList} handleLogout={this.handleLogout}/>
+                                <PrivateRoute exact path="/users" authenticated={this.persistentState.getState().isAuthenticated} component={UsersList} handleLogout={this.handleLogout}/>
                                 <Route component={NotFound} />
                             </Switch>
                         </BrowserRouter>

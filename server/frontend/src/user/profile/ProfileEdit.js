@@ -17,7 +17,7 @@ import {Avatar} from "antd";
 import React, {Component, useState} from "react";
 import {getUserProfile, profileEdit} from "../../util/APIUtils";
 import './ProfileEdit.css';
-import NavigationPanel from "../../common/NavigationPanel";
+import NavigationPanel from "../../components/navigation/NavigationPanel";
 import {Redirect} from "react-router-dom";
 import PhoneInput, {isPossiblePhoneNumber} from "react-phone-number-input";
 import './CustomPhoneStyle.css'

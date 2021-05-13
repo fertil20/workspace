@@ -6,7 +6,7 @@ VALUES ('fertil', 'Илья Фертиков', 'fertil@list.ru', '$2b$10$QLXUPVP
 
 INSERT INTO roles (name, privileges)
 VALUES ('Пользователь', 'View'),
-       ('Администратор', 'Manage_Users,Manage_Roles,View_Secret,Edit_Users,Manage_News,Edit_About');
+       ('Администратор', 'Manage_Users,Manage_Roles,View_Secret,Edit_Users,Manage_News,Edit_About,Booking');
 
 INSERT INTO rooms (address, about, max_people)
 VALUES ('Богатырский 37 к2, кв33', 'Просторная кухня, на которой можно перетереть за любой вопрос международного уровня', 8),

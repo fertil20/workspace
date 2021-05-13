@@ -16,7 +16,7 @@ import React, {Component, useState} from "react";
 import {checkEmailAvailability, checkUsernameAvailability, newUser} from "../../util/APIUtils";
 import {EMAIL_MAX_LENGTH, USERNAME_MAX_LENGTH, USERNAME_MIN_LENGTH} from "../../constants/constants";
 import FormItem from "@ant-design/compatible/es/form/FormItem";
-import NavigationPanel from "../../common/NavigationPanel";
+import NavigationPanel from "../../components/navigation/NavigationPanel";
 import PhoneInput, {isPossiblePhoneNumber} from "react-phone-number-input";
 
 

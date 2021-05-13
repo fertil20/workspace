@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {getAllUsers} from "../../util/APIUtils";
-import NotFound from "../NotFound";
-import ServerError from "../ServerError";
+import NotFound from "../../common/NotFound";
+import ServerError from "../../common/ServerError";
 import {Row, Col} from 'reactstrap';
 import "./birthdayPage.css";
 import {Link} from "react-router-dom";
 
-import NavigationPanel from "../NavigationPanel";
+import NavigationPanel from "../navigation/NavigationPanel";
 import {formatDate} from "../../util/Helpers";
 
 class BirthdayPage extends Component {

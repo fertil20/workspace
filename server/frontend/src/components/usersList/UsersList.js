@@ -1,22 +1,22 @@
 import React, {Component} from 'react';
-import {getAllUsers} from "../util/APIUtils";
-import NotFound from "../common/NotFound";
-import ServerError from "../common/ServerError";
+import {getAllUsers} from "../../util/APIUtils";
+import NotFound from "../../common/NotFound";
+import ServerError from "../../common/ServerError";
 import {ListGroup, ListGroupItem, Button, Row, Input, Form, Col} from 'reactstrap';
-import "./UsersAdminList.css";
-import search from '../media/search.png'
+import "./UsersList.css";
+import search from '../../media/search.png'
 import {
     TooltipWidgetAtWork,
     TooltipWidgetHoliday,
     TooltipWidgetHome,
     TooltipWidgetIll
-} from "../user/profile/TooltipWidget";
-import NavigationPanel from "../common/NavigationPanel";
+} from "../../user/profile/TooltipWidget";
+import NavigationPanel from "../navigation/NavigationPanel";
 //todo пофиксить отображение одинаковых статусов
 
 let userStatus = ''
 
-class UsersAdminList extends Component {
+class UsersList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -192,4 +192,4 @@ class UsersAdminList extends Component {
     }
 }
 
-export default UsersAdminList
+export default UsersList

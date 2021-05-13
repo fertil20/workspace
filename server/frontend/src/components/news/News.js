@@ -1,7 +1,7 @@
 import {Component} from "react";
 import nobody from "../../media/nobody.jpg";
 import './News.css';
-import NavigationPanel from "../NavigationPanel";
+import NavigationPanel from "../navigation/NavigationPanel";
 import {Row,Col,Button} from 'reactstrap';
 
 let NewsText1 = 'Пособия могут получать семьи, в которых доход на человека меньше прожиточного минимума — 1203 руб. Напомним, что до первого апреля сумма пособия была размером с половину прожиточного минимума на душу населения, а уже с первого апреля есть возможность пересчитать её. Половина останется, если в семье получаемая соответственная сумма прожиточного минимума выходит на среднедушевой доход.'

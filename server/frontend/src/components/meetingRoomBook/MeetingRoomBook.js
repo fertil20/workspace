@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import NavigationPanel from "../NavigationPanel";
+import NavigationPanel from "../navigation/NavigationPanel";
 import {
     Row,
     Col,
@@ -194,7 +194,8 @@ export default class MeetingRoomBook extends Component {
                         timeOfStart:  button+9,
                         timeOfEnd: button+10
                     })
-            }else{
+            }
+            else {
                 this.copyArray(MenArray,TimeArray)
                 if (direct<button){
 
@@ -335,7 +336,7 @@ export default class MeetingRoomBook extends Component {
                         </div>
                         <div style={{width:600, paddingTop:10}}>
                             <FullCalendar
-                                plugins={[ dayGridPlugin, interactionPlugin  ]}
+                                plugins={[dayGridPlugin, interactionPlugin]}
                                 initialView="dayGridMonth"
                                 dateClick={this.handleDateClick}
                                 weekends={false}

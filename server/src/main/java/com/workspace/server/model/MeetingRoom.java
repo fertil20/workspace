@@ -30,7 +30,7 @@ public class MeetingRoom {
     @NotBlank
     private byte maxPeople;
 
-    @OneToMany
+    @OneToMany (mappedBy = "meetingRoom")
     @EqualsAndHashCode.Exclude
     private Set<Meeting> meetings;
 

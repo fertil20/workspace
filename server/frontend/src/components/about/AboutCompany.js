@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import NavigationPanel from "../NavigationPanel";
+import NavigationPanel from "../navigation/NavigationPanel";
 import {Row,Col,Button} from 'reactstrap';
 import './AboutCompany.css'
 

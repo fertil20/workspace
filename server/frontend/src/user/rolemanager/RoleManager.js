@@ -29,7 +29,7 @@ import {
     getUsersWithoutRole,
 } from "../../util/APIUtils";
 import './RoleManager.css';
-import NavigationPanel from "../../common/NavigationPanel";
+import NavigationPanel from "../../components/navigation/NavigationPanel";
 
 let UsersByRole = ''
 let UsersWithoutRole = ''
