@@ -21,9 +21,9 @@ const request = (options) => {
         .then((text) => text.length ? JSON.parse(text) : {})
 };
 
-export function Meeting(MeetingRequest,id){
+export function Meeting(MeetingRequest, id){
     return request({
-        url: API_BASE_URL + "/meetings/"+id+"/newMeeting",
+        url: API_BASE_URL + "/meetings/" + id + "/newMeeting",
         method: 'POST',
         body: JSON.stringify(MeetingRequest)
     });
@@ -31,7 +31,7 @@ export function Meeting(MeetingRequest,id){
 
 export function getMeetings(id){
     return request({
-        url: API_BASE_URL + "/meetings/"+id,
+        url: API_BASE_URL + "/meetings/" + id,
         method: 'GET',
     });
 }

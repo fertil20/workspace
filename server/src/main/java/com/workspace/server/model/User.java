@@ -133,10 +133,10 @@ public class User extends DateAudit {
         this.position = position;
     }
 
-    public User(Long id, String name) {
+/*    public User(Long id, String name) {
         this.id = id;
         this.name = name;
-    }
+    }*/
 
 /*    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_hours",

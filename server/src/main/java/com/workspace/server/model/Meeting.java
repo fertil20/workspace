@@ -49,7 +49,6 @@ public class Meeting {
     private Set<User> users;
 
     @ManyToOne
-//    @JoinColumn(name = "rooms_id")
     @EqualsAndHashCode.Exclude
     private MeetingRoom meetingRoom;
 

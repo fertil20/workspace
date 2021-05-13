@@ -91,12 +91,18 @@ export default class MeetingRoomBook extends Component {
             timeOfStart: this.state.timeOfStart,
             timeOfEnd: this.state.timeOfEnd,
             organizerName: this.state.user.currentUser.username,
-            users: this.state.usersOnMeeting
+            usersId: this.state.usersOnMeeting
         }
-        if (MeetingRequest.title !== '' && MeetingRequest.timeOfStart !=='-' && MeetingRequest.users.length !== 0){
+        if (MeetingRequest.title !== '' && MeetingRequest.timeOfStart !=='-' && MeetingRequest.usersId.length !== 0){
         Meeting(MeetingRequest,CurrentRoom)
             .then(response => {
-                this.setState({toggle: false,title: {value: ''},usersOnMeeting: [],timeOfStart: '-',timeOfEnd: '-'})
+                this.setState({
+                    toggle: false,
+                    title: {value: ''},
+                    usersOnMeeting: [],
+                    timeOfStart: '-',
+                    timeOfEnd: '-'
+                })
                 TimeArray = [0,0,0,0,0,0,0,0,0]
                 this.loadMeetingsByRoomId()
             })
@@ -125,8 +131,8 @@ export default class MeetingRoomBook extends Component {
                                         users =>
                                         <div className='user-element'>
                                                 {users.name}
-                                            <Input type='checkbox' name={users.username} style={{right:35}}
-                                                   onChange={(event)=> {this.handleCheckBoxState(event,users)}}
+                                            <Input type='checkbox' name={users.id} style={{right:35}}
+                                                   onChange={(event)=> {this.handleCheckBoxState(event, users.id)}}
                                             />
                                         </div>
                                     )
