@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { createPoll } from '../util/APIUtils';
-import { MAX_CHOICES, POLL_QUESTION_MAX_LENGTH, POLL_CHOICE_MAX_LENGTH } from '../constants';
+import { MAX_CHOICES, POLL_QUESTION_MAX_LENGTH, POLL_CHOICE_MAX_LENGTH } from '../constants/constants';
 import './NewPoll.css';
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import { Form } from '@ant-design/compatible';

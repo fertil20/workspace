@@ -7,7 +7,7 @@ import {
     USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH,
     EMAIL_MAX_LENGTH,
     PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH
-} from '../../constants';
+} from '../../constants/constants';
 
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';

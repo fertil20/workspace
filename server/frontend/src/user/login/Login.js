@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {login} from '../../util/APIUtils';
 import './Login.css';
-import { ACCESS_TOKEN } from '../../constants';
+import { ACCESS_TOKEN } from '../../constants/constants';
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
 import { Input, Button, notification } from 'antd';
@@ -23,7 +23,7 @@ class Login extends Component {
         );
     }
 }
-
+//todo починить notification для Login
 class LoginForm extends Component {
     constructor(props) {
         super(props);

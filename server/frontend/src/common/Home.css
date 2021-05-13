@@ -1,6 +1,6 @@
 .home {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
+    margin: auto;
+    width: 600px;
+    height: 600px;
 }

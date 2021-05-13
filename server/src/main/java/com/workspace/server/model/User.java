@@ -120,10 +120,22 @@ public class User extends DateAudit {
     @EqualsAndHashCode.Exclude
     private Set<Role> roles;
 
+    @ManyToMany
+    @JoinTable(name = "users_meetings",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "meeting_id"))
+    @EqualsAndHashCode.Exclude
+    private Set<Meeting> meetings;
+
     public User(String name, String username, String position) {
         this.name = name;
         this.username = username;
         this.position = position;
+    }
+
+    public User(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
 /*    @ManyToMany(fetch = FetchType.LAZY)

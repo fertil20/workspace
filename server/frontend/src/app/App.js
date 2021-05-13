@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import {getCurrentUser} from '../util/APIUtils';
-import { ACCESS_TOKEN } from '../constants';
+import { ACCESS_TOKEN } from '../constants/constants';
 
 import NewPoll from '../poll/NewPoll';
 import Login from '../user/login/Login';

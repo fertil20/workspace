@@ -6,12 +6,12 @@ import {
     DropdownItem,
     UncontrolledButtonDropdown,
     DropdownMenu,
-    DropdownToggle,ButtonDropdown, Modal, ModalHeader, ModalBody, Input, ModalFooter, Button
+    DropdownToggle, Modal, ModalHeader, ModalBody, Input, ModalFooter, Button
 } from 'reactstrap';
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from "@fullcalendar/interaction";
-import {formatDate, formatTime} from "../../util/Helpers";
+import {formatDate} from "../../util/Helpers";
 import './MeetingRoomBook.css';
 import {getAllUsers} from "../../util/APIUtils";
 
@@ -19,7 +19,7 @@ let CurrentRoom = '1'
 let Users = ''
 let CurrentEventDate = ''
 let TimeArray = [0,0,0,0,0,0,0,0,0]
-let PersArray = [0,0,0,0,0,0,0,0,0]
+let MenArray = [0,0,0,0,0,0,0,0,0]
 let direct = 0
 
 export default class MeetingRoomBook extends Component {
@@ -195,14 +195,14 @@ export default class MeetingRoomBook extends Component {
                         timeOfEnd: button+10
                     })
             }else{
-                this.copyArray(PersArray,TimeArray)
+                this.copyArray(MenArray,TimeArray)
                 if (direct<button){
 
                     let i = button + 1
                     while(1){
                         i = i - 1
                         if(i === -1 || TimeArray[i] === 1){
-                            this.copyArray(TimeArray,PersArray)
+                            this.copyArray(TimeArray,MenArray)
                             break
                         }
                         if(TimeArray[i] === 2){
@@ -219,7 +219,7 @@ export default class MeetingRoomBook extends Component {
                     while(1){
                         i = i + 1
                         if(i === 9 ||TimeArray[i] === 1){
-                            this.copyArray(TimeArray,PersArray)
+                            this.copyArray(TimeArray,MenArray)
                             break
                         }
                         if(TimeArray[i] === 2)
