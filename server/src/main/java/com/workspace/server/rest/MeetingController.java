@@ -3,8 +3,6 @@ package com.workspace.server.rest;
 import com.workspace.server.dto.MeetingRequest;
 import com.workspace.server.dto.MeetingsByRoomResponse;
 import com.workspace.server.model.Meeting;
-import com.workspace.server.model.Role;
-import com.workspace.server.model.User;
 import com.workspace.server.repository.MeetingRepository;
 import com.workspace.server.repository.MeetingRoomRepository;
 import com.workspace.server.repository.UserRepository;

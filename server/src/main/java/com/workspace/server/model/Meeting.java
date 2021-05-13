@@ -44,7 +44,10 @@ public class Meeting {
     @NotBlank
     private String organizerName;
 
-    @ManyToMany(mappedBy = "meetings")
+    @ManyToMany
+    @JoinTable(name = "meetings_users",
+            joinColumns = @JoinColumn(name = "meeting_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     @EqualsAndHashCode.Exclude
     private Set<User> users;
 

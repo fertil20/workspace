@@ -120,10 +120,7 @@ public class User extends DateAudit {
     @EqualsAndHashCode.Exclude
     private Set<Role> roles;
 
-    @ManyToMany
-    @JoinTable(name = "users_meetings",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "meeting_id"))
+    @ManyToMany(mappedBy = "users")
     @EqualsAndHashCode.Exclude
     private Set<Meeting> meetings;
 
