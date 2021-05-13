@@ -3,6 +3,7 @@ package com.workspace.server.rest;
 import com.workspace.server.dto.MeetingRequest;
 import com.workspace.server.dto.MeetingsByRoomResponse;
 import com.workspace.server.model.Meeting;
+import com.workspace.server.model.User;
 import com.workspace.server.repository.MeetingRepository;
 import com.workspace.server.repository.MeetingRoomRepository;
 import com.workspace.server.repository.UserRepository;
@@ -34,7 +35,8 @@ public class MeetingController {
         return meetingRepository.findByMeetingRoom_Id(id).stream()
                 .map(meeting -> new MeetingsByRoomResponse(meeting.getId(), meeting.getTitle(),
                         meeting.getDate(), meeting.getColor(), meeting.getTimeOfStart(),
-                        meeting.getTimeOfEnd(), meeting.getOrganizerName()))
+                        meeting.getTimeOfEnd(), meeting.getOrganizerName(), meeting.getUsers().stream()
+                        .map(user -> new User(user.getId(), user.getName())).collect(Collectors.toSet())))
                 .collect(Collectors.toList());
     }
 

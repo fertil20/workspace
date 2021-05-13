@@ -51,7 +51,7 @@ export default class MeetingRoomBook extends Component {
     loadMeetingsByRoomId(){
         getMeetings(CurrentRoom)
             .then(response => {
-                this.setState({events: response})
+                this._isMounted && this.setState({events: response})
             })
             .catch(error => {
                 alert('Что-то пошло не так.');
@@ -61,6 +61,10 @@ export default class MeetingRoomBook extends Component {
     componentDidMount() {
         this._isMounted = true;
         this.loadMeetingsByRoomId('1')
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     handleDateClick = (arg) => {

@@ -25,7 +25,7 @@ import ForgotPassword from "../user/passwordReset/ForgotPassword";
 import ForgotPasswordReset from "../user/passwordReset/ForgotPasswordReset";
 import Home from "../components/home/Home";
 import NewUser from "../user/new/NewUser";
-import RoleManager from "../user/rolemanager/RoleManager";
+import RoleManager from "../components/rolemanager/RoleManager";
 import UsersListEdit from "../components/usersList/UsersListEdit";
 import AboutCompany from "../components/about/AboutCompany";
 import AboutCompanyEdit from "../components/about/AboutCompanyEdit";
