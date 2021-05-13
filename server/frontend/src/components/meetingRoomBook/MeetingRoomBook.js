@@ -13,7 +13,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from "@fullcalendar/interaction";
 import {formatDate} from "../../util/Helpers";
 import './MeetingRoomBook.css';
-import {getAllUsers} from "../../util/APIUtils";
+import {getAllUsers, getMeetings, Meeting} from "../../util/APIUtils";
 
 let CurrentRoom = '1'
 let Users = ''
@@ -31,17 +31,12 @@ export default class MeetingRoomBook extends Component {
             CurrentEvent: '',
             toggle: false,
             search: {value: ''},
-            events:[{
-                    id: '',
-                    title: '',
-                    date: '',
-                    end: '',
-                    color: '',
-                    timeOfStart:  '',
-                    timeOfEnd: ''
-                }],
+            events:[],
             timeOfStart:  '-',
-            timeOfEnd: '-'
+            timeOfEnd: '-',
+            title:{value:''},
+            usersOnMeeting: [],
+            user: JSON.parse(localStorage.getItem('app'))
 
         }
         this.handleDateClick = this.handleDateClick.bind(this);
@@ -50,15 +45,67 @@ export default class MeetingRoomBook extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.getUsers = this.getUsers.bind(this);
         this.changeColor = this.changeColor.bind(this);
+        this.handleCheckBoxState = this.handleCheckBoxState.bind(this);
+    }
+
+    loadMeetingsByRoomId(){
+        getMeetings(CurrentRoom)
+            .then(response => {
+                this.setState({events: response})
+            })
+            .catch(error => {
+                alert('Что-то пошло не так.');
+            });
     }
 
     componentDidMount() {
         this._isMounted = true;
+        this.loadMeetingsByRoomId('1')
     }
 
     handleDateClick = (arg) => {
+        this.loadMeetingsByRoomId()
         this.changeToggle(arg)
         CurrentEventDate = arg.dateStr
+    }
+
+    handleCheckBoxState(event, user){
+        const target = event.target;
+        const inputName = target.name;
+        if(event.target.checked){
+            this.state.usersOnMeeting.push(user)
+        }
+        else{
+            let index = this.state.usersOnMeeting.indexOf(user)
+            if (index !== -1) {
+                this.state.usersOnMeeting.splice(index, 1);
+            }
+        }
+    }
+
+    createNewMeeting(){
+        const MeetingRequest ={
+            title: this.state.title.value,
+            date: CurrentEventDate,
+            color: 'red',
+            timeOfStart: this.state.timeOfStart,
+            timeOfEnd: this.state.timeOfEnd,
+            organizerName: this.state.user.currentUser.username,
+            users: this.state.usersOnMeeting
+        }
+        if (MeetingRequest.title !== '' && MeetingRequest.timeOfStart !=='-' && MeetingRequest.users.length !== 0){
+        Meeting(MeetingRequest,CurrentRoom)
+            .then(response => {
+                this.setState({toggle: false,title: {value: ''},usersOnMeeting: [],timeOfStart: '-',timeOfEnd: '-'})
+                TimeArray = [0,0,0,0,0,0,0,0,0]
+                this.loadMeetingsByRoomId()
+            })
+            .catch(error => {
+                alert('Что-то пошло не так.');
+            });}
+        else{
+            alert('Введите полную информацию о встрече')
+        }
     }
 
     getUsers(){
@@ -78,7 +125,9 @@ export default class MeetingRoomBook extends Component {
                                         users =>
                                         <div className='user-element'>
                                                 {users.name}
-                                            <Input type='checkbox' style={{right:35}}/>
+                                            <Input type='checkbox' name={users.username} style={{right:35}}
+                                                   onChange={(event)=> {this.handleCheckBoxState(event,users)}}
+                                            />
                                         </div>
                                     )
                                 }
@@ -120,41 +169,12 @@ export default class MeetingRoomBook extends Component {
 
     changeRoom(room){
         CurrentRoom = room
-        if(room === '1'){
-            this.setState({events:[{
-                    id: '1',
-                    title:'Бронь',
-                    date: '2021-05-03',
-                    end: '2021-05-04',
-                    color: 'red',
-                    timeOfStart: 9,
-                    timeOfEnd: 10
-                },{
-                    id: '2',
-                    title:'Бронь',
-                    date: '2021-05-03',
-                    end: '2021-05-04',
-                    color: 'red',
-                    timeOfStart: 11,
-                    timeOfEnd: 14
-                }]})
-        }
-        else{
-            this.setState({events:[{
-                    id: '3',
-                    title:'Бронь',
-                    date: '2021-05-04',
-                    end: '2021-05-05',
-                    color: 'red',
-                    timeOfStart: 10,
-                    timeOfEnd: 17
-                }]})
-        }
+        this.loadMeetingsByRoomId()
     }
 
     changeToggle(arg){
         if (this.state.toggle === true){
-            this.setState({toggle: false})
+            this.setState({toggle: false,title: {value: ''},timeOfStart: '-',timeOfEnd: '-'})
             TimeArray = [0,0,0,0,0,0,0,0,0]
         }
         if (this.state.toggle === false){
@@ -163,7 +183,6 @@ export default class MeetingRoomBook extends Component {
             this.getTimeByEventDate(arg.dateStr)
         }
         this.setState({CurrentEvent: arg})
-        console.log(this.state.CurrentEvent)
     }
 
     handleInputChange(event) {
@@ -263,7 +282,12 @@ export default class MeetingRoomBook extends Component {
                 <div>
                     <Modal isOpen={this.state.toggle} toggle={this.changeToggle}>
                         <ModalHeader toggle={this.changeToggle}><div>Забронировать переговорную {CurrentRoom}</div>
-                            <div>{formatDate(this.state.CurrentEvent.dateStr)}</div>
+                            <div>{formatDate(this.state.CurrentEvent.dateStr)} Организатор: {this.state.user.currentUser.name}
+                                <Input type='text' name='title'
+                                       placeholder='Введите название встречи'
+                                       value={this.state.title.value}
+                                       onChange={(event)=>this.handleInputChange(event)}
+                            /></div>
                         </ModalHeader>
                         <ModalBody>
                             <Row>
@@ -316,7 +340,7 @@ export default class MeetingRoomBook extends Component {
                         </ModalBody>
                         <ModalFooter>
                             <Button color="danger" onClick={this.changeToggle}>Отмена</Button>{' '}
-                            <Button color="primary" onClick={this.roleAddSubmit}>Забронировать</Button>
+                            <Button color="primary" onClick={()=>this.createNewMeeting()}>Забронировать</Button>
                         </ModalFooter>
                     </Modal>
                 </div>

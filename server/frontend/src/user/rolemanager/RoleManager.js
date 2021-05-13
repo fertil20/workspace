@@ -333,7 +333,6 @@ class RoleManager extends Component {
                 this.state.rolePrivileges.splice(index, 1);
             }
         }
-        console.log(this.state.rolePrivileges)
         editRolePrivileges(this.state.rolePrivileges,CurrentRole)
             .then(response => {
             })
