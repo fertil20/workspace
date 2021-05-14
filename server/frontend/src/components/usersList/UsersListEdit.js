@@ -22,7 +22,8 @@ class UsersListEdit extends Component {
             user: null,
             isLoading: false,
             deleteUserID: '',
-            FIO: {value:''}
+            FIO: {value:''},
+            CurUser: JSON.parse(localStorage.getItem('app'))
         }
         this.loadAllUsers = this.loadAllUsers.bind(this);
         this.SetUserStatus = this.SetUserStatus.bind(this);
@@ -170,7 +171,7 @@ class UsersListEdit extends Component {
                                                     <Input type='text' name='position' id='position'
                                                            value={user.tg}
                                                            onChange={(event) => this.handleInputChange(event)}/>
-                                                    <Button size='sm' color='danger' style={{height:30, marginTop:5}} key={user.id+'.6'} onClick={() => this.DeleteUser(user.id)}>Удалить сотрудника</Button>
+                                                    {user.username !== this.state.CurUser.currentUser.username && <Button size='sm' color='danger' style={{height:30, marginTop:5}} key={user.id+'.6'} onClick={() => this.DeleteUser(user.id)}>Удалить сотрудника</Button>}
                                                 </ListGroupItem>
 
                                             </ListGroup>

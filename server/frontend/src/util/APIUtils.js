@@ -21,6 +21,20 @@ const request = (options) => {
         .then((text) => text.length ? JSON.parse(text) : {})
 };
 
+export function getUserEvents(username) {
+    return request({
+        url: API_BASE_URL + "/users/" + username + "/events",
+        method: 'GET',
+    });
+}
+
+export function getMeetingRooms() {
+    return request({
+        url: API_BASE_URL + "/meetings/",
+        method: 'GET',
+    });
+}
+
 export function Meeting(MeetingRequest, id) {
     return request({
         url: API_BASE_URL + "/meetings/" + id + "/newMeeting",

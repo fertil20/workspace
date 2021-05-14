@@ -20,7 +20,8 @@ let NewEmployeeText = 'При приеме на работу нужно:\n' +
     'Режим работы:\n' +
     'Вы должны быть на работе не позднее 9:00. Окончание рабочего дня не ранее 19:00. \n' +
     '\n'
-let OfficeAboutText = 'Г. Москва, ул. Беговая, 67 \n Г. Санкт-Петербург, ул. Ленина, 55'
+let OfficeAboutText1 = 'Г. Москва, ул. Беговая, 67'
+let OfficeAboutText2 = 'Г. Санкт-Петербург, ул. Ленина, 55'
 let OfficePhoneText = '+7(812)-578-85-44 +7(812)-543-56-65'
 
 export default class NewEmployee extends Component{
@@ -43,12 +44,13 @@ export default class NewEmployee extends Component{
                             <div className='office'>Дополнительная информация:</div>
                             <Row style={{width:750}}>
                                 <Col>
-                                    <div style={{height:'auto'}}>{OfficeAboutText}</div>
+                                    <div style={{height:'auto'}}>{OfficeAboutText1}</div>
+                                    <div style={{height:'auto',width:270}}>{OfficeAboutText2}</div>
                                 </Col>
                                 <Col>
                                     <div style={{height:'auto'}}>{OfficePhoneText}</div>
                                 </Col>
-                                {this.state.CurUser.currentUser.privileges.includes('Edit_About') && <Button style={{marginRight:50}} size='sm' className='company-button' href='/about/newEmployee/edit'>Редактировать</Button>}
+                                {this.state.CurUser.currentUser.privileges.includes('Edit_About') && <Button style={{marginRight:50}} disabled='true' size='sm' className='company-button' href='/about/newEmployee/edit'>Редактировать</Button>}
                             </Row>
                         </div>
                     </div>

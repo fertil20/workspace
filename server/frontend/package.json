@@ -5,6 +5,7 @@
   "dependencies": {
     "@ant-design/compatible": "^1.0.8",
     "@babel/core": "^7.13.16",
+    "@fullcalendar/bootstrap": "^5.7.0",
     "@fullcalendar/core": "^5.7.0",
     "@fullcalendar/daygrid": "^5.7.0",
     "@fullcalendar/interaction": "^5.7.0",

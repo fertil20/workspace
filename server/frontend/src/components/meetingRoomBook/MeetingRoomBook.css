@@ -18,3 +18,16 @@
     border-bottom: 2px;
     border-bottom: 1px solid #C4C4C4;
 }
+
+.room-title{
+    font-size: 20px;
+    color: #5380B7;
+    margin-bottom: 5px;
+}
+
+.choose-event{
+    margin-top: 10px;
+    font-size: 15px;
+    color: green;
+    font-weight: bold;
+}

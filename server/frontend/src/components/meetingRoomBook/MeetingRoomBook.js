@@ -6,14 +6,14 @@ import {
     DropdownItem,
     UncontrolledButtonDropdown,
     DropdownMenu,
-    DropdownToggle, Modal, ModalHeader, ModalBody, Input, ModalFooter, Button
+    DropdownToggle, Modal, ModalHeader, ModalBody, Input, ModalFooter, Button, Popover, PopoverHeader, PopoverBody
 } from 'reactstrap';
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from "@fullcalendar/interaction";
 import {formatDate} from "../../util/Helpers";
 import './MeetingRoomBook.css';
-import {getAllUsers, getMeetings, Meeting} from "../../util/APIUtils";
+import {getAllUsers, getMeetingRooms, getMeetings, Meeting} from "../../util/APIUtils";
 
 let CurrentRoom = '1'
 let Users = ''
@@ -21,6 +21,10 @@ let CurrentEventDate = ''
 let TimeArray = [0,0,0,0,0,0,0,0,0]
 let MenArray = [0,0,0,0,0,0,0,0,0]
 let direct = 0
+let EventName = ''
+let EventBody = ''
+let MeetingRooms = ''
+let RoomAbout = ''
 
 export default class MeetingRoomBook extends Component {
     constructor(props) {
@@ -36,8 +40,9 @@ export default class MeetingRoomBook extends Component {
             timeOfEnd: '-',
             title:{value:''},
             usersOnMeeting: [],
-            user: JSON.parse(localStorage.getItem('app'))
-
+            user: JSON.parse(localStorage.getItem('app')),
+            toggleEvent: false,
+            meetingRooms: ''
         }
         this.handleDateClick = this.handleDateClick.bind(this);
         this.changeRoom = this.changeRoom.bind(this);
@@ -46,6 +51,9 @@ export default class MeetingRoomBook extends Component {
         this.getUsers = this.getUsers.bind(this);
         this.changeColor = this.changeColor.bind(this);
         this.handleCheckBoxState = this.handleCheckBoxState.bind(this);
+        this.showEventDetails = this.showEventDetails.bind(this);
+        this.changeEventToggle = this.changeEventToggle.bind(this);
+        this.loadAllMeetingRooms = this.loadAllMeetingRooms.bind(this);
     }
 
     loadMeetingsByRoomId(){
@@ -58,8 +66,29 @@ export default class MeetingRoomBook extends Component {
             });
     }
 
+    loadAllMeetingRooms(){
+        getMeetingRooms()
+            .then(response=>{
+                this.setState({meetingRooms: response})
+                MeetingRooms = <DropdownMenu>{this.state.meetingRooms ? (<div>{
+                    this.state.meetingRooms.map(
+                    room =>
+                        <DropdownItem onClick={() => this.changeRoom(room.id)}>Переговорная {room.id}</DropdownItem>
+                    )}</div>):null}</DropdownMenu>
+                RoomAbout = <div>
+                    <div style={{fontWeight:'bold'}}>Описание: </div><div>{response[0].about}</div>
+                    <div style={{fontWeight:'bold'}}>Адрес: </div><div>{response[0].address}</div>
+                    <div style={{fontWeight:'bold'}}>Вместимость: </div><div>{response[0].maxPeople} человек</div>
+                </div>
+            })
+            .catch(error => {
+                alert('Что-то пошло не так.');
+            });
+    }
+
     componentDidMount() {
         this._isMounted = true;
+        this.loadAllMeetingRooms()
         this.loadMeetingsByRoomId('1')
     }
 
@@ -94,7 +123,7 @@ export default class MeetingRoomBook extends Component {
             color: 'red',
             timeOfStart: this.state.timeOfStart,
             timeOfEnd: this.state.timeOfEnd,
-            organizerName: this.state.user.currentUser.username,
+            organizerName: this.state.user.currentUser.name,
             usersId: this.state.usersOnMeeting
         }
         if (MeetingRequest.title !== '' && MeetingRequest.timeOfStart !=='-' && MeetingRequest.usersId.length !== 0){
@@ -116,6 +145,42 @@ export default class MeetingRoomBook extends Component {
         else{
             alert('Введите полную информацию о встрече')
         }
+    }
+
+    showEventDetails = (arg) => {
+        let UsersOnEvent = ''
+        EventName = <div>{arg.event.title}</div>
+        UsersOnEvent = <div>{
+            arg.event._def.extendedProps.users ?(
+                <div>{
+                    arg.event._def.extendedProps.users.map(
+                        user=>
+                            <div>{user.name}</div>
+                    )
+                }</div>
+            ):null
+        }</div>
+        EventBody = <div>
+            <Row>
+            <Col sm={{size: 5.4}} style={{marginLeft:15,width:150}}>
+                <div style={{fontWeight:'bold'}}>Переговорная:</div>
+                <div style={{fontWeight:'bold'}}>Адрес:</div>
+                <div style={{fontWeight:'bold'}}>Организатор:</div>
+                <div style={{fontWeight:'bold'}}>Дата:</div>
+                <div style={{fontWeight:'bold'}}>Время:</div>
+            </Col>
+            <Col>
+                <div>{CurrentRoom} </div>
+                <div>{this.state.meetingRooms[CurrentRoom-1].address}</div>
+                <div>{arg.event._def.extendedProps.organizerName}</div>
+                <div>{arg.event.start.toLocaleDateString()}</div>
+                <div>с {arg.event._def.extendedProps.timeOfStart}:00 до {arg.event._def.extendedProps.timeOfEnd}:00</div>
+            </Col>
+            </Row>
+            <div style={{marginTop:10, fontWeight: 'bold'}}>Участники:</div>
+            <div className='user-list' style={{width:350}}>{UsersOnEvent}</div>
+        </div>
+        this.changeEventToggle(arg)
     }
 
     getUsers(){
@@ -179,7 +244,13 @@ export default class MeetingRoomBook extends Component {
 
     changeRoom(room){
         CurrentRoom = room
+        RoomAbout = <div>
+            <div style={{fontWeight:'bold'}}>Описание: </div><div>{this.state.meetingRooms[CurrentRoom-1].about}</div>
+            <div style={{fontWeight:'bold'}}>Адрес: </div><div>{this.state.meetingRooms[CurrentRoom-1].address}</div>
+            <div style={{fontWeight:'bold'}}>Вместимость: </div><div>{this.state.meetingRooms[CurrentRoom-1].maxPeople} человек</div>
+        </div>
         this.loadMeetingsByRoomId()
+
     }
 
     changeToggle(arg){
@@ -193,6 +264,15 @@ export default class MeetingRoomBook extends Component {
             this.getTimeByEventDate(arg.dateStr)
         }
         this.setState({CurrentEvent: arg})
+    }
+
+    changeEventToggle(){
+        if (this.state.toggleEvent === true){
+            this.setState({toggleEvent: false})
+        }
+        if (this.state.toggleEvent === false){
+            this.setState({toggleEvent: true})
+        }
     }
 
     handleInputChange(event) {
@@ -290,6 +370,17 @@ export default class MeetingRoomBook extends Component {
         return (
             <div>
                 <div>
+                    <Modal isOpen={this.state.toggleEvent} toggle={this.changeEventToggle}>
+                        <ModalHeader toggle={this.changeEventToggle}>
+                            {EventName}
+                        </ModalHeader>
+                        <ModalBody>
+                            {EventBody}
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button color="primary" onClick={()=>this.changeEventToggle()}>Понятно</Button>{' '}
+                        </ModalFooter>
+                    </Modal>
                     <Modal isOpen={this.state.toggle} toggle={this.changeToggle}>
                         <ModalHeader toggle={this.changeToggle}><div>Забронировать переговорную {CurrentRoom}</div>
                             <div>{formatDate(this.state.CurrentEvent.dateStr)} Организатор: {this.state.user.currentUser.name}
@@ -359,23 +450,23 @@ export default class MeetingRoomBook extends Component {
                     <Col sm={{size: 9}} style={{backgroundColor:'white', borderRadius:10, height:'auto', paddingBottom:20, width: '75%'}}>
                         <Row>
                         <div style={{width:170, margin:20}}>
-                            <div>Переговорная {CurrentRoom}. Выберите дату брони.</div>
                             <UncontrolledButtonDropdown >
                                 <DropdownToggle nav caret>Переговорная</DropdownToggle>
-                                <DropdownMenu>
-                                    <DropdownItem onClick={() => this.changeRoom('1')}>Переговорная 1</DropdownItem>
-                                    <DropdownItem onClick={() => this.changeRoom('2')}>Переговорная 2</DropdownItem>
-                                </DropdownMenu>
+                                {MeetingRooms}
                             </UncontrolledButtonDropdown>
+                            <div className='room-title'>Переговорная {CurrentRoom}.</div>
+                            {RoomAbout}
+                            <div className='choose-event'>Выберите дату брони.</div>
                         </div>
                         <div style={{width:600, paddingTop:10}}>
                             <FullCalendar
                                 plugins={[dayGridPlugin, interactionPlugin]}
                                 initialView="dayGridMonth"
                                 dateClick={this.handleDateClick}
-                                weekends={false}
                                 events={this.state.events}
                                 eventContent={renderEventContent}
+                                locale='ru'
+                                eventClick={this.showEventDetails}
                             />
                         </div>
                         </Row>

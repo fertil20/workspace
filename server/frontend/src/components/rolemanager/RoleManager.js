@@ -246,13 +246,13 @@ class RoleManager extends Component {
         document.querySelector('.editUsersCheckbox').checked = !!rolePrivileges.includes('Edit_Users');
         document.querySelector('.manageNewsCheckbox').checked = !!rolePrivileges.includes('Manage_News');
         document.querySelector('.editAboutCheckbox').checked = !!rolePrivileges.includes('Edit_About');
+        document.querySelector('.booking').checked = !!rolePrivileges.includes('Booking');
     }
 
     showUsersByRole(roleName){
         this.getUsersWithoutRole(roleName);
         this.getListOfRolePrivileges(roleName);
         if((roleName === 'Администратор') ||(roleName === 'Пользователь')){CheckBoxAble=false}else{CheckBoxAble=true}
-        console.log(CheckBoxAble)
         CurrentRole = roleName;
         getRoleUsers(roleName)
             .then(response => {
@@ -486,6 +486,11 @@ class RoleManager extends Component {
                                             </div>
                                             <div className='role-column'>Редактирование контента "О компании"
                                                 <Input disabled={!CheckBoxAble} className='editAboutCheckbox' type ='checkbox' style={{right:25}} name='Edit_About'
+                                                       onChange={(event)=> {this.handleCheckBoxState(event)}}
+                                                />
+                                            </div>
+                                            <div className='role-column'>Бронирование переговорных
+                                                <Input disabled={!CheckBoxAble} className='booking' type ='checkbox' style={{right:25}} name='Booking'
                                                        onChange={(event)=> {this.handleCheckBoxState(event)}}
                                                 />
                                             </div>
