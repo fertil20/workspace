@@ -38,7 +38,6 @@ export default class NavigationPanel extends Component {
 
         getUserEvents(this.state.user.currentUser.username)
             .then(response => {
-                console.log(response)
                 this._isMounted && this.setState({events: response})
             })
             .catch(error => {
@@ -91,7 +90,7 @@ export default class NavigationPanel extends Component {
 
     render() {
         return (
-            <Col sm={{size: 2.7}}>
+            <Col sm={{size: 2.7}} className='col-left'>
                 <Modal isOpen={this.state.toggleEvent} toggle={this.changeEventToggle}>
                     <ModalHeader toggle={this.changeEventToggle}>
                         {EventName}
@@ -129,17 +128,20 @@ export default class NavigationPanel extends Component {
                     <Link to='/news'>
                         <div className='row-navigation'>Новости</div>
                     </Link>
-                    <div style={{marginTop: 30}}/>
-                    <div className='calendar'>
+                    <div style={{paddingBottom: 10}}/>
+                </Col>
+                <div style={{marginTop: 30}}/>
+                <div className='calendar'>
                     <FullCalendar
                         plugins={[ dayGridPlugin, interactionPlugin ]}
                         initialView="dayGridMonth"
                         locale='ru'
+                        firstDay={1}
+                        height='auto'
                         events={this.state.events}
                         eventContent={renderEventContent}
                         eventClick={this.showEventDetails}
                     /></div>
-                </Col>
             </Col>
         )
     }

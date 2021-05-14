@@ -49,12 +49,12 @@ export default class Home extends Component {
                         <Col sm={{size: 1.5}} style={{
                             backgroundColor: 'white',
                             borderRadius: 10,
-                            height: 'auto',
+                            height: '100%',
                             padding: 10,
                             marginRight: '2%',
                             width: '53%'
                         }}>
-                            <div style={{width: '100%'}}>
+                            <div style={{width: '100%', maxHeight: '80%'}}>
                                 {randomImg === 1 &&
                                 <img src={hello1} id="hello" alt='Hello!' className="home"/>}
                                 {randomImg === 2 &&
