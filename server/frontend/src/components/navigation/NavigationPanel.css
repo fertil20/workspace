@@ -5,11 +5,14 @@
 }
 
 .col-navigation {
+    background-color: white;
+    border-radius:10px;
+}
+
+.col-left{
     position: sticky;
     top: 80px;
     z-index: 100;
-    background-color: white;
-    border-radius: 10px;
     height: 100%;
     margin-right: 2%;
     width: 23%;
@@ -133,17 +136,6 @@
 .react-calendar--selectRange .react-calendar__tile--hover {
     background-color: #e6e6e6;
 }
-
-/*
-.col-navigation2{
-    position: sticky;
-    top: 80px;
-    z-index: 100;
-    background-color: white;
-    border-radius:10px;
-    height:200px;
-    margin-right:30px;
-}*/
 
 .navigation-link-red{
     color:red;

@@ -16,7 +16,8 @@ export default class NavigationPanel extends Component {
 
     render() {
         return (
-            <Col sm={{size: 2.7}} className='col-navigation'>
+            <Col sm={{size: 2.7}} className='col-left'>
+                <Col sm={{size: 2.7}} className='col-navigation'>
                 <Link to='/'>
                     <div style={{paddingTop: 10}} className='row-navigation'>Главная</div>
                 </Link>
@@ -43,10 +44,12 @@ export default class NavigationPanel extends Component {
                     <div className='row-navigation'>Новости</div>
                 </Link>
                 <div style={{paddingBottom: 10}}/>
-                {/*<FullCalendar*/}
-                {/*    plugins={[ dayGridPlugin ]}*/}
-                {/*    initialView="dayGridMonth"*/}
-                {/*/>*/}
+                </Col>
+                <div style={{marginTop: 30}}/>
+                <FullCalendar
+                    plugins={[ dayGridPlugin ]}
+                    initialView="dayGridMonth"
+                />
             </Col>
         )
     }
