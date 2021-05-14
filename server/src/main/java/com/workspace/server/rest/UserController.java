@@ -108,11 +108,6 @@ public class UserController {
         }
     }//todo перенести в отдельный сервис!
 
-/*    @GetMapping("/{username}/events")
-    public Set<Meeting> getAllUserEvents(@PathVariable String username) {
-        return meetingRepository.findAllByUsers_Username(username);
-    }*/ //todo удалить приколдес, который ломает сервер))
-
     @GetMapping("/{username}/events")
     public List<UserMeetingsResponse> getAllUserEvents(@PathVariable String username) {
         return meetingRepository.findAllByUsers_Username(username).stream().map(meeting ->
