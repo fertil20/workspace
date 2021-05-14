@@ -1,11 +1,11 @@
 .birthday-block{
-    height: 100px;
+    height: 100%;
     margin-bottom: 10px;
     border-bottom: 2px solid #bbb;
     border-radius: 1px;
 }
 
 .birthday-block-content{
-    margin-left:10px;
+    margin-left: 10px;
     padding-top: 10px;
 }

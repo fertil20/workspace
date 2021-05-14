@@ -356,7 +356,7 @@ export default class MeetingRoomBook extends Component {
                 </div>
                 <Row>
                     <NavigationPanel/>
-                    <Col sm={{size: 9}} style={{backgroundColor:'white', borderRadius:10, height:'auto', paddingBottom:20}}>
+                    <Col sm={{size: 9}} style={{backgroundColor:'white', borderRadius:10, height:'auto', paddingBottom:20, width: '75%'}}>
                         <Row>
                         <div style={{width:170, margin:20}}>
                             <div>Переговорная {CurrentRoom}. Выберите дату брони.</div>

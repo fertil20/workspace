@@ -22,7 +22,7 @@ export default class News extends Component {
             <div>
                 <Row>
                     <NavigationPanel/>
-                    <Col sm={{size:1.5}} style={{backgroundColor: 'white',borderRadius:10,height:'auto',paddingBottom:20,marginRight:30}}>
+                    <Col sm={{size:1.5}} style={{backgroundColor: 'white', borderRadius: 10, height: 'auto', paddingBottom: 20, marginRight: '2%', width: '53%'}}>
                         <div style={{width:600}}>
                             <div className='news-title'>Кто может получить выплаты и при каких условиях</div>
                             <div className='news-date'>28.04.2021</div>
@@ -39,7 +39,7 @@ export default class News extends Component {
                                 <Button disabled='true' size='sm' color='danger' className='news-delete-button'>Удалить</Button></div>}
                         </div>
                     </Col>
-                    <Col sm={{size:1.5}} style={{backgroundColor: 'white',borderRadius:10,height:'auto',paddingBottom:20}}>
+                    <Col sm={{size:1.5}} style={{backgroundColor: 'white', borderRadius:10, height:'auto', paddingBottom: 20, width: '20%'}}>
                         <div style={{width:210}}>
                             <div style={{margin:10}} >
                                 <div className='news-text'>Путин выплатит семьям со школьниками по 10 тысяч рублей</div>

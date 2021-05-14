@@ -217,51 +217,49 @@ class ProfileEdit extends Component {
                         <Form onSubmit={this.handleSubmit}>
                             <Row >
                                 <NavigationPanel/>
-                                <Col sm={{ size: 4.4 }} style={{backgroundColor: 'white',borderRadius:10,height:500,marginRight:30}}>
-                                    <div style={{backgroundColor: 'white', margin: 20,borderRadius:10,height:300,width:300}}>
+                                <Col sm={{ size: 4.4 }} style={{backgroundColor: 'white',borderRadius:10,height:500, width: '30%'}}>
+                                    <div style={{backgroundColor: 'white', margin: 20,borderRadius:10,height:300,width:"auto"}}>
                                         <Avatar className="user-avatar-circle" style={{ backgroundColor: getAvatarColor(this.state.user.name)}}>
                                             {this.state.user.name.toUpperCase()}
                                         </Avatar>
                                     </div>
                                     <Row>
-                                        <Col sm={{size:'auto'}}>
+                                        <Col sm={{size:'auto'}}>{/*todo переделать колонки в строки*/}
                                             <div className='profile-text1'>E-mail:</div>
                                             <div className='profile-text1'>Рабочий номер:</div>
                                             <div className='profile-text1'>Telegram:</div>
                                         </Col>
                                         <Col>
-                                            <FormGroup className='profile-form'>
-                                                <Input type="email" name="email" id="email" placeholder="sophie@example.com"
-                                                       value={this.state.email.value}
-                                                       required
-                                                       style={{width:165}}
-                                                       onChange={(event) => {this.handleInputChange(event)}}/>
-                                                <div style={{height: 10}}/>
-                                                <PhoneInput
-                                                    international
-                                                    countryCallingCodeEditable={false}
-                                                    placeholder="+7 905 226 23 58"
-                                                    defaultCountry="RU"
-                                                    value={this.state.phone.value}
-                                                    style={{width:165, height:40}}
-                                                    onChange={event => this.setState({phone: {value: event }})}/>
-                                                {/*{(this.state.phone.value && isPossiblePhoneNumber(this.state.phone.value))
+                                            <Input type="email" name="email" id="email" placeholder="sophie@example.com"
+                                                   value={this.state.email.value}
+                                                   required
+                                                   style={{width:165}}
+                                                   onChange={(event) => {this.handleInputChange(event)}}/>
+                                            <div style={{height: 10}}/>
+                                            <PhoneInput
+                                                international
+                                                countryCallingCodeEditable={false}
+                                                placeholder="+7 905 226 23 58"
+                                                defaultCountry="RU"
+                                                value={this.state.phone.value}
+                                                style={{width:165, height:40}}
+                                                onChange={event => this.setState({phone: {value: event }})}/>
+                                            {/*{(this.state.phone.value && isPossiblePhoneNumber(this.state.phone.value))
                                                     ? <a> </a> : <a>Проверьте правильность номера</a>}*/}
-                                                {/*                                                <Input type="tel" name="phone" id="phone" placeholder={"+7 (905) 226-23-58"}
+                                            {/*                                                <Input type="tel" name="phone" id="phone" placeholder={"+7 (905) 226-23-58"}
                                                        value={this.state.phone.value}
                                                        required
                                                        style={{width:165}}
                                                        pattern="[+][7] [(][0-9]{3}[)] [0-9]{3}-[0-9]{2}-[0-9]{2}"
                                                        onChange={(event) => this.handleInputChange(event)}/>*/}
-                                                <div style={{height: 10}}/>
-                                                <Input type="text" name="tg" id="tg" placeholder={"telegram"}
-                                                       value={this.state.tg.value} style={{width:165}}
-                                                       onChange={(event) => this.handleInputChange(event)}/>
-                                            </FormGroup>
+                                            <div style={{height: 10}}/>
+                                            <Input type="text" name="tg" id="tg" placeholder={"telegram"}
+                                                   value={this.state.tg.value} style={{width:165}}
+                                                   onChange={(event) => this.handleInputChange(event)}/>
                                         </Col>
                                     </Row>
                                 </Col>
-                                <Col sm={{ size: 6.6}} style={{backgroundColor: 'white',borderRadius:10,height:500, width:465}}>
+                                <Col sm={{ size: 6.6}} style={{backgroundColor: 'white',borderRadius:10,height:500, marginLeft: '2%', width: '43%'}}>
                                     <Row>
                                         <Col sm={{ size: 'auto'}}>
                                             <div style={{marginTop:20}} className='profile-text1'>Ф.И.О:</div>

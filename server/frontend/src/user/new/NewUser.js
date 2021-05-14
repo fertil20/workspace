@@ -189,7 +189,7 @@ class NewUser extends Component {
                     });
                 }
             }).catch(error => {
-            // Marking validateStatus as success, Form will be recchecked at server
+            // Marking validateStatus as success, Form will be rechecked at server
             this.setState({
                 username: {
                     value: usernameValue,
@@ -317,7 +317,7 @@ class NewUser extends Component {
                         <Form onSubmit={this.handleSubmit}>
                             <Row >
                                 <NavigationPanel/>
-                                <Col sm={{ size: 4.4 }} style={{backgroundColor: 'white',borderRadius:10,height:500,marginRight:30}}>
+                                <Col sm={{ size: 4.4 }} style={{backgroundColor: 'white', borderRadius:10, height:500, width: '30%'}}>
                                     {/*<div style={{backgroundColor: 'white', margin: 20,borderRadius:10,height:300,width:300}}>*/}
                                     {/*    /!*<Avatar className="user-avatar-circle" style={{ backgroundColor: getAvatarColor(this.state.user.name)}}>*!/*/}
                                     {/*    /!*    {this.state.user.name.toUpperCase()}*!/*/}
@@ -325,11 +325,11 @@ class NewUser extends Component {
                                     {/*</div>*/}
                                     <div className='profile-title'>Новый пользователь</div>
                                     <Row>
-                                        <Col >
+                                        <Col>{/*todo переделать колонки в строки*/}
                                             <div style={{marginTop:25}} className='profile-text1'>Username:</div>
                                             <div style={{marginTop:15}} className='profile-text1'>E-mail:</div>
                                             <div style={{marginTop:45}} className='profile-text1'>Рабочий номер:</div>
-                                            <div className='profile-text1'>Telegram:</div>
+                                            <div style={{marginTop:10}} className='profile-text1'>Telegram:</div>
                                         </Col>
                                         <Col>
                                             <FormGroup style={{marginTop:20}}>
@@ -371,7 +371,6 @@ class NewUser extends Component {
                                                        onChange={(event) => this.handleInputChange(event)}/>*/}
                                                 <PhoneInput
                                                     international
-                                                    countryCallingCodeEditable={false}
                                                     placeholder="+7 905 226 23 58"
                                                     defaultCountry="RU"
                                                     value={this.state.phone.value}
@@ -379,7 +378,7 @@ class NewUser extends Component {
                                                     onChange={event => this.setState({phone: {value: event }})}/>
                                                 {/*{(this.state.phone.value && isPossiblePhoneNumber(this.state.phone.value))
                                                     ? <a> </a> : <a> </a>}*/}
-                                                <div style={{height: 10}}/>
+                                                <div style={{height: 10, marginTop:10}}/>
                                                 <Input type="text" name="tg" id="tg" placeholder={"telegram"}
                                                        value={this.state.tg.value} className='profile-form'
                                                        onChange={(event) => this.handleInputChange(event)}/>
@@ -387,7 +386,7 @@ class NewUser extends Component {
                                         </Col>
                                     </Row>
                                 </Col >
-                                <Col sm={{ size: 6.6}} style={{backgroundColor: 'white',borderRadius:10, height:500, width:465}}>
+                                <Col sm={{ size: 6.6}} style={{backgroundColor: 'white',borderRadius:10, height:500, marginLeft: '2%', width: '43%'}}>
                                     <Row>
                                         <Col sm={{ size: 'auto'}}>
                                             <div className='profile-text1' style={{marginTop:15}}>Ф.И.О:</div>

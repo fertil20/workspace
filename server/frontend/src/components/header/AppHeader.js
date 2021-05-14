@@ -4,11 +4,6 @@ import {
 } from 'react-router-dom';
 import './AppHeader.css';
 import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
@@ -30,8 +25,6 @@ class AppHeader extends Component {
     }
 
     render() {
-
-//        let menuItems;
         if(this.props.currentUser) {
           return(
             <NavBarLogged className='header-of-app' currentUser={this.props.currentUser} handleMenuClick={this.handleMenuClick}/>
@@ -52,7 +45,8 @@ const NavBarNotLogged = () => {
         return (
             <div className='nav-bar-container'>
                 <Row >
-                    <Col></Col>
+                    <Col>
+                    </Col>
                     <Col>
                         <a href="/" style={{textDecoration: "none"}}><div className='main-title'>Workspace</div></a>
                     </Col>
@@ -68,7 +62,8 @@ function NavBarLogged(props){
     return (
         <div className='nav-bar-container'>
             <Row >
-                <Col></Col>
+                <Col>
+                </Col>
                 <Col>
             <a href="/" style={{textDecoration: "none"}}><div className='main-title'>Workspace</div></a>
                 </Col>

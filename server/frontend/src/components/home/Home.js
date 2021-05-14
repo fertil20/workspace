@@ -50,10 +50,11 @@ export default class Home extends Component {
                             backgroundColor: 'white',
                             borderRadius: 10,
                             height: 'auto',
-                            paddingBottom: 20,
-                            marginRight: 30
+                            padding: 10,
+                            marginRight: '2%',
+                            width: '53%'
                         }}>
-                            <div style={{width: 600}}>
+                            <div style={{width: '100%'}}>
                                 {randomImg === 1 &&
                                 <img src={hello1} id="hello" alt='Hello!' className="home"/>}
                                 {randomImg === 2 &&
@@ -69,7 +70,7 @@ export default class Home extends Component {
                             </div>
                         </Col>
                         <Col sm={{size: 1.5}}
-                             style={{backgroundColor: 'white', borderRadius: 10, height: 'auto', paddingBottom: 20}}>
+                             style={{backgroundColor: 'white', borderRadius: 10, height: 'auto', padding: 20, width: '20%'}}>
                             <div style={{width: 210}}>
                                 Новости
                             </div>

@@ -92,14 +92,14 @@ class Profile extends Component {
                        this.state.user ? (
                 <Row >
                     <NavigationPanel/>
-                    <Col sm={{ size: 4.4 }} style={{backgroundColor: 'white',borderRadius:10,height:500,marginRight:30}}>
-                        <div style={{backgroundColor: 'white', margin: 20,borderRadius:10,height:300,width:300}}>
+                    <Col sm={{ size: 4.4 }} style={{backgroundColor: 'white',borderRadius:10,height:500, width: '30%'}}>
+                        <div style={{backgroundColor: 'white', margin: 20,borderRadius:10,height:300,width:"auto"}}>
                             <Avatar className="user-avatar-circle" style={{ backgroundColor: getAvatarColor(this.state.user.name)}}>
                                 {this.state.user.name.toUpperCase()}
                             </Avatar>
                         </div>
                         <Row>
-                            <Col >
+                            <Col>{/*todo заменить колонки на строки*/}
                                 <div className='profile-text1'>E-mail:</div>
                                 <div className='profile-text1'>Рабочий номер:</div>
                                 <div className='profile-text1'>Telegram:</div>
@@ -111,7 +111,7 @@ class Profile extends Component {
                             </Col>
                         </Row>
                     </Col>
-                    <Col sm={{ size: 6.6}} style={{backgroundColor: 'white',borderRadius:10,height:500, width:465}}>
+                    <Col sm={{ size: 6.6}} style={{backgroundColor: 'white',borderRadius:10,height:500, marginLeft: '2%', width: '43%'}}>
                         <Row>
                             <Col sm={{ size: 'auto'}}>
                                 <div className='profile-text1' style={{marginTop:20,width:50}}>Ф.И.О:</div>
@@ -124,12 +124,12 @@ class Profile extends Component {
                                 <div className='profile-text1'>Дата рождения:</div>
                                 {this.state.CurUser.currentUser.privileges.includes('View_Secret') && <div className='profile-text1'>Секретная заметка:</div>}
                             </Col>
-                            <Col >
+                            <Col>
                                 <Row>
-                                    <Col >
+                                    <Col style={{width: '75%'}}>
                                     <div style={{marginTop:20,height:50,width:200}}>{this.state.user.name}</div>
                                     </Col>
-                                    <Col>
+                                    <Col style={{width: '25%'}}>
                                     <div style={{marginTop:20}}>
                                         {this.state.user.status === '0' && <TooltipWidgetHome/>}
                                         {this.state.user.status === '1' && <TooltipWidgetAtWork/>}

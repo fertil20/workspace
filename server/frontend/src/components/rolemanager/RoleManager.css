@@ -2,18 +2,20 @@
     text-align: center;
     margin-top: 30px;
     font-weight: bold;
-    width:270px;
-
+    width: auto;
 }
 
 .column2-title{
-    width: 180px;
+    width: auto;
     font-weight: bold;
 }
 
-.button-group{
-    margin-left: 25px;
+.button-group {
     margin-top: 10px;
+    position: relative;
+    left: 50%;
+    -ms-transform: translate(-50%);
+    transform: translate(-50%);
     outline:0;
     border: 0;
 }

@@ -113,10 +113,10 @@ class UsersList extends Component {
             <div>
                 <Row>
                     <NavigationPanel/>
-                    <Col sm={{size: 4.4}} style={{backgroundColor:'white', borderRadius:10, height:'auto', paddingBottom:20}}>
+                    <Col sm={{size: 4.4}} style={{backgroundColor:'white', borderRadius:10, height:'auto', paddingBottom:20, width: '75%'}}>
                 <div>
                     <Form>
-                        <Row style={{width:865}}>
+                        <Row style={{width:'auto', marginRight: '1%', marginLeft: '1%'}}>
                         <Input placeholder='Поиск'
                                className='search-bar'
                                id="FIO" name='FIO' type='text'
@@ -129,32 +129,32 @@ class UsersList extends Component {
                 </div>
                 {
                     this.state.user ? (
-                        <div>
-                            <ListGroup horizontal className='table-top-line' key={"TABLE"} style={{marginLeft:5}}>
-                                <ListGroupItem style={{width:200}} key={"FIO"}>Фио</ListGroupItem>
-                                <ListGroupItem style={{width:70}} key={"STATUS"}><div style={{marginLeft:-10}}>Статус</div></ListGroupItem>
-                                <ListGroupItem style={{width:150}} key={"POSITION"}>Должность</ListGroupItem>
-                                <ListGroupItem style={{width:160}} key={"DEPARTMENT"}>Департамент</ListGroupItem>
-                                <ListGroupItem style={{width:230}} key={"CONTACTS"}>Контактная информация</ListGroupItem>
+                        <div style={{marginRight: '1%', marginLeft: '1%', overflowX: 'auto'}}>
+                            <ListGroup horizontal className='table-top-line' key={"TABLE"}>
+                                <ListGroupItem style={{width:'25%', overflowX: 'auto'}} key={"FIO"}>Фио</ListGroupItem>
+                                <ListGroupItem style={{width:'9%', overflowX: 'auto'}} key={"STATUS"}><div style={{marginLeft:-10}}>Статус</div></ListGroupItem>
+                                <ListGroupItem style={{width:'18%', overflowX: 'auto'}} key={"POSITION"}>Должность</ListGroupItem>
+                                <ListGroupItem style={{width:'19%', overflowX: 'auto'}} key={"DEPARTMENT"}>Департамент</ListGroupItem>
+                                <ListGroupItem style={{width:'29%', overflowX: 'auto'}} key={"CONTACTS"}>Контактная информация</ListGroupItem>
                             </ListGroup>
                             {
                                 this.state.user.map(
                                     user => //todo Пофиксить варнинг
 
-                                            (this.setUserStatus(user.status) ||
-                                                (user.name.indexOf(this.state.FIO.value) !== -1)
-                                            || (user.position.indexOf(this.state.FIO.value) !== -1)
-                                            || (user.department.indexOf(this.state.FIO.value) !== -1)
-                                            || (user.email.indexOf(this.state.FIO.value) !== -1)
-                                            || (user.tg.indexOf(this.state.FIO.value) !== -1)
-                                            || (user.phone.indexOf(this.state.FIO.value) !== -1)
-                                            || (userStatus.indexOf(this.state.FIO.value) !== -1))  && <div>
-                                        <ListGroup horizontal="lg" key={user.id} style={{marginLeft:5}}>
-                                            <ListGroupItem style={{width:200}} key={user.id+'.1'} tag = 'a' href={`/users/${user.username}`}>{user.name}</ListGroupItem>
-                                            <ListGroupItem style={{width:70}} key={user.id+'.2'}>{this.SetUserStatus(user.status)}</ListGroupItem>
-                                            <ListGroupItem style={{width:150}} key={user.id+'.3'}>{user.position}</ListGroupItem>
-                                            <ListGroupItem style={{width:160}} key={user.id+'.4'}>{user.department}</ListGroupItem>
-                                            <ListGroupItem style={{width:230}} key={user.id+'.5'}>{user.email}<br/>{user.phone}<br/>Telegram: @{user.tg}</ListGroupItem>
+                                            (this.setUserStatus(user.status.toLowerCase()) ||
+                                                (user.name.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1)
+                                            || (user.position.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1)
+                                            || (user.department.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1)
+                                            || (user.email.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1)
+                                            || (user.tg.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1)
+                                            || (user.phone.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1)
+                                            || (userStatus.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1))  && <div>
+                                        <ListGroup horizontal className='table-top-line' key={user.id}>
+                                            <ListGroupItem style={{width:'25%', overflowX: 'auto'}} key={user.id+'.1'} tag = 'a' href={`/users/${user.username}`}>{user.name}</ListGroupItem>
+                                            <ListGroupItem style={{width:'9%', overflowX: 'auto'}} key={user.id+'.2'}>{this.SetUserStatus(user.status)}</ListGroupItem>
+                                            <ListGroupItem style={{width:'18%', overflowX: 'auto'}} key={user.id+'.3'}>{user.position}</ListGroupItem>
+                                            <ListGroupItem style={{width:'19%', overflowX: 'auto'}} key={user.id+'.4'}>{user.department}</ListGroupItem>
+                                            <ListGroupItem style={{width:'29%', overflowX: 'auto'}} key={user.id+'.5'}>{user.email}<br/>{user.phone}<br/>Telegram: @{user.tg}</ListGroupItem>
                                         </ListGroup>
                                         </div>
                                 )
