@@ -129,7 +129,7 @@ class RoleManager extends Component {
         };
         addNewRole(addNewRoleRequest)
                 .then(response => {
-                    alert('Новая роль добавлена.');
+                    alert('Новая группа добавлена.');
                     this.loadRoles()
                 })
                 .catch(error => {
@@ -391,7 +391,7 @@ class RoleManager extends Component {
                         <Button outline color="primary" size='sm' className="button-group" onClick={this.changeToggle}>+ Добавить группу доступа</Button>
                         <div>
                             <Modal isOpen={this.state.toggle} toggle={this.changeToggle}>
-                                <ModalHeader toggle={this.changeToggle}>Добавить новую роль</ModalHeader>
+                                <ModalHeader toggle={this.changeToggle}>Добавить новую группу</ModalHeader>
                                 <ModalBody>
                                     <Input type="text" name="role" id="role" placeholder='Введите название роли'
                                            value={this.state.role.value}

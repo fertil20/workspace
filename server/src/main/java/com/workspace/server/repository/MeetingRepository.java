@@ -9,4 +9,6 @@ import java.util.Set;
 @Repository
 public interface MeetingRepository extends JpaRepository<Meeting, Long> {
     Set<Meeting> findByMeetingRoom_Id(Long id);
+
+    Set<Meeting> findAllByUsers_Username(String username);
 }

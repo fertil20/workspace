@@ -9,7 +9,6 @@ import ServerError from '../../common/ServerError';
 import {Row, Col, Button} from 'reactstrap';
 import {TooltipWidgetHome,TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidgetIll} from './TooltipWidget'
 import NavigationPanel from "../../components/navigation/NavigationPanel";
-import formatPhoneNumber from "react-phone-number-input/modules/libphonenumber/formatPhoneNumber";
 import {formatPhoneNumberIntl} from "react-phone-number-input";
 
 

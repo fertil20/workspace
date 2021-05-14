@@ -25,8 +25,6 @@ public class UserProfile {
     private char status;
     private LocalTime startAt;
     private LocalTime endAt;
-/*    private Long pollCount;
-    private Long voteCount;*/
 
 
     public UserProfile(Long id, String username, String name, Instant joinedAt, String email, String phone, String tg,
@@ -47,8 +45,24 @@ public class UserProfile {
         this.status = status;
         this.startAt = startAt;
         this.endAt = endAt;
-/*        this.workTimes = workTimes;*/
-/*        this.pollCount = pollCount;
-        this.voteCount = voteCount;*/
+    }
+
+    public UserProfile(Long id, String username, String name, Instant joinedAt, String email, String phone, String tg,
+                       String about, String position, String department, String office, LocalDate birthday, char status, LocalTime startAt, LocalTime endAt) {
+        this.id = id;
+        this.username = username;
+        this.name = name;
+        this.joinedAt = joinedAt;
+        this.email = email;
+        this.phone = phone;
+        this.tg = tg;
+        this.about = about;
+        this.position = position;
+        this.department = department;
+        this.office = office;
+        this.birthday = birthday;
+        this.status = status;
+        this.startAt = startAt;
+        this.endAt = endAt;
     }
 }

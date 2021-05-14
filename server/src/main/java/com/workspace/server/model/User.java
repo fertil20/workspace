@@ -123,44 +123,4 @@ public class User extends DateAudit {
     @ManyToMany(mappedBy = "users")
     @EqualsAndHashCode.Exclude
     private Set<Meeting> meetings;
-
-    public User(String name, String username, String position) {
-        this.name = name;
-        this.username = username;
-        this.position = position;
-    }
-
-    public User(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-/*    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_hours",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "hours_id"))
-    private Set<WorkTime> workTimes = new HashSet<>();
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_days",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "days_id"))
-    private Set<WorkDay> workDays = new HashSet<>();*/
-
-/*
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(username, email, phone, tg, about, position,
-                department, office, startAt, endAt, secretNote, status);
-    }
-*/
-
-
-    public User(String name, String username, String email, String password) {
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
 }

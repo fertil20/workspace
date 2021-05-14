@@ -21,7 +21,7 @@ const request = (options) => {
         .then((text) => text.length ? JSON.parse(text) : {})
 };
 
-export function Meeting(MeetingRequest, id){
+export function Meeting(MeetingRequest, id) {
     return request({
         url: API_BASE_URL + "/meetings/" + id + "/newMeeting",
         method: 'POST',
@@ -29,14 +29,21 @@ export function Meeting(MeetingRequest, id){
     });
 }
 
-export function getMeetings(id){
+export function getMeetings(id) {
     return request({
         url: API_BASE_URL + "/meetings/" + id,
         method: 'GET',
     });
 }
 
-export function newUser(newUserRequest){
+export function getUsersBirthday() {
+    return request({
+        url: API_BASE_URL + "/birthdays",
+        method: 'GET'
+    })
+}
+
+export function newUser(newUserRequest) {
     return request({
         url: API_BASE_URL + "/newUser",
         method: 'POST',
@@ -44,35 +51,35 @@ export function newUser(newUserRequest){
     });
 }
 
-export function getRoleUsers(roleName){
+export function getRoleUsers(roleName) {
     return request({
         url: API_BASE_URL + "/roles/" + roleName,
         method: 'GET',
     });
 }
 
-export function addUserToRole(roleName, username){
+export function addUserToRole(roleName, username) {
     return request({
         url: API_BASE_URL + "/roles/" + roleName+ "/addUser/" + username,
         method: 'POST',
     });
 }
 
-export function deleteRole(roleName){
+export function deleteRole(roleName) {
     return request({
         url: API_BASE_URL + "/roles" +"/deleteRole/" + roleName,
         method: 'POST',
     });
 }
 
-export function deleteUserFromRole(roleName, username){
+export function deleteUserFromRole(roleName, username) {
     return request({
         url: API_BASE_URL + "/roles/" + roleName+ "/deleteUser/" + username,
         method: 'POST',
     });
 }
 
-export function editRolePrivileges(editRolePrivilegesRequest,roleName){
+export function editRolePrivileges(editRolePrivilegesRequest,roleName) {
     return request({
         url: API_BASE_URL + "/roles/" + roleName + '/privileges/edit',
         method: 'POST',
@@ -80,28 +87,28 @@ export function editRolePrivileges(editRolePrivilegesRequest,roleName){
     });
 }
 
-export function getRolePrivileges(roleName){
+export function getRolePrivileges(roleName) {
     return request({
         url: API_BASE_URL + "/roles/" + roleName + "/privileges",
         method: 'GET',
     });
 }
 
-export function getUsersWithoutRole(roleName){
+export function getUsersWithoutRole(roleName) {
     return request({
         url: API_BASE_URL + "/roles/" + roleName + "/addUser",
         method: 'GET',
     });
 }
 
-export function getAllRoles(){
+export function getAllRoles() {
     return request({
         url: API_BASE_URL + "/roles",
         method: 'GET'
     })
 }
 
-export function addNewRole(addNewRoleRequest){
+export function addNewRole(addNewRoleRequest) {
     return request({
         url: API_BASE_URL + "/roles",
         method: 'POST',
@@ -109,7 +116,7 @@ export function addNewRole(addNewRoleRequest){
     });
 }
 
-export function forgotPassword(forgotPasswordRequest){
+export function forgotPassword(forgotPasswordRequest) {
     return request({
         url: API_BASE_URL + "/auth/forgotPassword",
         method: 'POST',
@@ -117,14 +124,14 @@ export function forgotPassword(forgotPasswordRequest){
     });
 }
 
-export function forgotPasswordResetGet(token){ //GET token запрос
+export function forgotPasswordResetGet(token) { //GET token запрос
     return request({
         url: API_BASE_URL + "/auth/resetPassword?token=" + token,
         method: 'GET'
     });
 }
 
-export function forgotPasswordResetPost(password, token){ //Возвращает пароль и токен
+export function forgotPasswordResetPost(password, token) { //Возвращает пароль и токен
     return request({
         url: API_BASE_URL + "/auth/resetPassword?token=" + token,
         method: 'POST',
@@ -132,7 +139,7 @@ export function forgotPasswordResetPost(password, token){ //Возвращает
     });
 }
 
-export function deleteUser(deleteUserRequest){ // Возвращает ID пользователя
+export function deleteUser(deleteUserRequest) { // Возвращает ID пользователя
     return request({
         url: API_BASE_URL + "/deleteUsers/" + deleteUserRequest,
         method: 'POST'
@@ -181,7 +188,7 @@ export function signup(signupRequest) {
     });
 }
 
-export function profileEdit(profileEditRequest, username){
+export function profileEdit(profileEditRequest, username) {
     return request({
         url: API_BASE_URL + "/users/" + username + "/edit",
         method: 'POST',

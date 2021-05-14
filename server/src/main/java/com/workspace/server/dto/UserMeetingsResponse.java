@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Data
-public class MeetingsByRoomResponse {
+public class UserMeetingsResponse {
     private Long id;
     private String title;
     private LocalDate date;
@@ -15,9 +15,13 @@ public class MeetingsByRoomResponse {
     private byte timeOfEnd;
     private String organizerName;
     private Set<MeetingUsersResponse> users;
+    private String address;
+    private String about;
+    private byte maxPeople;
 
 
-    public MeetingsByRoomResponse(Long id, String title, LocalDate date, String color, byte timeOfStart, byte timeOfEnd, String organizerName, Set<MeetingUsersResponse> users) {
+    public UserMeetingsResponse(Long id, String title, LocalDate date, String color, byte timeOfStart, byte timeOfEnd,
+                                String organizerName, Set<MeetingUsersResponse> users, String address, String about, byte maxPeople) {
         this.id = id;
         this.title = title;
         this.date = date;
@@ -26,5 +30,8 @@ public class MeetingsByRoomResponse {
         this.timeOfEnd = timeOfEnd;
         this.organizerName = organizerName;
         this.users = users;
+        this.address = address;
+        this.about = about;
+        this.maxPeople = maxPeople;
     }
 }

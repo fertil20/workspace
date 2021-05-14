@@ -1,5 +1,6 @@
 package com.workspace.server.rest;
 
+import com.workspace.server.dto.UserForRoleResponse;
 import com.workspace.server.exception.ResourceNotFoundException;
 import com.workspace.server.model.Role;
 import com.workspace.server.model.User;
@@ -49,16 +50,16 @@ public class RoleController {
     }
 
     @GetMapping("/{role}")
-    public List<User> getRoleUsers(@PathVariable String role) {
+    public List<UserForRoleResponse> getRoleUsers(@PathVariable String role) {
         return roleRepository.getOne(role).getUsers().stream()
-                .map(user -> new User(user.getName(), user.getUsername(), user.getPosition()))
+                .map(user -> new UserForRoleResponse(user.getName(), user.getUsername(), user.getPosition()))
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{role}/addUser")
-    public List<User> getRoleNewUsers(@PathVariable String role) {
+    public List<UserForRoleResponse> getRoleNewUsers(@PathVariable String role) {
         return userRepository.findAllNotAssignedUsers(role)
-                .stream().map(user -> new User(user.getName(), user.getUsername(), user.getPosition()))
+                .stream().map(user -> new UserForRoleResponse(user.getName(), user.getUsername(), user.getPosition()))
                 .collect(Collectors.toList());
     }
 

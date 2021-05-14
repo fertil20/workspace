@@ -28,8 +28,4 @@ public class Role {
     public Role(String name) {
         this.name = name;
     }
-
-    public Role(Set<User> users) {
-        this.users = users;
-    }
 }

@@ -32,7 +32,7 @@ import AboutCompanyEdit from "../components/about/AboutCompanyEdit";
 import NewEmployee from "../components/about/NewEmployee";
 import NewEmployeeEdit from "../components/about/NewEmployeeEdit";
 import News from "../components/news/News";
-import birthdayPage from "../components/birthday/birthdayPage";
+import birthdayPage from "../components/birthday/BirthdayPage";
 import MeetingRoomBook from "../components/meetingRoomBook/MeetingRoomBook";
 const { Content } = Layout;
 

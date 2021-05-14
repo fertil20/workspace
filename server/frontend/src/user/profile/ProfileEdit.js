@@ -272,7 +272,8 @@ class ProfileEdit extends Component {
                                             <div className='profile-text1'>Рабочие часы:</div>
                                             <div className='profile-text1'>В компании с:</div>
                                             <div className='profile-text1'>Дата рождения:</div>
-                                            {this.state.CurUser.currentUser.privileges.includes('Edit_Users') && <div className='profile-text1'>Секретная заметка:</div>}
+                                            {this.state.CurUser.currentUser.privileges.includes('View_Secret') &&
+                                            <div className='profile-text1'>Секретная заметка:</div>}
                                         </Col>
                                         <Col sm={{ size: 7}}>
                                             <div style={{height: 10}}/>
@@ -341,14 +342,20 @@ class ProfileEdit extends Component {
                                             <div style={{height: 15}}/>
                                             {this.state.CurUser.currentUser.privileges.includes('Edit_Users') &&
                                             <Input type="date" name="birthday" id="birthday"
+                                                   style={{marginTop: 10}}
                                                    value={this.state.birthday.value}
                                                    onChange={(event) => this.handleInputChange(event)}/>}
                                             {!this.state.CurUser.currentUser.privileges.includes('Edit_Users') &&
-                                            <div style={{marginTop:15, height:20}}>{formatDate(this.state.user.birthday)}</div>}
-                                            <div style={{height: 25}}/>
-                                            {this.state.CurUser.currentUser.privileges.includes('Edit_Users') && <Input type="text" name="secretNote" id="editSecretNote"
-                                                                                                                        value={this.state.secretNote.value}
-                                                                                                                        onChange={(event) => this.handleInputChange(event)}/>}
+                                            <div style={{marginTop: 15, height:20}}>{formatDate(this.state.user.birthday)}</div>}
+                                            <div style={{height: 15}}/>
+                                            {this.state.CurUser.currentUser.privileges.includes('View_Secret') &&
+                                            !this.state.CurUser.currentUser.privileges.includes('Edit_Users') &&
+                                            <div style={{marginTop: 12, height:30}}>{this.state.user.secretNote}</div>}
+                                            {this.state.CurUser.currentUser.privileges.includes('Edit_Users') &&
+                                            this.state.CurUser.currentUser.privileges.includes('View_Secret') &&
+                                            <Input type="text" name="secretNote" id="editSecretNote"
+                                                   value={this.state.secretNote.value}
+                                                   onChange={(event) => this.handleInputChange(event)}/>}
                                             <div style={{marginTop:20}}>
                                                 <Button disabled={!(this.state.phone.value && isPossiblePhoneNumber(this.state.phone.value))} color="primary" size="sm">
                                                     Сохранить

@@ -88,7 +88,7 @@ class UsersList extends Component {
 
 /*    componentDidUpdate(prevState) {
         if(this.state.deleteUserID !== prevState.deleteUserID) {
-            this.loadAllUsers();
+            this.loadAllUsersBirthdays();
         }
     }*/
 

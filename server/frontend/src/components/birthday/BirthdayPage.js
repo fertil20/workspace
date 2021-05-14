@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {getAllUsers} from "../../util/APIUtils";
+import {getUsersBirthday} from "../../util/APIUtils";
 import NotFound from "../../common/NotFound";
 import ServerError from "../../common/ServerError";
 import {Row, Col} from 'reactstrap';
-import "./birthdayPage.css";
+import "./BirthdayPage.css";
 import {Link} from "react-router-dom";
 
 import NavigationPanel from "../navigation/NavigationPanel";
@@ -19,15 +19,15 @@ class BirthdayPage extends Component {
             deleteUserID: '',
             FIO: {value:''}
         }
-        this.loadAllUsers = this.loadAllUsers.bind(this);
+        this.loadAllUsersBirthdays = this.loadAllUsersBirthdays.bind(this);
     }
 
-    loadAllUsers(id) {
+    loadAllUsersBirthdays() {
         this._isMounted && this.setState({
             isLoading: true
         });
 
-        getAllUsers(id)
+        getUsersBirthday()
             .then(response => {
                 this._isMounted && this.setState({
                     user: response,
@@ -51,7 +51,7 @@ class BirthdayPage extends Component {
 
     componentDidMount() {
         this._isMounted = true;
-        this._isMounted && this.loadAllUsers();
+        this._isMounted && this.loadAllUsersBirthdays();
     }
 
     componentWillUnmount() {

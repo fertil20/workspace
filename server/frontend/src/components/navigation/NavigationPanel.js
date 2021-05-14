@@ -30,7 +30,7 @@ export default class NavigationPanel extends Component {
                     <Link to='/users'>
                         <div className='row-navigation'>Адресная книга сотрудников</div>
                     </Link>
-                    {this.state.user.currentUser.privileges.includes('Manage_Users') &&
+                    {this.state.user.currentUser.privileges.includes('Booking') &&
                     <Link to='/meeting' >
                         <div className='row-navigation'>Бронирование переговорных</div>
                     </Link>}
