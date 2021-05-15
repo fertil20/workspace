@@ -386,7 +386,7 @@ class RoleManager extends Component {
             <div className="profile"  >
                 <Row>
                     <NavigationPanel/>
-                    <Col sm={{ size: 3.3 }} style={{backgroundColor: 'white', borderRadius:10,overflow: 'auto', height:"100%", width: '25%',overflowX:'hidden',paddingBottom:20}}>
+                    <Col sm={{ size: 3.3 }} style={{backgroundColor: 'white', borderRadius:10, height:"auto", overflowY: 'auto', width: '25%',overflowX:'hidden',paddingBottom:20}}>
                         <div className="column1-title">Группа доступа</div>
                         <Button outline color="primary" size='sm' className="button-group" onClick={this.changeToggle}>+ Добавить группу доступа</Button>
                         <div>
@@ -425,7 +425,7 @@ class RoleManager extends Component {
                             ):null
                         }
                     </Col>
-                    <Col sm={{size: 5.6}} style={{backgroundColor: 'white', borderRadius:10,overflowY: 'auto', height:550, marginLeft: '2%', width: '48%',overflowX:'hidden'}}>
+                    <Col sm={{size: 5.6}} style={{backgroundColor: 'white', borderRadius:10,overflowY: 'auto', height:'auto', marginLeft: '2%', width: '48%',overflowX:'hidden'}}>
                         <Nav tabs>
                             <NavItem style={{width:'50%'}}>
                                 <NavLink className={classnames({ active: this.state.activeTab === '1' })} onClick={() => this.setState({activeTab: '1'})} style={{cursor:'pointer'}}>

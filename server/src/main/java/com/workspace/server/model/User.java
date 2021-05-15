@@ -110,8 +110,9 @@ public class User extends DateAudit {
     @Column(name = "status_date_finish")
     private LocalDate statusDateFinish;
 
-    @Embedded
-    private PasswordResetToken resetPasswordToken;
+    @Column
+    @Size(max = 30)
+    private String token;
 
     @ManyToMany
     @JoinTable(name = "users_roles",
