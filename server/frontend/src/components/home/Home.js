@@ -70,8 +70,8 @@ export default class Home extends Component {
                             </div>
                         </Col>
                         <Col sm={{size: 1.5}}
-                             style={{backgroundColor: 'white', borderRadius: 10, height: 'auto', padding: 20, width: '20%'}}>
-                            <div style={{width: 210}}>
+                             style={{backgroundColor: 'white', borderRadius: 10,height: 600, overflow: 'auto', padding: 20, width: '20%'}}>
+                            <div>
                                 Новости
                             </div>
                         </Col>

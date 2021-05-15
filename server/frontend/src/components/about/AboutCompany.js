@@ -24,8 +24,8 @@ export default class AboutCompany extends Component{
         return(
             <Row>
                 <NavigationPanel/>
-                <Col sm={{ size: 5.5 }} style={{backgroundColor: 'white',borderRadius:10,height:'auto',paddingBottom:10, width: '75%'}}>
-                    <div style={{width:835}}>
+                <Col sm={{ size: 5.5 }} style={{backgroundColor: 'white',borderRadius:10,overflow: 'auto', height:'100%',paddingBottom:10, width: '75%'}}>
+                    <div >
                         <div style={{margin:50,width:750,height:'auto'}}>
                             <div className='company-about-text'>{CompanyAboutText}</div>
                             <div className='office'>Офис:</div>

@@ -500,7 +500,7 @@ export default class MeetingRoomBook extends Component {
                     <Col sm={{size: 9}} style={{
                         backgroundColor: 'white',
                         borderRadius: 10,
-                        height: 'auto',
+                        overflow: 'auto', height:'100%',
                         paddingBottom: 20,
                         paddingRight: 20,
                         width: '75%'
@@ -525,6 +525,7 @@ export default class MeetingRoomBook extends Component {
                                     locale='ru'
                                     firstDay={1}
                                     eventClick={this.showEventDetails}
+
                                 />
                             </div>
                         </Row>
