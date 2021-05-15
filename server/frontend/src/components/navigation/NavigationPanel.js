@@ -130,7 +130,7 @@ export default class NavigationPanel extends Component {
                     </Link>
                     <div style={{paddingBottom: 10}}/>
                 </Col>
-                <div style={{marginTop: 30}}/>
+                <div style={{marginTop: 15}}/>
                 <div className='calendar'>
                     <FullCalendar
                         plugins={[ dayGridPlugin, interactionPlugin ]}

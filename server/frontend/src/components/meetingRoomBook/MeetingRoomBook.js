@@ -14,6 +14,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import {formatDate} from "../../util/Helpers";
 import './MeetingRoomBook.css';
 import {getAllUsers, getMeetingRooms, getMeetings, Meeting} from "../../util/APIUtils";
+import {Redirect} from "react-router-dom";
 
 let CurrentRoom = '1'
 let Users = ''
@@ -137,7 +138,6 @@ export default class MeetingRoomBook extends Component {
                     })
                     TimeArray = [0, 0, 0, 0, 0, 0, 0, 0, 0]
                     this.loadMeetingsByRoomId()
-                    //this.props.history.go('O');
                 })
                 .catch(error => {
                     alert('Что-то пошло не так.');

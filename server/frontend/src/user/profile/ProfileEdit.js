@@ -238,7 +238,6 @@ class ProfileEdit extends Component {
                                             <div style={{height: 10}}/>
                                             <PhoneInput
                                                 international
-                                                countryCallingCodeEditable={false}
                                                 placeholder="+7 905 226 23 58"
                                                 defaultCountry="RU"
                                                 value={this.state.phone.value}
