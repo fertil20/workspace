@@ -14,7 +14,6 @@ import interactionPlugin from "@fullcalendar/interaction";
 import {formatDate} from "../../util/Helpers";
 import './MeetingRoomBook.css';
 import {getAllUsers, getMeetingRooms, getMeetings, Meeting} from "../../util/APIUtils";
-import {Redirect} from "react-router-dom";
 
 let CurrentRoom = '1'
 let Users = ''
@@ -43,7 +42,8 @@ export default class MeetingRoomBook extends Component {
             usersOnMeeting: [],
             user: JSON.parse(localStorage.getItem('app')),
             toggleEvent: false,
-            meetingRooms: ''
+            meetingRooms: '',
+            currentRoom: 1
         }
         this.handleDateClick = this.handleDateClick.bind(this);
         this.changeRoom = this.changeRoom.bind(this);
@@ -58,7 +58,7 @@ export default class MeetingRoomBook extends Component {
     }
 
     loadMeetingsByRoomId() {
-        getMeetings(CurrentRoom)
+        getMeetings(this.state.currentRoom)
             .then(response => {
                 this._isMounted && this.setState({events: response})
             })
@@ -127,7 +127,7 @@ export default class MeetingRoomBook extends Component {
             usersId: this.state.usersOnMeeting
         }
         if (MeetingRequest.title !== '' && MeetingRequest.timeOfStart !== '-' && MeetingRequest.usersId.length !== 0) {
-            Meeting(MeetingRequest, CurrentRoom)
+            Meeting(MeetingRequest, this.state.currentRoom)
                 .then(response => {
                     this.setState({
                         toggle: false,
@@ -170,8 +170,8 @@ export default class MeetingRoomBook extends Component {
                     <div style={{fontWeight: 'bold'}}>Время:</div>
                 </Col>
                 <Col>
-                    <div>{CurrentRoom} </div>
-                    <div>{this.state.meetingRooms[CurrentRoom - 1].address}</div>
+                    <div>{this.state.currentRoom} </div>
+                    <div>{this.state.meetingRooms[this.state.currentRoom - 1].address}</div>
                     <div>{arg.event._def.extendedProps.organizerName}</div>
                     <div>{arg.event.start.toLocaleDateString()}</div>
                     <div>с {arg.event._def.extendedProps.timeOfStart}:00
@@ -247,15 +247,15 @@ export default class MeetingRoomBook extends Component {
     }
 
     changeRoom(room) {
+        this.state.currentRoom = room
         this.loadMeetingsByRoomId()
-        CurrentRoom = room
         RoomAbout = <div>
             <div style={{fontWeight: 'bold'}}>Описание:</div>
-            <div>{this.state.meetingRooms[CurrentRoom - 1].about}</div>
+            <div>{this.state.meetingRooms[this.state.currentRoom - 1].about}</div>
             <div style={{fontWeight: 'bold'}}>Адрес:</div>
-            <div>{this.state.meetingRooms[CurrentRoom - 1].address}</div>
+            <div>{this.state.meetingRooms[this.state.currentRoom - 1].address}</div>
             <div style={{fontWeight: 'bold'}}>Вместимость:</div>
-            <div>{this.state.meetingRooms[CurrentRoom - 1].maxPeople} человек</div>
+            <div>{this.state.meetingRooms[this.state.currentRoom - 1].maxPeople} человек</div>
         </div>
     }
 
@@ -386,7 +386,7 @@ export default class MeetingRoomBook extends Component {
                     </Modal>
                     <Modal isOpen={this.state.toggle} toggle={this.changeToggle}>
                         <ModalHeader toggle={this.changeToggle}>
-                            <div>Забронировать переговорную {CurrentRoom}</div>
+                            <div>Забронировать переговорную {this.state.currentRoom}</div>
                             <div>{formatDate(this.state.CurrentEvent.dateStr)} Организатор: {this.state.user.currentUser.name}
                                 <Input type='text' name='title'
                                        placeholder='Введите название встречи'
@@ -511,7 +511,7 @@ export default class MeetingRoomBook extends Component {
                                     <DropdownToggle nav caret>Переговорная</DropdownToggle>
                                     {MeetingRooms}
                                 </UncontrolledButtonDropdown>
-                                <div className='room-title'>Переговорная {CurrentRoom}.</div>
+                                <div className='room-title'>Переговорная {this.state.currentRoom}.</div>
                                 {RoomAbout}
                                 <div className='choose-event'>Выберите дату брони.</div>
                             </div>
