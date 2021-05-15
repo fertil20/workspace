@@ -43,6 +43,14 @@ class UsersList extends Component {
                     user: response,
                     isLoading: false
                 });
+                let byName = this.state.user.slice(0);
+                byName.sort(function(a,b) {
+                    let x = a.name.toLowerCase();
+                    let y = b.name.toLowerCase();
+                    return x < y ? -1 : x > y ? 1 : 0;
+                });
+                this.setState({user: byName})
+
             }).catch(error => {
             if(error.status === 404) {
                 this._isMounted && this.setState({

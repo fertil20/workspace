@@ -7,7 +7,7 @@ import "./BirthdayPage.css";
 import {Link} from "react-router-dom";
 
 import NavigationPanel from "../navigation/NavigationPanel";
-import {formatDate} from "../../util/Helpers";
+import {formatDate, formatDateDayMonth} from "../../util/Helpers";
 
 class BirthdayPage extends Component {
     constructor(props) {
@@ -33,6 +33,16 @@ class BirthdayPage extends Component {
                     user: response,
                     isLoading: false
                 });
+                let byDate = this.state.user.slice(0);
+                byDate.sort(function(a,b) {
+                    return parseInt(a.birthday.substr(5,2)+a.birthday.substr(8,2))
+                        - parseInt(b.birthday.substr(5,2)+b.birthday.substr(8,2));
+                });
+                for (let i = 0; i < byDate.length; i++){
+                    byDate[i].id = i+1
+                }
+                this.setState({user: byDate})
+
             }).catch(error => {
             if(error.status === 404) {
                 this._isMounted && this.setState({
@@ -91,8 +101,8 @@ class BirthdayPage extends Component {
                                                     {(user.id % 3 === 1) &&
                                                     <div className='birthday-block'>
                                                         <div className='birthday-block-content'>
-                                                            <Link to={`/users/${user.username}`}>{user.name}</Link>
-                                                            <div style={{paddingTop:10}}>{formatDate(user.birthday)}</div>
+                                                            <Link to={`/users/${user.username}`}><div style={{textAlign:"center"}}>{user.name}</div></Link>
+                                                            <div style={{paddingTop:10,textAlign:"center"}}>{formatDateDayMonth(user.birthday)}</div>
                                                         </div>
                                                     </div>}
                                                 </div>
@@ -113,8 +123,8 @@ class BirthdayPage extends Component {
                                                     {(user.id % 3 === 2) &&
                                                     <div className='birthday-block'>
                                                         <div className='birthday-block-content'>
-                                                            <Link to={`/users/${user.username}`}>{user.name}</Link>
-                                                            <div style={{paddingTop:10}}>{formatDate(user.birthday)}</div>
+                                                            <Link to={`/users/${user.username}`}><div style={{textAlign:"center"}}>{user.name}</div></Link>
+                                                            <div style={{paddingTop:10,textAlign:"center"}}>{formatDateDayMonth(user.birthday)}</div>
                                                         </div>
                                                     </div>}
                                                 </div>
@@ -135,8 +145,8 @@ class BirthdayPage extends Component {
                                                     {(user.id % 3 === 0) &&
                                                     <div className='birthday-block'>
                                                         <div className='birthday-block-content'>
-                                                            <Link to={`/users/${user.username}`}>{user.name}</Link>
-                                                            <div style={{paddingTop:10}}>{formatDate(user.birthday)}</div>
+                                                            <Link to={`/users/${user.username}`}><div style={{textAlign:"center"}}>{user.name}</div></Link>
+                                                            <div style={{paddingTop:10,textAlign:"center"}}>{formatDateDayMonth(user.birthday)}</div>
                                                         </div>
                                                     </div>}
                                                 </div>

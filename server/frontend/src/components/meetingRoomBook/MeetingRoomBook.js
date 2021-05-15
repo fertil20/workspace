@@ -15,7 +15,7 @@ import {formatDate} from "../../util/Helpers";
 import './MeetingRoomBook.css';
 import {getAllUsers, getMeetingRooms, getMeetings, Meeting} from "../../util/APIUtils";
 
-let Users = ''
+let Users = <div>Выберите время</div>
 let CurrentEventDate = ''
 let TimeArray = [0,0,0,0,0,0,0,0,0]
 let MenArray = [0,0,0,0,0,0,0,0,0]
@@ -185,7 +185,6 @@ export default class MeetingRoomBook extends Component {
     }
 
     getUsers() {
-        this.setState({toggleDropDown: false})
         getAllUsers()
             .then(response => {
                 this._isMounted && this.setState({
@@ -365,7 +364,6 @@ export default class MeetingRoomBook extends Component {
                 })
             }
         }
-        this.setState({})
     }
 
     render() {

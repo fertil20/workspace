@@ -15,6 +15,21 @@ export function formatDate(dateString) {
     return date.getDate() + ' ' + monthNames[monthIndex] + ' ' + year;
 }
 
+export function formatDateDayMonth(dateString) {
+    const date = new Date(dateString);
+
+    const monthNames = [
+        "Января", "Февраля", "Марта",
+        "Апреля", "Мая", "Июня", "Июля",
+        "Августа", "Сентября", "Октября",
+        "Ноября", "Декабря"
+    ];
+
+    const monthIndex = date.getMonth();
+
+    return date.getDate() + ' ' + monthNames[monthIndex];
+}
+
 export function formatTime(timeString) {
     const time = String(timeString);
 
