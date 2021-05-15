@@ -11,6 +11,7 @@ import com.workspace.server.repository.UserRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
@@ -52,7 +53,7 @@ public class MeetingController {
 
     @PostMapping("/{id}/newMeeting")
     public void setNewMeeting(@PathVariable Long id, @RequestBody MeetingRequest request) {
-        if (!request.getDate().isBefore(LocalDate.now())) {
+        if (request.getInstant().isAfter(Instant.now())) {
             Meeting meeting = new Meeting();
             meeting.setTitle(request.getTitle());
             meeting.setDate(request.getDate());

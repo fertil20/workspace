@@ -110,9 +110,8 @@ public class User extends DateAudit {
     @Column(name = "status_date_finish")
     private LocalDate statusDateFinish;
 
-    @Column
-    @Size(max = 30)
-    private String token;
+    @Embedded
+    private PasswordResetToken resetPasswordToken;
 
     @ManyToMany
     @JoinTable(name = "users_roles",
@@ -124,4 +123,8 @@ public class User extends DateAudit {
     @ManyToMany(mappedBy = "users")
     @EqualsAndHashCode.Exclude
     private Set<Meeting> meetings;
+
+    public User(PasswordResetToken resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
+    }
 }

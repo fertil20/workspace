@@ -20,7 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findUserByEmail(String email);
 
-    User findByToken(String token);
+    User findByResetPasswordToken_Token(String token);
 
     @Query("from User u1 where u1.id not in (select u.id from User u join u.roles r where r.name =:roleName)")
     List<User> findAllNotAssignedUsers(String roleName);

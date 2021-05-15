@@ -1,5 +1,6 @@
 package com.workspace.server.service;
 
+import com.workspace.server.model.PasswordResetToken;
 import com.workspace.server.model.User;
 import com.workspace.server.repository.UserRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,7 +22,7 @@ public class ResetPasswordService {
     public void updateResetPasswordToken(String token, String email) throws UsernameNotFoundException {
         User user = userRepository.findUserByEmail(email);
         if (user != null) {
-            user.setToken(token);
+            user.setResetPasswordToken(new PasswordResetToken(token));
             userRepository.save(user);
         } else {
             throw new UsernameNotFoundException("Could not find any user with the email " + email);
@@ -29,7 +30,7 @@ public class ResetPasswordService {
     }
 
     public User getByResetPasswordToken(String token) {
-        return userRepository.findByToken(token);
+        return userRepository.findByResetPasswordToken_Token(token);
     }
 
 
@@ -38,7 +39,7 @@ public class ResetPasswordService {
         String encodedPassword = passwordEncoder.encode(newPassword);
         user.setPassword(encodedPassword);
 
-        user.setToken(null);
+        user.setResetPasswordToken(null);
         userRepository.save(user);
     }
 }
