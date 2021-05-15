@@ -97,9 +97,17 @@ export default class MeetingRoomBook extends Component {
     }
 
     handleDateClick = (arg) => {
-        this.loadMeetingsByRoomId()
-        this.changeToggle(arg)
         CurrentEventDate = arg.dateStr
+        let date = new Date();
+        date = date.toISOString().substr(0,10)
+        if(parseInt(CurrentEventDate.substr(0,4)+CurrentEventDate.substr(5,2)+CurrentEventDate.substr(8,2))>=
+            parseInt(date.substr(0,4)+date.substr(5,2)+date.substr(8,2))){
+            this.loadMeetingsByRoomId()
+            this.changeToggle(arg)
+        }
+        else{
+            alert('Невозможно забронировать на прошедшую дату')
+        }
     }
 
     handleCheckBoxState(event, user) {

@@ -145,7 +145,6 @@ class ProfileEdit extends Component {
         };
         profileEdit(profileEditRequest, this.state.user.username)
             .then(response => {
-                alert('Данные успешно изменены.');
                 this.props.history.push(`/users/${this.state.user.username}`);
             })
             .catch(error => {

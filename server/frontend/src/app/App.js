@@ -100,7 +100,6 @@ class App extends Component {
             currentUser: null,
             isAuthenticated: false
         });
-        alert("You're successfully logged out.")
         this.props.history.push("/login");
     };
 
@@ -110,7 +109,6 @@ class App extends Component {
         //   description: "You're successfully logged in.",
         // });
         this.loadCurrentUser();
-        alert("You're successfully logged in.")
         this.props.history.push("/");
     }
 

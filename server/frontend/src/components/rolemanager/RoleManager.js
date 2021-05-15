@@ -129,7 +129,6 @@ class RoleManager extends Component {
         };
         addNewRole(addNewRoleRequest)
                 .then(response => {
-                    alert('Новая группа добавлена.');
                     this.loadRoles()
                 })
                 .catch(error => {
