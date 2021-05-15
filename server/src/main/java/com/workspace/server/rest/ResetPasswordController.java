@@ -1,7 +1,6 @@
 package com.workspace.server.rest;
 
 
-import ch.qos.logback.classic.helpers.MDCInsertingServletFilter;
 import com.workspace.server.dto.ForgotPasswordRequest;
 import com.workspace.server.dto.ResetPasswordTokenResponse;
 import com.workspace.server.model.User;
@@ -9,7 +8,6 @@ import com.workspace.server.service.ResetPasswordService;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 

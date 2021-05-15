@@ -137,6 +137,7 @@ export default class MeetingRoomBook extends Component {
                     })
                     TimeArray = [0, 0, 0, 0, 0, 0, 0, 0, 0]
                     this.loadMeetingsByRoomId()
+                    //this.props.history.go('O');
                 })
                 .catch(error => {
                     alert('Что-то пошло не так.');

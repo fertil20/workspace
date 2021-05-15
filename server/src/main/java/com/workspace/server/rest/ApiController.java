@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
-@PreAuthorize("hasAuthority('View')")
 public class ApiController {
 
     private final UserRepository userRepository;
@@ -24,17 +23,18 @@ public class ApiController {
     }
 
     @GetMapping("/me")
+    @PreAuthorize("hasAuthority('View')")
     public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
         return new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName(), currentUser.getPrivileges());
     }
 
-    @GetMapping("/checkUsernameAvailability")
+    @GetMapping("/auth/checkUsernameAvailability")
     public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "username") String username) {
         Boolean isAvailable = !userRepository.existsByUsername(username);
         return new UserIdentityAvailability(isAvailable);
     }
 
-    @GetMapping("/checkEmailAvailability")
+    @GetMapping("/auth/checkEmailAvailability")
     public UserIdentityAvailability checkEmailAvailability(@RequestParam(value = "email") String email) {
         Boolean isAvailable = !userRepository.existsByEmail(email);
         return new UserIdentityAvailability(isAvailable);
@@ -47,6 +47,7 @@ public class ApiController {
     }
 
     @GetMapping("/birthdays")
+    @PreAuthorize("hasAuthority('View')")
     public List<UserBirthdayListResponse> getUsersBirthday() {
         return userRepository.findAll().stream()
                 .map(user -> new UserBirthdayListResponse(user.getId(), user.getUsername(), user.getName(), user.getBirthday()))

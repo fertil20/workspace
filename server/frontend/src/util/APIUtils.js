@@ -212,14 +212,14 @@ export function profileEdit(profileEditRequest, username) {
 
 export function checkUsernameAvailability(username) {
     return request({
-        url: API_BASE_URL + "/checkUsernameAvailability?username=" + username,
+        url: API_BASE_URL + "/auth/checkUsernameAvailability?username=" + username,
         method: 'GET'
     });
 }
 
 export function checkEmailAvailability(email) {
     return request({
-        url: API_BASE_URL + "/checkEmailAvailability?email=" + email,
+        url: API_BASE_URL + "/auth/checkEmailAvailability?email=" + email,
         method: 'GET'
     });
 }
