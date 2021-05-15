@@ -62,4 +62,6 @@
 .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
     position: relative;
     min-height: 0.5em !important;
+    margin-bottom: 0 !important;
 }
+

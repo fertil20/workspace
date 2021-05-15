@@ -80,7 +80,7 @@ class BirthdayPage extends Component {
             <div>
                 <Row>
                     <NavigationPanel/>
-                    <Col sm={{size: 2}} style={{backgroundColor:'white', borderRadius:10, height:'auto', width: '25%'}}>
+                    <Col sm={{size: 2}} style={{backgroundColor:'white', borderRadius:10,overflow: 'auto', height:'35%', width: '25%'}}>
                         {
                             this.state.user ? (
                                 <div>
@@ -102,7 +102,7 @@ class BirthdayPage extends Component {
                             ):null
                         }
                     </Col>
-                    <Col sm={{size: 2,offset:1}} style={{backgroundColor:'white', borderRadius:10, height:'auto', width: '25%'}}>
+                    <Col sm={{size: 2,offset:1}} style={{backgroundColor:'white', borderRadius:10,overflow: 'auto', height:'35%', width: '25%'}}>
                         {
                             this.state.user ? (
                                 <div>
@@ -124,7 +124,7 @@ class BirthdayPage extends Component {
                             ):null
                         }
                     </Col>
-                    <Col sm={{size: 2,offset:1}} style={{backgroundColor:'white', borderRadius:10, height:'auto', width: '25%'}}>
+                    <Col sm={{size: 2,offset:1}} style={{backgroundColor:'white', borderRadius:10,overflow: 'auto', height:'35%', width: '25%'}}>
                         {
                             this.state.user ? (
                                 <div>

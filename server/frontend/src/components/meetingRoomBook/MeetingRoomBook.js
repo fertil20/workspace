@@ -42,7 +42,8 @@ export default class MeetingRoomBook extends Component {
             usersOnMeeting: [],
             user: JSON.parse(localStorage.getItem('app')),
             toggleEvent: false,
-            meetingRooms: ''
+            meetingRooms: '',
+            CurrentRoom: '1'
         }
         this.handleDateClick = this.handleDateClick.bind(this);
         this.changeRoom = this.changeRoom.bind(this);
@@ -246,8 +247,8 @@ export default class MeetingRoomBook extends Component {
     }
 
     changeRoom(room) {
-        this.loadMeetingsByRoomId()
         CurrentRoom = room
+        this.loadMeetingsByRoomId()
         RoomAbout = <div>
             <div style={{fontWeight: 'bold'}}>Описание:</div>
             <div>{this.state.meetingRooms[CurrentRoom - 1].about}</div>
@@ -499,7 +500,7 @@ export default class MeetingRoomBook extends Component {
                     <Col sm={{size: 9}} style={{
                         backgroundColor: 'white',
                         borderRadius: 10,
-                        height: 'auto',
+                        overflow: 'auto', height:'100%',
                         paddingBottom: 20,
                         paddingRight: 20,
                         width: '75%'
@@ -524,6 +525,7 @@ export default class MeetingRoomBook extends Component {
                                     locale='ru'
                                     firstDay={1}
                                     eventClick={this.showEventDetails}
+
                                 />
                             </div>
                         </Row>
