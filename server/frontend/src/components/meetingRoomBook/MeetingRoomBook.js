@@ -15,7 +15,6 @@ import {formatDate} from "../../util/Helpers";
 import './MeetingRoomBook.css';
 import {getAllUsers, getMeetingRooms, getMeetings, Meeting} from "../../util/APIUtils";
 
-let CurrentRoom = '1'
 let Users = ''
 let CurrentEventDate = ''
 let TimeArray = [0,0,0,0,0,0,0,0,0]
