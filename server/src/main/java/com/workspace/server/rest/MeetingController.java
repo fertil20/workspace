@@ -1,8 +1,10 @@
 package com.workspace.server.rest;
 
-import com.workspace.server.dto.*;
+import com.workspace.server.dto.MeetingRequest;
+import com.workspace.server.dto.MeetingRoomResponse;
+import com.workspace.server.dto.MeetingUsersResponse;
+import com.workspace.server.dto.MeetingsByRoomResponse;
 import com.workspace.server.model.Meeting;
-import com.workspace.server.model.User;
 import com.workspace.server.repository.MeetingRepository;
 import com.workspace.server.repository.MeetingRoomRepository;
 import com.workspace.server.repository.UserRepository;
@@ -10,6 +12,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.NotAcceptableStatusException;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -18,7 +21,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
 @RestController
@@ -30,30 +33,50 @@ public class MeetingController {
     private final MeetingRoomRepository meetingRoomRepository;
     private final UserRepository userRepository;
     private final JavaMailSender mailSender;
+    private final ExecutorService executorService;
 
-    public MeetingController(MeetingRepository meetingRepository, MeetingRoomRepository meetingRoomRepository,
-                             UserRepository userRepository, JavaMailSender mailSender) {
+    public MeetingController(MeetingRepository meetingRepository,
+                             MeetingRoomRepository meetingRoomRepository,
+                             UserRepository userRepository,
+                             JavaMailSender mailSender,
+                             ExecutorService executorService) {
         this.meetingRepository = meetingRepository;
         this.meetingRoomRepository = meetingRoomRepository;
         this.userRepository = userRepository;
         this.mailSender = mailSender;
+        this.executorService = executorService;
     }
 
     @GetMapping("/room")
     public List<MeetingRoomResponse> getMeetingRooms() {
-        return meetingRoomRepository.findAll().stream().map(meetingRoom -> new MeetingRoomResponse(
-                meetingRoom.getId(), meetingRoom.getAddress(), meetingRoom.getAbout(), meetingRoom.getMaxPeople()))
+        return meetingRoomRepository.findAll().stream()
+                .map(meetingRoom -> new MeetingRoomResponse(
+                        meetingRoom.getId(),
+                        meetingRoom.getAddress(),
+                        meetingRoom.getAbout(),
+                        meetingRoom.getMaxPeople()
+                ))
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/room/{id}")
     public List<MeetingsByRoomResponse> getMeetingsByRoom(@PathVariable Long id) {
         return meetingRepository.findByMeetingRoom_IdOrderByTimeOfStart(id).stream()
-                .map(meeting -> new MeetingsByRoomResponse(meeting.getId(), meeting.getTitle(),
-                        meeting.getDate(), meeting.getColor(), meeting.getTimeOfStart(),
-                        meeting.getTimeOfEnd(), meeting.getOrganizerName(), meeting.getUsers()
-                        .stream().map(user -> new MeetingUsersResponse(
-                                user.getId(), user.getName())).collect(Collectors.toSet())))
+                .map(meeting -> new MeetingsByRoomResponse(
+                        meeting.getId(),
+                        meeting.getTitle(),
+                        meeting.getDate(),
+                        meeting.getColor(),
+                        meeting.getTimeOfStart(),
+                        meeting.getTimeOfEnd(),
+                        meeting.getOrganizerName(),
+                        meeting.getUsers().stream()
+                                .map(user -> new MeetingUsersResponse(
+                                        user.getId(),
+                                        user.getName()
+                                ))
+                                .collect(Collectors.toSet())
+                ))
                 .collect(Collectors.toList());
     }
 
@@ -70,18 +93,23 @@ public class MeetingController {
             meeting.setUsers(new HashSet<>(userRepository.findAllById(request.getUsersId())));
             meeting.setMeetingRoom(meetingRoomRepository.getOne(id));
             meetingRepository.save(meeting);
-/*            meeting.getUsers().forEach(user -> {new User(user.getEmail());
-                try {
-                    sendEmail(user.getEmail());
-                } catch (MessagingException | UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                });*/
+            scheduleUsersNotification(meeting);
+        } else {
+            throw new NotAcceptableStatusException("Выбранное время уже прошло");
         }
     }
 
-/*    public void sendEmail(String recipientEmail)
-            throws MessagingException, UnsupportedEncodingException {
+    private void scheduleUsersNotification(Meeting meeting) {
+        executorService.submit(() -> meeting.getUsers().forEach(user -> {
+            try {
+                trySendEmail(user.getEmail());
+            } catch (MessagingException | UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+        }));
+    }
+
+    public void trySendEmail(String recipientEmail) throws MessagingException, UnsupportedEncodingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
@@ -98,13 +126,14 @@ public class MeetingController {
         helper.setSubject(subject);
         helper.setText(content, true);
         mailSender.send(message);
-    }*/
+    }
 
     @GetMapping("/availableUsers/{date}/{timeOfStart}/{timeOfEnd}")
-    public List<MeetingUsersResponse> getMeetingNewUsers(@PathVariable Map<String, String> pathVars) {
-        //todo бесят дебильные алерты
-        return userRepository.findAllAvailableUsers(LocalDate.parse(pathVars.get("date")),
-                Byte.parseByte(pathVars.get("timeOfStart")), Byte.parseByte(pathVars.get("timeOfEnd")))
+    public List<MeetingUsersResponse> getMeetingNewUsers(@PathVariable String date,
+                                                         @PathVariable String timeOfStart,
+                                                         @PathVariable String timeOfEnd) {
+        return userRepository.findAllAvailableUsers(LocalDate.parse(date),
+                Byte.parseByte(timeOfEnd), Byte.parseByte(timeOfStart))
                 .stream().map(user -> new MeetingUsersResponse(user.getId(), user.getName()))
                 .collect(Collectors.toList());
     }

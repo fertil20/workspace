@@ -148,7 +148,11 @@ export default class MeetingRoomBook extends Component {
                     this.loadMeetingsByRoomId()
                 })
                 .catch(error => {
-                    alert('Что-то пошло не так.');
+                    if (error.status === 406) {
+                        alert("Выбранное время уже прошло");
+                    } else {
+                        alert('Что-то пошло не так.');
+                    }
                 });
         } else {
             alert('Введите полную информацию о встрече')

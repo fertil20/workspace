@@ -7,12 +7,14 @@ import com.workspace.server.repository.MeetingRepository;
 import com.workspace.server.repository.UserRepository;
 import com.workspace.server.security.CurrentUser;
 import com.workspace.server.security.UserPrincipal;
+import com.workspace.server.service.UserService;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -22,10 +24,14 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final MeetingRepository meetingRepository;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepository, MeetingRepository meetingRepository) {
+    public UserController(UserRepository userRepository,
+                          MeetingRepository meetingRepository,
+                          UserService userService) {
         this.userRepository = userRepository;
         this.meetingRepository = meetingRepository;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -51,65 +57,29 @@ public class UserController {
 
     @PostMapping("/{username}/edit")
     public void editUserProfile(@PathVariable(value = "username") String username,
-                                @CurrentUser UserPrincipal currentUser, @RequestBody ProfileEditRequest request) throws AccessDeniedException {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
-        if (currentUser.getUsername().equals(username) && !currentUser.getPrivileges().contains("Edit_Users"))
-        {
-            user.setEmail(request.getEmail());
-            user.setPhone(request.getPhone());
-            user.setTg(request.getTg());
-            user.setAbout(request.getAbout());
-            user.setStartAt(request.getStartAt());
-            user.setEndAt(request.getEndAt());
-            user.setStatus(request.getStatus());
-            userRepository.save(user);
-        }
-        else if (currentUser.getPrivileges().contains("Edit_Users") && !currentUser.getPrivileges().contains("View_Secret")) {
-            user.setEmail(request.getEmail());
-            user.setPhone(request.getPhone());
-            user.setTg(request.getTg());
-            user.setName(request.getName());
-            user.setAbout(request.getAbout());
-            user.setPosition(request.getPosition());
-            user.setDepartment(request.getDepartment());
-            user.setOffice(request.getOffice());
-            user.setStartAt(request.getStartAt());
-            user.setEndAt(request.getEndAt());
-            user.setBirthday(request.getBirthday());
-            user.setStatus(request.getStatus());
-            userRepository.save(user);
-        }
-        else if (currentUser.getPrivileges().contains("Edit_Users") && currentUser.getPrivileges().contains("View_Secret"))
-        {
-            user.setEmail(request.getEmail());
-            user.setPhone(request.getPhone());
-            user.setTg(request.getTg());
-            user.setName(request.getName());
-            user.setAbout(request.getAbout());
-            user.setPosition(request.getPosition());
-            user.setDepartment(request.getDepartment());
-            user.setOffice(request.getOffice());
-            user.setStartAt(request.getStartAt());
-            user.setEndAt(request.getEndAt());
-            user.setBirthday(request.getBirthday());
-            user.setSecretNote(request.getSecretNote());
-            user.setStatus(request.getStatus());
-            userRepository.save(user);
-        }
-        else {
-            throw new AccessDeniedException("У вас нет прав для редактирования других пользователей");
-        }
-    }//todo перенести в отдельный сервис!
+                                @CurrentUser UserPrincipal currentUser,
+                                @RequestBody ProfileEditRequest request) {
+        userService.editProfile(currentUser, username, request);
+    }
 
     @GetMapping("/{username}/events")
     public List<UserMeetingsResponse> getAllUserEvents(@PathVariable String username) {
-        return meetingRepository.findMeetingsByUsers_UsernameOrderByTimeOfStart(username).stream().map(meeting ->
-                new UserMeetingsResponse(meeting.getId(), meeting.getTitle(), meeting.getDate(), meeting.getColor(),
-                        meeting.getTimeOfStart(), meeting.getTimeOfEnd(), meeting.getOrganizerName(), meeting.getUsers()
-                        .stream().map(user -> new MeetingUsersResponse(
-                                user.getId(), user.getName())).collect(Collectors.toSet()),
-                        meeting.getMeetingRoom().getAddress(), meeting.getMeetingRoom().getAbout(),
+        return meetingRepository.findMeetingsByUsers_UsernameOrderByTimeOfStart(username).stream()
+                .map(meeting -> new UserMeetingsResponse(
+                        meeting.getId(),
+                        meeting.getTitle(),
+                        meeting.getDate(),
+                        meeting.getColor(),
+                        meeting.getTimeOfStart(),
+                        meeting.getTimeOfEnd(),
+                        meeting.getOrganizerName(),
+                        meeting.getUsers().stream()
+                                .map(user -> new MeetingUsersResponse(
+                                        user.getId(),
+                                        user.getName()))
+                                .collect(Collectors.toSet()),
+                        meeting.getMeetingRoom().getAddress(),
+                        meeting.getMeetingRoom().getAbout(),
                         meeting.getMeetingRoom().getMaxPeople()))
                 .collect(Collectors.toList());
     }

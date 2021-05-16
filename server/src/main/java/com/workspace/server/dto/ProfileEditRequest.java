@@ -22,6 +22,5 @@ public class ProfileEditRequest {
     private LocalDate birthday;
     private String secretNote;
     private char status;
-/*    private Set<WorkTime> workTimes;*/
 }
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;
 import java.util.Collections;
@@ -38,6 +39,7 @@ public class NewUserController {
 
     @PostMapping("/newUser")
     @PreAuthorize("hasAuthority('Manage_Users')")
+    @Transactional
     public void createUserProfile(@RequestBody User request) throws MessagingException, UnsupportedEncodingException {
         User user = new User();
         String username = request.getUsername();
