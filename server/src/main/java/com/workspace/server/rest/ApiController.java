@@ -9,6 +9,7 @@ import com.workspace.server.security.UserPrincipal;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,8 +42,10 @@ public class ApiController {
     }
 
     @PostMapping("/deleteUser/{id}")
+    @Transactional
     @PreAuthorize("hasAuthority('Manage_Users')")
     public void deleteUser(@PathVariable(value = "id") Long id) {
+        userRepository.deleteMeetingsAssociations(id);
         userRepository.deleteById(id);
     }
 

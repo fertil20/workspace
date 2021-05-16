@@ -45,7 +45,7 @@ public class RoleController {
     @Transactional
     @PreAuthorize("@customAuthorizationService.canEditRole(#role)")
     public void deleteRole(@PathVariable String role) {
-        roleRepository.deleteAssociations(role);
+        roleRepository.deleteRolesAssociations(role);
         roleRepository.deleteById(role);
     }
 

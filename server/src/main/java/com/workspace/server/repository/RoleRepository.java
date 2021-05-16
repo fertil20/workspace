@@ -11,5 +11,5 @@ public interface RoleRepository extends JpaRepository<Role, String> {
 
     @Modifying
     @Query(nativeQuery = true, value = "DELETE from users_roles where role_name = :roleName")
-    void deleteAssociations(String roleName);
+    void deleteRolesAssociations(String roleName);
 }

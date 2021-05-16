@@ -70,17 +70,17 @@ public class MeetingController {
             meeting.setUsers(new HashSet<>(userRepository.findAllById(request.getUsersId())));
             meeting.setMeetingRoom(meetingRoomRepository.getOne(id));
             meetingRepository.save(meeting);
-            meeting.getUsers().forEach(user -> {new User(user.getEmail());
+/*            meeting.getUsers().forEach(user -> {new User(user.getEmail());
                 try {
                     sendEmail(user.getEmail());
                 } catch (MessagingException | UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                });
+                });*/
         }
     }
 
-    public void sendEmail(String recipientEmail)
+/*    public void sendEmail(String recipientEmail)
             throws MessagingException, UnsupportedEncodingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -98,7 +98,7 @@ public class MeetingController {
         helper.setSubject(subject);
         helper.setText(content, true);
         mailSender.send(message);
-    }
+    }*/
 
     @GetMapping("/availableUsers/{date}/{timeOfStart}/{timeOfEnd}")
     public List<MeetingUsersResponse> getMeetingNewUsers(@PathVariable Map<String, String> pathVars) {

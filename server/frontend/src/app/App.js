@@ -89,9 +89,9 @@ class App extends Component {
         }
     }*/
 
-/*    componentWillUnmount() {
+    componentWillUnmount() {
         this._isMounted = false;
-    }*/
+    }
 
     handleLogout() {
         localStorage.removeItem(ACCESS_TOKEN);

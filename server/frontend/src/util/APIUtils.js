@@ -162,7 +162,7 @@ export function forgotPasswordResetPost(password, token) { //Возвращае�
 
 export function deleteUser(deleteUserRequest) { // Возвращает ID пользователя
     return request({
-        url: API_BASE_URL + "/deleteUsers/" + deleteUserRequest,
+        url: API_BASE_URL + "/deleteUser/" + deleteUserRequest,
         method: 'POST'
     });
 }
