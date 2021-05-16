@@ -91,6 +91,18 @@
                 <artifactId>frontend-maven-plugin</artifactId>
                 <version>1.11.2</version>
             </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>appengine-maven-plugin</artifactId>
+                <version>2.4.0</version>
+                <configuration>
+                    <stage.enableJarSplitting>true</stage.enableJarSplitting>
+                    <deploy.stopPreviousVersion>true</deploy.stopPreviousVersion>
+                    <deploy.projectId>lucid-box-313913</deploy.projectId>
+                    <deploy.version>v1</deploy.version>
+                    <cloudSdkPath>C:\Users\iliaf\AppData\Local\Google\Cloud SDK\google-cloud-sdk</cloudSdkPath>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
