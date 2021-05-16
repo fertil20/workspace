@@ -9,9 +9,9 @@ import java.util.Set;
 
 @Repository
 public interface MeetingRepository extends JpaRepository<Meeting, Long> {
-    Set<Meeting> findByMeetingRoom_Id(Long id);
+    Set<Meeting> findByMeetingRoom_IdOrderByTimeOfStart(Long id);
 
-    Set<Meeting> findAllByUsers_Username(String username);
+    Set<Meeting> findMeetingsByUsers_UsernameOrderByTimeOfStart(String username);
 
     Set<Meeting> deleteMeetingsByDateBefore(LocalDate date);
 }

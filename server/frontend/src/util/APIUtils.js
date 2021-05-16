@@ -21,6 +21,13 @@ const request = (options) => {
         .then((text) => text.length ? JSON.parse(text) : {})
 };
 
+export function getFreeUsers(date, timeOfStart, timeOfEnd){
+    return request({
+        url: API_BASE_URL + "/meetings/availableUsers/" + date + "/" + timeOfStart + "/" + timeOfEnd,
+        method: 'GET'
+    })
+}
+
 export function getUserEvents(username) {
     return request({
         url: API_BASE_URL + "/users/" + username + "/events",
@@ -30,14 +37,14 @@ export function getUserEvents(username) {
 
 export function getMeetingRooms() {
     return request({
-        url: API_BASE_URL + "/meetings/",
+        url: API_BASE_URL + "/meetings/room",
         method: 'GET',
     });
 }
 
 export function Meeting(MeetingRequest, id) {
     return request({
-        url: API_BASE_URL + "/meetings/" + id + "/newMeeting",
+        url: API_BASE_URL + "/meetings/room/" + id + "/newMeeting",
         method: 'POST',
         body: JSON.stringify(MeetingRequest)
     });
@@ -45,7 +52,7 @@ export function Meeting(MeetingRequest, id) {
 
 export function getMeetings(id) {
     return request({
-        url: API_BASE_URL + "/meetings/" + id,
+        url: API_BASE_URL + "/meetings/room/" + id,
         method: 'GET',
     });
 }

@@ -127,4 +127,8 @@ public class User extends DateAudit {
     public User(PasswordResetToken resetPasswordToken) {
         this.resetPasswordToken = resetPasswordToken;
     }
+
+    public User(String email) {
+        this.email = email;
+    }
 }

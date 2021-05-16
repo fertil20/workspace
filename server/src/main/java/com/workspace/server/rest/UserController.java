@@ -2,11 +2,8 @@ package com.workspace.server.rest;
 
 import com.workspace.server.dto.*;
 import com.workspace.server.exception.ResourceNotFoundException;
-import com.workspace.server.model.Meeting;
-import com.workspace.server.model.MeetingRoom;
 import com.workspace.server.model.User;
 import com.workspace.server.repository.MeetingRepository;
-import com.workspace.server.repository.MeetingRoomRepository;
 import com.workspace.server.repository.UserRepository;
 import com.workspace.server.security.CurrentUser;
 import com.workspace.server.security.UserPrincipal;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -26,12 +22,10 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final MeetingRepository meetingRepository;
-    private final MeetingRoomRepository meetingRoomRepository;
 
-    public UserController(UserRepository userRepository, MeetingRepository meetingRepository, MeetingRoomRepository meetingRoomRepository) {
+    public UserController(UserRepository userRepository, MeetingRepository meetingRepository) {
         this.userRepository = userRepository;
         this.meetingRepository = meetingRepository;
-        this.meetingRoomRepository = meetingRoomRepository;
     }
 
     @GetMapping
@@ -110,7 +104,7 @@ public class UserController {
 
     @GetMapping("/{username}/events")
     public List<UserMeetingsResponse> getAllUserEvents(@PathVariable String username) {
-        return meetingRepository.findAllByUsers_Username(username).stream().map(meeting ->
+        return meetingRepository.findMeetingsByUsers_UsernameOrderByTimeOfStart(username).stream().map(meeting ->
                 new UserMeetingsResponse(meeting.getId(), meeting.getTitle(), meeting.getDate(), meeting.getColor(),
                         meeting.getTimeOfStart(), meeting.getTimeOfEnd(), meeting.getOrganizerName(), meeting.getUsers()
                         .stream().map(user -> new MeetingUsersResponse(

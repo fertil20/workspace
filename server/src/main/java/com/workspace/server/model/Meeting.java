@@ -66,4 +66,9 @@ public class Meeting {
     public Meeting(MeetingRoom meetingRoom) {
         this.meetingRoom = meetingRoom;
     }
+/*
+    public Meeting(LocalDate date, Byte timeOfStart) {
+        this.timeOfStart = timeOfStart;
+        this.date = date;
+    }*/
 }

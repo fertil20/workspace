@@ -1,15 +1,17 @@
 package com.workspace.server.service;
 
+import com.workspace.server.model.Meeting;
 import com.workspace.server.model.PasswordResetToken;
-import com.workspace.server.model.User;
 import com.workspace.server.repository.MeetingRepository;
 import com.workspace.server.repository.UserRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Optional;
 
 @Service
@@ -23,14 +25,14 @@ public class CleanerService {
         this.userRepository = userRepository;
     }
 
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0 0 0 * * ?") //every day at 00:00
     @Transactional
     public void clearMeeting() {
         meetingRepository.deleteMeetingsByDateBefore(LocalDate.now());
         System.out.println("clearMeeting is Done");
     }
 
-    @Scheduled(fixedRate = 18000000L) // half an hour
+    @Scheduled(fixedRate = 1800000L) // half an hour
     @Transactional
     public void clearToken() {
         userRepository.findAll().forEach(user -> {
@@ -43,4 +45,18 @@ public class CleanerService {
                     });
         });
     }
+/*
+    @Scheduled(fixedRate = 900000L) // a quarter an hour
+    @Transactional
+    public void sendReminder() {
+        return meetingRepository.findAll().stream().map(meeting -> new Meeting(meeting.getDate(), meeting.getTimeOfStart())
+
+                    .ifPresent(date -> {
+                        if (Instant.now().isAfter(date.atStartOfDay(ZoneId.systemDefault())
+                                .plus(Duration.ofHours(timeOfStart)).toInstant())) {
+                            user.setResetPasswordToken(null);
+                        }
+                    });
+        }));
+    }todo доделать рассылку письма за день и за два часа до события*/
 }

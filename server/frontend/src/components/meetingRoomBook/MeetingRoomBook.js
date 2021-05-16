@@ -6,14 +6,14 @@ import {
     DropdownItem,
     UncontrolledButtonDropdown,
     DropdownMenu,
-    DropdownToggle, Modal, ModalHeader, ModalBody, Input, ModalFooter, Button, Popover, PopoverHeader, PopoverBody
+    DropdownToggle, Modal, ModalHeader, ModalBody, Input, ModalFooter, Button
 } from 'reactstrap';
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from "@fullcalendar/interaction";
 import {formatDate} from "../../util/Helpers";
 import './MeetingRoomBook.css';
-import {getAllUsers, getMeetingRooms, getMeetings, Meeting} from "../../util/APIUtils";
+import {getFreeUsers, getMeetingRooms, getMeetings, Meeting} from "../../util/APIUtils";
 
 let Users = <div>Выберите время</div>
 let CurrentEventDate = ''
@@ -140,10 +140,11 @@ export default class MeetingRoomBook extends Component {
                         toggle: false,
                         title: {value: ''},
                         usersOnMeeting: [],
-                        timeOfStart: '-',
-                        timeOfEnd: '-'
                     })
+                    this.state.timeOfStart = '-'
+                    this.state.timeOfEnd = '-'
                     TimeArray = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+                    Users = <div>Выберите время</div>
                     this.loadMeetingsByRoomId()
                 })
                 .catch(error => {
@@ -193,7 +194,7 @@ export default class MeetingRoomBook extends Component {
     }
 
     getUsers() {
-        getAllUsers()
+        getFreeUsers(CurrentEventDate, this.state.timeOfStart, this.state.timeOfEnd)
             .then(response => {
                 this._isMounted && this.setState({
                     users: response,
@@ -267,15 +268,17 @@ export default class MeetingRoomBook extends Component {
 
     changeToggle(arg) {
         if (this.state.toggle === true) {
-            this.setState({toggle: false, title: {value: ''}, timeOfStart: '-', timeOfEnd: '-'})
+            this.setState({toggle: false, title: {value: ''}})
+            this.state.timeOfStart = '-';
+            this.state.timeOfEnd = '-';
             TimeArray = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+            Users = <div>Выберите время</div>
         }
         if (this.state.toggle === false) {
-            this.setState({toggle: true})
-            this.getUsers()
+            this.state.toggle = true
             this.getTimeByEventDate(arg.dateStr)
         }
-        this.setState({CurrentEvent: arg})
+        this.state.CurrentEvent = arg
     }
 
     changeEventToggle() {
@@ -311,10 +314,9 @@ export default class MeetingRoomBook extends Component {
             if (!TimeArray.includes(2)) {
                 TimeArray[button] = 2
                 direct = button
-                this.setState({
-                    timeOfStart: button + 9,
-                    timeOfEnd: button + 10
-                })
+                this.state.timeOfStart = button + 9;
+                this.state.timeOfEnd = button + 10;
+                this.getUsers()
             } else {
                 this.copyArray(MenArray, TimeArray)
                 if (direct < button) {
@@ -327,9 +329,8 @@ export default class MeetingRoomBook extends Component {
                             break
                         }
                         if (TimeArray[i] === 2) {
-                            this.setState({
-                                timeOfEnd: button + 10
-                            })
+                            this.state.timeOfEnd = button + 10
+                            this.getUsers()
                             break
                         }
                         TimeArray[i] = 2
@@ -343,9 +344,8 @@ export default class MeetingRoomBook extends Component {
                             break
                         }
                         if (TimeArray[i] === 2) {
-                            this.setState({
-                                timeOfStart: button + 9
-                            })
+                            this.state.timeOfStart = button + 9;
+                            this.getUsers()
                             break
                         }
                         TimeArray[i] = 2
@@ -353,11 +353,10 @@ export default class MeetingRoomBook extends Component {
                 }
             }
         } else {
-            this.setState({
-                timeOfEnd: button + 9
-            })
+            this.state.timeOfEnd = button + 9;
             let i = button
             direct = this.state.timeOfStart - 9
+            this.setState({})
             while (1) {
                 if (i === 9 || TimeArray[i] === 1) {
                     break
@@ -366,10 +365,12 @@ export default class MeetingRoomBook extends Component {
                 i = i + 1
             }
             if (!TimeArray.includes(2)) {
-                this.setState({
-                    timeOfStart: '-',
-                    timeOfEnd: '-'
-                })
+                this.state.timeOfStart = '-';
+                this.state.timeOfEnd = '-';
+                Users = <div>Выберите время</div>
+            }
+            else {
+                this.getUsers()
             }
         }
     }
@@ -530,7 +531,8 @@ export default class MeetingRoomBook extends Component {
                                     locale='ru'
                                     firstDay={1}
                                     eventClick={this.showEventDetails}
-
+                                    eventOrder={-1}
+                                    eventOrderStrict={true}
                                 />
                             </div>
                         </Row>

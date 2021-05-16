@@ -141,6 +141,8 @@ export default class NavigationPanel extends Component {
                         events={this.state.events}
                         eventContent={renderEventContent}
                         eventClick={this.showEventDetails}
+                        eventOrder={-1}
+                        eventOrderStrict={true}
                     /></div>
             </Col>
         )
