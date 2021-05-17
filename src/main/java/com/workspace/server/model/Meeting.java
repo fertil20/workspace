@@ -20,28 +20,22 @@ public class Meeting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 60)
-    @NotBlank
+    @Column(length = 60, nullable=false)
     private String title;
 
-    @Column
-    @NotBlank
+    @Column(name = "date", nullable=false)
     private LocalDate date;
 
-    @Column(length = 15)
-    @NotBlank
+    @Column(length = 15, nullable=false)
     private String color;
 
-    @Column
-    @NotBlank
+    @Column(nullable=false)
     private byte timeOfStart;
 
-    @Column
-    @NotBlank
+    @Column(nullable=false)
     private byte timeOfEnd;
 
-    @Column
-    @NotBlank
+    @Column(nullable=false)
     private String organizerName;
 
     @ManyToMany

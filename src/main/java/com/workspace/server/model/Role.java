@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 
@@ -14,7 +15,7 @@ import java.util.Set;
 @Table(name = "roles")
 public class Role {
     @Id
-    @Column(length = 60, unique = true)
+    @Column(length = 60, unique = true, nullable=false)
     private String name;
 
     @ManyToMany(mappedBy = "roles")

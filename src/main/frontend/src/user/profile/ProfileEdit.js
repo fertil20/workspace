@@ -267,6 +267,7 @@ class ProfileEdit extends Component {
                                             <Row>
                                                 <Col >{this.state.CurUser.currentUser.privileges.includes('Edit_Users') &&
                                                 <Input type="text" name="name" id="editName" placeholder={"Попов Валерий Александрович"}
+                                                       required
                                                        value={this.state.name.value} style={{width:155}}
                                                        onChange={(event) => this.handleInputChange(event)}/>}
                                                     {!this.state.CurUser.currentUser.privileges.includes('Edit_Users') &&
@@ -290,16 +291,19 @@ class ProfileEdit extends Component {
                                                    onChange={(event) => this.handleInputChange(event)}/>
                                             <div style={{height: 20}}/>
                                             {this.state.CurUser.currentUser.privileges.includes('Edit_Users') && <Input type="text" name="position" id="editPosition"
+                                                                                                                        required
                                                                                                                         value={this.state.position.value}
                                                                                                                         onChange={(event) => this.handleInputChange(event)}/>}
                                             {!this.state.CurUser.currentUser.privileges.includes('Edit_Users') && <div style={{height:40}}>{this.state.user.position}</div>}
                                             <div style={{height: 10}}/>
                                             {this.state.CurUser.currentUser.privileges.includes('Edit_Users') &&  <Input type="text" name="department" id="editDepartment"
+                                                                                                                         required
                                                                                                                          value={this.state.department.value}
                                                                                                                          onChange={(event) => this.handleInputChange(event)}/>}
                                             {!this.state.CurUser.currentUser.privileges.includes('Edit_Users') && <div style={{height:40}}>{this.state.user.department}</div>}
                                             <div style={{height: 10}}/>
                                             {this.state.CurUser.currentUser.privileges.includes('Edit_Users') &&  <Input type="text" name="office" id="editOffice"
+                                                                                                                         required
                                                                                                                          value={this.state.office.value}
                                                                                                                          onChange={(event) => this.handleInputChange(event)}/>}
                                             {!this.state.CurUser.currentUser.privileges.includes('Edit_Users') && <div style={{height:35}}>{this.state.user.office}</div>}
@@ -329,6 +333,7 @@ class ProfileEdit extends Component {
                                             <div style={{height: 15}}/>
                                             {this.state.CurUser.currentUser.privileges.includes('Edit_Users') &&
                                             <Input type="date" name="birthday" id="birthday"
+                                                   required
                                                    style={{marginTop: 10}}
                                                    value={this.state.birthday.value}
                                                    onChange={(event) => this.handleInputChange(event)}/>}

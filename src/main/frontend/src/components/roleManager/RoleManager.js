@@ -125,7 +125,7 @@ class RoleManager extends Component {
         event.preventDefault();
 
         const addNewRoleRequest = {
-            name: this.state.role.value
+            name: this.state.role.value.trim()
         };
         addNewRole(addNewRoleRequest)
                 .then(response => {

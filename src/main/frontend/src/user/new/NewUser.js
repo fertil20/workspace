@@ -427,14 +427,17 @@ class NewUser extends Component {
                                                    onChange={(event) => this.handleInputChange(event)}/>
                                             <div style={{height: 25}}/>
                                             <Input type="text" name="position" id="editPosition"
+                                                   required
                                                    value={this.state.position.value}
                                                    onChange={(event) => this.handleInputChange(event)}/>
                                             <div style={{height: 10}}/>
                                             <Input type="text" name="department" id="editDepartment"
+                                                   required
                                                    value={this.state.department.value}
                                                    onChange={(event) => this.handleInputChange(event)}/>
                                             <div style={{height: 10}}/>
                                             <Input type="text" name="office" id="editOffice"
+                                                   required
                                                    value={this.state.office.value}
                                                    onChange={(event) => this.handleInputChange(event)}/>
                                             <div style={{height: 10}}/>
@@ -461,6 +464,7 @@ class NewUser extends Component {
                                             </Row>
                                             <div style={{height: 15}}/>
                                             <Input type="date" name="birthday" id="birthday"
+                                                   required
                                                    value={this.state.birthday.value}
                                                    onChange={(event) => this.handleInputChange(event)}/>
                                             <div style={{height: 15}}/>

@@ -33,34 +33,28 @@ public class User extends DateAudit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    @NotBlank
+    @Column(name = "name", nullable=false)
     @Size(max = 200)
     private String name;
 
-    @Column(name = "username")
-    @NotBlank
+    @Column(name = "username", nullable=false)
     @Size(max = 50)
     private String username;
 
-    @Column(name = "email")
-    @NotBlank
+    @Column(name = "email", nullable=false)
     @Size(max = 254)
     @Email
     private String email;
 
-    @Column(name = "password")
-    @NotBlank
+    @Column(name = "password", nullable=false)
     @Size(max = 100)
     private String password;
 
-    @Column(name = "phone", unique = true)
-    @NotBlank
+    @Column(name = "phone", unique = true, nullable=false)
     @Size(max = 50)
     private String phone;
 
-    @Column(name = "tg")
-    @NotBlank
+    @Column(name = "tg", nullable=false)
     @Size(max = 30)
     private String tg;
 
@@ -68,40 +62,32 @@ public class User extends DateAudit {
     @Size(max = 300)
     private String about;
 
-    @Column(name = "position")
-    @NotBlank
+    @Column(name = "position", nullable=false)
     @Size(max = 50)
     private String position;
 
-    @Column(name = "department")
-    @NotBlank
+    @Column(name = "department", nullable=false)
     @Size(max = 300)
     private String department;
 
-    @Column(name = "office")
-    @NotBlank
+    @Column(name = "office", nullable=false)
     @Size(max = 3)
     private String office;
 
-    @NotBlank
-    @Column(name = "start_at")
+    @Column(name = "start_at", nullable=false)
     private LocalTime startAt;
 
-    @NotBlank
-    @Column(name = "end_at")
+    @Column(name = "end_at", nullable=false)
     private LocalTime endAt;
 
-    @Column(name = "birthday")
-    @NotBlank
+    @Column(name = "birthday", nullable=false)
     private LocalDate birthday;
 
     @Column(name = "secret_note")
-    @NotBlank
     @Size(max = 300)
     private String secretNote;
 
-    @Column(name = "status")
-    @NotBlank
+    @Column(name = "status", nullable=false)
     @Size(max = 1)
     private char status;
 

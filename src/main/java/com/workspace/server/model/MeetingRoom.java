@@ -19,15 +19,13 @@ public class MeetingRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 100)
-    @NotBlank
+    @Column(length = 100, nullable=false)
     private String address;
 
     @Column(length = 300)
     private String about;
 
-    @Column
-    @NotBlank
+    @Column(nullable=false)
     private byte maxPeople;
 
     @OneToMany (mappedBy = "meetingRoom")
