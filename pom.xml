@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.workspace</groupId>
     <artifactId>workspace</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.6.2-RELEASE</version>
 
     <description>Demo project for Spring Boot</description>
     <properties>
@@ -120,6 +120,7 @@
                         <goals>
                             <goal>npm</goal>
                         </goals>
+                        <phase>prepare-package</phase>
                         <configuration>
                             <arguments>run-script build</arguments>
                         </configuration>

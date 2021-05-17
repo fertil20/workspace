@@ -7,7 +7,6 @@ import {
     Row,
     Col,
     Button,
-    FormGroup,
     Form,
     Input,
     Dropdown, DropdownToggle, DropdownMenu, DropdownItem
@@ -242,14 +241,6 @@ class ProfileEdit extends Component {
                                                 value={this.state.phone.value}
                                                 style={{width:165, height:40}}
                                                 onChange={event => this.setState({phone: {value: event }})}/>
-                                            {/*{(this.state.phone.value && isPossiblePhoneNumber(this.state.phone.value))
-                                                    ? <a> </a> : <a>Проверьте правильность номера</a>}*/}
-                                            {/*                                                <Input type="tel" name="phone" id="phone" placeholder={"+7 (905) 226-23-58"}
-                                                       value={this.state.phone.value}
-                                                       required
-                                                       style={{width:165}}
-                                                       pattern="[+][7] [(][0-9]{3}[)] [0-9]{3}-[0-9]{2}-[0-9]{2}"
-                                                       onChange={(event) => this.handleInputChange(event)}/>*/}
                                             <div style={{height: 10}}/>
                                             <Input type="text" name="tg" id="tg" placeholder={"telegram"}
                                                    value={this.state.tg.value} style={{width:165}}

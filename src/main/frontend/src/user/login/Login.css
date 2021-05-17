@@ -1,5 +1,5 @@
 .login-container {
-    max-width: 420px;
+    max-width: 400px;
     margin: 40px auto 0;
 }
 
@@ -17,11 +17,11 @@
 .workspace-logo {
     padding-bottom: 50px;
     position: relative;
-    left: 20%;
     font-style: normal;
     font-weight: normal;
     font-size: 50px;
     line-height: 59px;
+    text-align: center;
 
     color: #5380B7;
 }
@@ -29,8 +29,7 @@
 .login-content {
     background: #FFFFFF;
     border-radius: 10px;
-    width: 400px;
-    height: 300px;
+    max-height: 300px;
 }
 
 .login-form {

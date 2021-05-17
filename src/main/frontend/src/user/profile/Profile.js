@@ -106,7 +106,7 @@ class Profile extends Component {
                             </Col>
                             <Col >
                                 <div className='profile-text2'>{this.state.user.email}</div>
-                                <div className='profile-text2'>{formatPhoneNumberIntl(this.state.user.phone)}</div>
+                                <div className='profile-text2'>{formatPhoneNumberIntl(this.state.user.phone) || (this.state.user.phone)}</div>
                                 <div className='profile-text2'>@{this.state.user.tg}</div>
                             </Col>
                         </Row>

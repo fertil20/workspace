@@ -5,6 +5,7 @@ import com.workspace.server.security.JwtAuthenticationEntryPoint;
 import com.workspace.server.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -74,6 +75,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
                     .authorizeRequests()
+                        .antMatchers(HttpMethod.GET, "/**")
+                            .permitAll()
                         .antMatchers("/",
                         "/_ah/health",
                         "/_ah/start",
@@ -90,9 +93,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             .permitAll()
                         .antMatchers("/api/auth/**")
                             .permitAll()
-/*                      .antMatchers("/api/users/checkUsernameAvailability", "/api/users/checkEmailAvailability")
-                            .permitAll()*/
-                        .anyRequest()
+                        .antMatchers("/api/**")
                             .authenticated();
 
         // Add our custom JWT security filter
