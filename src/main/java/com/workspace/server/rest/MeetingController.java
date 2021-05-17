@@ -121,7 +121,7 @@ public class MeetingController {
         String content = "<p>Добрый день!</p>"
                 + "<p>Вы зарегистрированы на новое событие.</p>"
                 + "<p>Перейдите в приложение, чтобы узнать подробности</p>" //todo написать информацию о событии
-                + "<p><a href=\"http://localhost:3000/\">Перейти в приложение</a></p>";
+                + "<p><a href=\"https://my-workspace.ml/\">Перейти в приложение</a></p>";
 
         helper.setSubject(subject);
         helper.setText(content, true);
@@ -133,7 +133,7 @@ public class MeetingController {
                                                          @PathVariable String timeOfStart,
                                                          @PathVariable String timeOfEnd) {
         return userRepository.findAllAvailableUsers(LocalDate.parse(date),
-                Byte.parseByte(timeOfEnd), Byte.parseByte(timeOfStart))
+                Byte.parseByte(timeOfStart), Byte.parseByte(timeOfEnd))
                 .stream().map(user -> new MeetingUsersResponse(user.getId(), user.getName()))
                 .collect(Collectors.toList());
     }

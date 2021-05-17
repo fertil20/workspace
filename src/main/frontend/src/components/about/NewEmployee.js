@@ -38,21 +38,19 @@ export default class NewEmployee extends Component{
             <Row>
                 <NavigationPanel/>
                 <Col sm={{ size: 5.5 }} style={{backgroundColor: 'white',borderRadius:10,overflow: 'auto', height:'100%',paddingBottom:10, width: '75%'}}>
-                    <div >
-                        <div style={{margin:50,width:750,height:'auto'}}>
-                            <div className='company-about-text'>{NewEmployeeText}</div>
-                            <div className='office'>Дополнительная информация:</div>
-                            <Row style={{width:750}}>
-                                <Col>
-                                    <div style={{height:'auto'}}>{OfficeAboutText1}</div>
-                                    <div style={{height:'auto',width:270}}>{OfficeAboutText2}</div>
-                                </Col>
-                                <Col>
-                                    <div style={{height:'auto'}}>{OfficePhoneText}</div>
-                                </Col>
-                                {this.state.CurUser.currentUser.privileges.includes('Edit_About') && <Button style={{marginRight:50}} disabled='true' size='sm' className='company-button' href='/about/newEmployee/edit'>Редактировать</Button>}
-                            </Row>
-                        </div>
+                    <div style={{margin:50,width:750,height:'auto'}}>
+                        <div className='company-about-text'>{NewEmployeeText}</div>
+                        <div className='office'>Дополнительная информация:</div>
+                        <Row style={{width:750}}>
+                            <Col>
+                                <div style={{height:'auto'}}>{OfficeAboutText1}</div>
+                                <div style={{height:'auto',width:270}}>{OfficeAboutText2}</div>
+                            </Col>
+                            <Col>
+                                <div style={{height:'auto'}}>{OfficePhoneText}</div>
+                            </Col>
+                            {this.state.CurUser.currentUser.privileges.includes('Edit_About') && <Button style={{marginRight:50}} disabled='true' size='sm' className='company-button' href='/about/newEmployee/edit'>Редактировать</Button>}
+                        </Row>
                     </div>
                 </Col>
             </Row>

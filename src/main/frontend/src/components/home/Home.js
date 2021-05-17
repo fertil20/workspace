@@ -43,40 +43,38 @@ export default class Home extends Component {
     render () {
         if (this.state.user.currentUser !== null) {
             return (
-                <div>
-                    <Row>
-                        <NavigationPanel/>
-                        <Col sm={{size: 1.5}} style={{
-                            backgroundColor: 'white',
-                            borderRadius: 10,
-                            height: '100%',
-                            padding: 10,
-                            marginRight: '2%',
-                            width: '53%'
-                        }}>
-                            <div style={{width: '100%', maxHeight: '80%'}}>
-                                {randomImg === 1 &&
-                                <img src={hello1} id="hello" alt='Hello!' className="home"/>}
-                                {randomImg === 2 &&
-                                <img src={hello2} id="hello" alt='Hello!' className="home"/>}
-                                {randomImg === 3 &&
-                                <img src={hello3} id="hello" alt='Hello!' className="home"/>}
-                                {randomImg === 4 &&
-                                <img src={hello4} id="hello" alt='Hello!' className="home"/>}
-                                {randomImg === 5 &&
-                                <img src="https://sun9-55.userapi.com/impg/cLkK91t6yMAcKLX2iCDkEB4mB4GmbXhASX0OFg/C8_gBhYMhAY.jpg?size=1080x867&quality=96&sign=a0ee44bb0407c0e7ecd8e11ff7f86ed6&type=album" alt='Hello!' className="home"/>}
-                                {randomImg === 6 &&
-                                <img src="https://sun9-30.userapi.com/impg/JI5Obz-cKWItsQEzj4uY4VhlqlfLs7Hmu2KkLw/IVf6VOJGAxg.jpg?size=1600x1374&quality=96&sign=50c4c0bebc35af815d0be0b582b1ae63&type=album" alt='Hello!' className="home"/>}
-                            </div>
-                        </Col>
-                        <Col sm={{size: 1.5}}
-                             style={{backgroundColor: 'white', borderRadius: 10,height: '100%', padding: 20, width: '20%'}}>
-                            <div>
-                                Новости
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
+                <Row>
+                    <NavigationPanel/>
+                    <Col sm={{size: 1.5}} style={{
+                        backgroundColor: 'white',
+                        borderRadius: 10,
+                        height: '100%',
+                        padding: 10,
+                        marginRight: '2%',
+                        width: '53%'
+                    }}>
+                        <div style={{width: '100%', maxHeight: '80%'}}>
+                            {randomImg === 1 &&
+                            <img src={hello1} id="hello" alt='Hello!' className="home"/>}
+                            {randomImg === 2 &&
+                            <img src={hello2} id="hello" alt='Hello!' className="home"/>}
+                            {randomImg === 3 &&
+                            <img src={hello3} id="hello" alt='Hello!' className="home"/>}
+                            {randomImg === 4 &&
+                            <img src={hello4} id="hello" alt='Hello!' className="home"/>}
+                            {randomImg === 5 &&
+                            <img src="https://sun9-55.userapi.com/impg/cLkK91t6yMAcKLX2iCDkEB4mB4GmbXhASX0OFg/C8_gBhYMhAY.jpg?size=1080x867&quality=96&sign=a0ee44bb0407c0e7ecd8e11ff7f86ed6&type=album" alt='Hello!' className="home"/>}
+                            {randomImg === 6 &&
+                            <img src="https://sun9-30.userapi.com/impg/JI5Obz-cKWItsQEzj4uY4VhlqlfLs7Hmu2KkLw/IVf6VOJGAxg.jpg?size=1600x1374&quality=96&sign=50c4c0bebc35af815d0be0b582b1ae63&type=album" alt='Hello!' className="home"/>}
+                        </div>
+                    </Col>
+                    <Col sm={{size: 1.5}}
+                         style={{backgroundColor: 'white', borderRadius: 10,height: '100%', padding: 20, width: '20%'}}>
+                        <div>
+                            Новости
+                        </div>
+                    </Col>
+                </Row>
             )
         }
         else

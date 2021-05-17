@@ -7,7 +7,7 @@ import "./BirthdayPage.css";
 import {Link} from "react-router-dom";
 
 import NavigationPanel from "../navigation/NavigationPanel";
-import {formatDate, formatDateDayMonth} from "../../util/Helpers";
+import {formatDateDayMonth} from "../../util/Helpers";
 
 class BirthdayPage extends Component {
     constructor(props) {
@@ -87,77 +87,75 @@ class BirthdayPage extends Component {
         }
 
         return (
-            <div>
-                <Row>
-                    <NavigationPanel/>
-                    <Col sm={{size: 2}} style={{backgroundColor:'white', borderRadius:10,height:'100%', width: '25%'}}>
-                        {
-                            this.state.user ? (
-                                <div>
-                                    {
-                                        this.state.user.map(
-                                            user =>
-                                                <div>
-                                                    {(user.id % 3 === 1) &&
-                                                    <div className='birthday-block'>
-                                                        <div className='birthday-block-content'>
-                                                            <Link to={`/users/${user.username}`}><div style={{textAlign:"center"}}>{user.name}</div></Link>
-                                                            <div style={{paddingTop:10,textAlign:"center"}}>{formatDateDayMonth(user.birthday)}</div>
-                                                        </div>
-                                                    </div>}
-                                                </div>
-                                        )
-                                    }
-                                </div>
-                            ):null
-                        }
-                    </Col>
-                    <Col sm={{size: 2,offset:1}} style={{backgroundColor:'white', borderRadius:10, height:'35%', width: '25%'}}>
-                        {
-                            this.state.user ? (
-                                <div>
-                                    {
-                                        this.state.user.map(
-                                            user =>
-                                                <div>
-                                                    {(user.id % 3 === 2) &&
-                                                    <div className='birthday-block'>
-                                                        <div className='birthday-block-content'>
-                                                            <Link to={`/users/${user.username}`}><div style={{textAlign:"center"}}>{user.name}</div></Link>
-                                                            <div style={{paddingTop:10,textAlign:"center"}}>{formatDateDayMonth(user.birthday)}</div>
-                                                        </div>
-                                                    </div>}
-                                                </div>
-                                        )
-                                    }
-                                </div>
-                            ):null
-                        }
-                    </Col>
-                    <Col sm={{size: 2,offset:1}} style={{backgroundColor:'white', borderRadius:10, height: '100%', width: '25%'}}>
-                        {
-                            this.state.user ? (
-                                <div>
-                                    {
-                                        this.state.user.map(
-                                            user =>
-                                                <div>
-                                                    {(user.id % 3 === 0) &&
-                                                    <div className='birthday-block'>
-                                                        <div className='birthday-block-content'>
-                                                            <Link to={`/users/${user.username}`}><div style={{textAlign:"center"}}>{user.name}</div></Link>
-                                                            <div style={{paddingTop:10,textAlign:"center"}}>{formatDateDayMonth(user.birthday)}</div>
-                                                        </div>
-                                                    </div>}
-                                                </div>
-                                        )
-                                    }
-                                </div>
-                            ):null
-                        }
-                    </Col>
-                </Row>
-            </div>
+            <Row>
+                <NavigationPanel/>
+                <Col sm={{size: 2}} style={{backgroundColor:'white', borderRadius:10,height:'100%', width: '25%'}}>
+                    {
+                        this.state.user ? (
+                            <div>
+                                {
+                                    this.state.user.map(
+                                        user =>
+                                            <div>
+                                                {(user.id % 3 === 1) &&
+                                                <div className='birthday-block'>
+                                                    <div className='birthday-block-content'>
+                                                        <Link to={`/users/${user.username}`}><div style={{textAlign:"center"}}>{user.name}</div></Link>
+                                                        <div style={{paddingTop:10,textAlign:"center"}}>{formatDateDayMonth(user.birthday)}</div>
+                                                    </div>
+                                                </div>}
+                                            </div>
+                                    )
+                                }
+                            </div>
+                        ):null
+                    }
+                </Col>
+                <Col sm={{size: 2,offset:1}} style={{backgroundColor:'white', borderRadius:10, height:'35%', width: '25%'}}>
+                    {
+                        this.state.user ? (
+                            <div>
+                                {
+                                    this.state.user.map(
+                                        user =>
+                                            <div>
+                                                {(user.id % 3 === 2) &&
+                                                <div className='birthday-block'>
+                                                    <div className='birthday-block-content'>
+                                                        <Link to={`/users/${user.username}`}><div style={{textAlign:"center"}}>{user.name}</div></Link>
+                                                        <div style={{paddingTop:10,textAlign:"center"}}>{formatDateDayMonth(user.birthday)}</div>
+                                                    </div>
+                                                </div>}
+                                            </div>
+                                    )
+                                }
+                            </div>
+                        ):null
+                    }
+                </Col>
+                <Col sm={{size: 2,offset:1}} style={{backgroundColor:'white', borderRadius:10, height: '100%', width: '25%'}}>
+                    {
+                        this.state.user ? (
+                            <div>
+                                {
+                                    this.state.user.map(
+                                        user =>
+                                            <div>
+                                                {(user.id % 3 === 0) &&
+                                                <div className='birthday-block'>
+                                                    <div className='birthday-block-content'>
+                                                        <Link to={`/users/${user.username}`}><div style={{textAlign:"center"}}>{user.name}</div></Link>
+                                                        <div style={{paddingTop:10,textAlign:"center"}}>{formatDateDayMonth(user.birthday)}</div>
+                                                    </div>
+                                                </div>}
+                                            </div>
+                                    )
+                                }
+                            </div>
+                        ):null
+                    }
+                </Col>
+            </Row>
         )
     }
 

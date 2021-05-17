@@ -110,86 +110,84 @@ class UsersListEdit extends Component {
         }
 
         return (
-            <div>
-                <Row>
-                    <NavigationPanel/>
-                    <Col sm={{ size: 4.4 }} style={{backgroundColor: 'white',borderRadius:10,overflow: 'auto', height:'100%',paddingBottom:20, width: '75%'}}>
-                <div>
-                    <Form>
-                        <Row style={{width:'auto', marginRight: '1%', marginLeft: '1%'}}>
-                            <Input placeholder='Поиск'
-                                   className='search-bar'
-                                   id="FIO" name='FIO' type='text'
-                                   value={this.state.FIO.value}
-                                   onChange={(event) => {this.handleInputChange(event)}}
-                            />
-                            <img src={search} width={25} height={25} alt='Search' className='search-image'/>
-                        </Row>
-                    </Form>
-                </div>
-                {
-                    this.state.user ? (
-                        <div style={{marginRight: '1%', marginLeft: '1%', overflowX: 'auto'}}>
-                            <ListGroup horizontal className='table-top-line' key={"TABLE"}>
-                                <ListGroupItem style={{width:'25%', overflowX: 'auto'}} key={"FIO"}>Фио</ListGroupItem>
-                                <ListGroupItem style={{width:'9%', overflowX: 'auto'}} key={"STATUS"}><div style={{marginLeft:-10}}>Статус</div></ListGroupItem>
-                                <ListGroupItem style={{width:'18%', overflowX: 'auto'}} key={"POSITION"}>Должность</ListGroupItem>
-                                <ListGroupItem style={{width:'19%', overflowX: 'auto'}} key={"DEPARTMENT"}>Департамент</ListGroupItem>
-                                <ListGroupItem style={{width:'29%', overflowX: 'auto'}} key={"CONTACTS"}>Контактная информация</ListGroupItem>
-                            </ListGroup>
-                            {
-                                this.state.user.map(
-                                    user => //todo Пофиксить варнинг
-                                        ( this.setUserStatus(user.status.toLowerCase()) ||
-                                            (user.name.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1)
-                                            || (user.position.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1)
-                                            || (user.department.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1)
-                                            || (user.email.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1)
-                                            || (user.tg.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1)
-                                            || (user.phone.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1)
-                                            || (userStatus.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1))  &&
-                                        <div>
-                                            <ListGroup horizontal key={user.id}>
-                                                <ListGroupItem style={{width:'25%', overflowX: 'auto'}} key={user.id+'.1'} tag = 'a' href={`/users/${user.username}`}>{user.name}
-                                                </ListGroupItem>
-                                                <ListGroupItem style={{width:'9%', overflowX: 'auto'}} key={user.id+'.2'}>{this.SetUserStatus(user.status)}</ListGroupItem>
-                                                <ListGroupItem style={{width:'18%', overflowX: 'auto'}} key={user.id+'.3'}>
-                                                    <Input type='text' name='position' id='position'
-                                                           value={user.position}
-                                                           onChange={(event) => this.handleInputChange(event)}/></ListGroupItem>
-                                                <ListGroupItem style={{width:'19%', overflowX: 'auto'}} key={user.id+'.4'}>
-                                                    <Input type='text' name='position' id='position'
-                                                           value={user.department}
-                                                           onChange={(event) => this.handleInputChange(event)}/></ListGroupItem>
-                                                <ListGroupItem style={{width:'29%', overflowX: 'auto'}} key={user.id+'.5'}>
-                                                    <Input type='text' name='position' id='position'
-                                                           value={user.email}
-                                                           onChange={(event) => this.handleInputChange(event)}/>
-                                                    <Input type='text' name='position' id='position'
-                                                           value={user.phone}
-                                                           onChange={(event) => this.handleInputChange(event)}/>
-                                                    <Input type='text' name='position' id='position'
-                                                           value={user.tg}
-                                                           onChange={(event) => this.handleInputChange(event)}/>
-                                                    {user.username !== this.state.CurUser.currentUser.username && <Button size='sm' color='danger' style={{height:30, marginTop:5}} key={user.id+'.6'} onClick={() => this.DeleteUser(user.id)}>Удалить сотрудника</Button>}
-                                                </ListGroupItem>
+            <Row>
+                <NavigationPanel/>
+                <Col sm={{ size: 4.4 }} style={{backgroundColor: 'white',borderRadius:10,overflow: 'auto', height:'100%',paddingBottom:20, width: '75%'}}>
+                    <div>
+                        <Form>
+                            <Row style={{width:'auto', marginRight: '1%', marginLeft: '1%'}}>
+                                <Input placeholder='Поиск'
+                                       className='search-bar'
+                                       id="FIO" name='FIO' type='text'
+                                       value={this.state.FIO.value}
+                                       onChange={(event) => {this.handleInputChange(event)}}
+                                />
+                                <img src={search} width={25} height={25} alt='Search' className='search-image'/>
+                            </Row>
+                        </Form>
+                    </div>
+                    {
+                        this.state.user ? (
+                            <div style={{marginRight: '1%', marginLeft: '1%', overflowX: 'auto'}}>
+                                <ListGroup horizontal className='table-top-line' key={"TABLE"}>
+                                    <ListGroupItem style={{width:'25%', overflowX: 'auto'}} key={"FIO"}>Фио</ListGroupItem>
+                                    <ListGroupItem style={{width:'9%', overflowX: 'auto'}} key={"STATUS"}><div style={{marginLeft:-10}}>Статус</div></ListGroupItem>
+                                    <ListGroupItem style={{width:'18%', overflowX: 'auto'}} key={"POSITION"}>Должность</ListGroupItem>
+                                    <ListGroupItem style={{width:'19%', overflowX: 'auto'}} key={"DEPARTMENT"}>Департамент</ListGroupItem>
+                                    <ListGroupItem style={{width:'29%', overflowX: 'auto'}} key={"CONTACTS"}>Контактная информация</ListGroupItem>
+                                </ListGroup>
+                                {
+                                    this.state.user.map(
+                                        user => //todo Пофиксить варнинг
+                                            ( this.setUserStatus(user.status.toLowerCase()) ||
+                                                (user.name.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1)
+                                                || (user.position.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1)
+                                                || (user.department.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1)
+                                                || (user.email.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1)
+                                                || (user.tg.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1)
+                                                || (user.phone.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1)
+                                                || (userStatus.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1))  &&
+                                            <div>
+                                                <ListGroup horizontal key={user.id}>
+                                                    <ListGroupItem style={{width:'25%', overflowX: 'auto'}} key={user.id+'.1'} tag = 'a' href={`/users/${user.username}`}>{user.name}
+                                                    </ListGroupItem>
+                                                    <ListGroupItem style={{width:'9%', overflowX: 'auto'}} key={user.id+'.2'}>{this.SetUserStatus(user.status)}</ListGroupItem>
+                                                    <ListGroupItem style={{width:'18%', overflowX: 'auto'}} key={user.id+'.3'}>
+                                                        <Input type='text' name='position' id='position'
+                                                               value={user.position}
+                                                               onChange={(event) => this.handleInputChange(event)}/></ListGroupItem>
+                                                    <ListGroupItem style={{width:'19%', overflowX: 'auto'}} key={user.id+'.4'}>
+                                                        <Input type='text' name='position' id='position'
+                                                               value={user.department}
+                                                               onChange={(event) => this.handleInputChange(event)}/></ListGroupItem>
+                                                    <ListGroupItem style={{width:'29%', overflowX: 'auto'}} key={user.id+'.5'}>
+                                                        <Input type='text' name='position' id='position'
+                                                               value={user.email}
+                                                               onChange={(event) => this.handleInputChange(event)}/>
+                                                        <Input type='text' name='position' id='position'
+                                                               value={user.phone}
+                                                               onChange={(event) => this.handleInputChange(event)}/>
+                                                        <Input type='text' name='position' id='position'
+                                                               value={user.tg}
+                                                               onChange={(event) => this.handleInputChange(event)}/>
+                                                        {user.username !== this.state.CurUser.currentUser.username && <Button size='sm' color='danger' style={{height:30, marginTop:5}} key={user.id+'.6'} onClick={() => this.DeleteUser(user.id)}>Удалить сотрудника</Button>}
+                                                    </ListGroupItem>
 
-                                            </ListGroup>
-                                        </div>
-                                )
-                            }
-                        </div>
-                    ):null
-                }
-                <Button size="sm" href='/users' style={{marginTop:10, marginLeft:10}} className='add-button'>
-                    Сохранить
-                </Button>
-                <Button size="sm" href='/newUser' style={{marginTop:10, marginLeft:10}} className='add-button'>
-                    Добавить сотрудника
-                </Button>
-                    </Col>
-                </Row>
-            </div>
+                                                </ListGroup>
+                                            </div>
+                                    )
+                                }
+                            </div>
+                        ):null
+                    }
+                    <Button size="sm" href='/users' style={{marginTop:10, marginLeft:10}} className='add-button'>
+                        Сохранить
+                    </Button>
+                    <Button size="sm" href='/newUser' style={{marginTop:10, marginLeft:10}} className='add-button'>
+                        Добавить сотрудника
+                    </Button>
+                </Col>
+            </Row>
         )
     }
 

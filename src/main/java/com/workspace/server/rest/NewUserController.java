@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;
 import java.util.Collections;
@@ -87,7 +87,7 @@ public class NewUserController {
 
         String content = "<p>Добро пожаловать!</p>"
                 + "<p>Вы были зарегистрированы в системе и теперь можете перейти к ней по ссылке:</p>"
-                + "<p><a href=\"http://localhost:3000\">Перейти к системе</a></p>"
+                + "<p><a href=\"https://my-workspace.ml/\">Перейти к системе</a></p>"
                 + "<p>Ваш логин: " + username + "</p>"
                 + "<p>Ваш пароль: " + password + "</p>";
 

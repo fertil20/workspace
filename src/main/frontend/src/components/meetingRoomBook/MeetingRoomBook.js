@@ -72,8 +72,8 @@ export default class MeetingRoomBook extends Component {
                 this._isMounted && this.setState({meetingRooms: response})
                 MeetingRooms = <DropdownMenu>{this.state.meetingRooms ? (<div>{
                     this.state.meetingRooms.map(
-                    room =>
-                        <DropdownItem onClick={() => this.changeRoom(room.id)}>Переговорная {room.id}</DropdownItem>
+                        room =>
+                            <DropdownItem onClick={() => this.changeRoom(room.id)}>Переговорная {room.id}</DropdownItem>
                     )}</div>):null}</DropdownMenu>
                 RoomAbout = <div>
                     <div style={{fontWeight:'bold'}}>Описание: </div><div>{response[0].about}</div>
@@ -382,129 +382,127 @@ export default class MeetingRoomBook extends Component {
     render() {
         return (
             <div>
-                <div>
-                    <Modal isOpen={this.state.toggleEvent} toggle={this.changeEventToggle}>
-                        <ModalHeader toggle={this.changeEventToggle}>
-                            {EventName}
-                        </ModalHeader>
-                        <ModalBody>
-                            {EventBody}
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button color="primary" onClick={() => this.changeEventToggle()}>Понятно</Button>{' '}
-                        </ModalFooter>
-                    </Modal>
-                    <Modal isOpen={this.state.toggle} toggle={this.changeToggle}>
-                        <ModalHeader toggle={this.changeToggle}>
-                            <div>Забронировать переговорную {this.state.currentRoom}</div>
-                            <div>{formatDate(this.state.CurrentEvent.dateStr)} Организатор: {this.state.user.currentUser.name}
-                                <Input type='text' name='title'
-                                       placeholder='Введите название встречи'
-                                       value={this.state.title.value}
-                                       onChange={(event) => this.handleInputChange(event)}
-                                /></div>
-                        </ModalHeader>
-                        <ModalBody>
-                            <Row>
-                                <Col>
-                                    <div style={{marginBottom: 5}}>Время:</div>
-                                    {(TimeArray[0] === 0) &&
-                                    <Button size='sm' color='primary' className='time-block-empty'
-                                            onClick={() => this.changeColor(0)}>Свободно 9:00-10:00</Button>}
-                                    {(TimeArray[0] === 1) &&
-                                    <Button size='sm' color='danger' className='time-block-booked'>Занято</Button>}
-                                    {(TimeArray[0] === 2) &&
-                                    <Button size='sm' color='success' className='time-block-booked'
-                                            onClick={() => this.changeColor(0)}>Бронь 9:00-10:00</Button>}
+                <Modal isOpen={this.state.toggleEvent} toggle={this.changeEventToggle}>
+                    <ModalHeader toggle={this.changeEventToggle}>
+                        {EventName}
+                    </ModalHeader>
+                    <ModalBody>
+                        {EventBody}
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={() => this.changeEventToggle()}>Понятно</Button>{' '}
+                    </ModalFooter>
+                </Modal>
+                <Modal isOpen={this.state.toggle} toggle={this.changeToggle}>
+                    <ModalHeader toggle={this.changeToggle}>
+                        <div>Забронировать переговорную {this.state.currentRoom}</div>
+                        <div>{formatDate(this.state.CurrentEvent.dateStr)} Организатор: {this.state.user.currentUser.name}
+                            <Input type='text' name='title'
+                                   placeholder='Введите название встречи'
+                                   value={this.state.title.value}
+                                   onChange={(event) => this.handleInputChange(event)}
+                            /></div>
+                    </ModalHeader>
+                    <ModalBody>
+                        <Row>
+                            <Col>
+                                <div style={{marginBottom: 5}}>Время:</div>
+                                {(TimeArray[0] === 0) &&
+                                <Button size='sm' color='primary' className='time-block-empty'
+                                        onClick={() => this.changeColor(0)}>Свободно 9:00-10:00</Button>}
+                                {(TimeArray[0] === 1) &&
+                                <Button size='sm' color='danger' className='time-block-booked'>Занято</Button>}
+                                {(TimeArray[0] === 2) &&
+                                <Button size='sm' color='success' className='time-block-booked'
+                                        onClick={() => this.changeColor(0)}>Бронь 9:00-10:00</Button>}
 
-                                    {(TimeArray[1] === 0) &&
-                                    <Button size='sm' color='primary' className='time-block-empty'
-                                            onClick={() => this.changeColor(1)}>Свободно 10:00-11:00</Button>}
-                                    {(TimeArray[1] === 1) &&
-                                    <Button size='sm' color='danger' className='time-block-booked'>Занято</Button>}
-                                    {(TimeArray[1] === 2) &&
-                                    <Button size='sm' color='success' className='time-block-booked'
-                                            onClick={() => this.changeColor(1)}>Бронь 10:00-11:00</Button>}
+                                {(TimeArray[1] === 0) &&
+                                <Button size='sm' color='primary' className='time-block-empty'
+                                        onClick={() => this.changeColor(1)}>Свободно 10:00-11:00</Button>}
+                                {(TimeArray[1] === 1) &&
+                                <Button size='sm' color='danger' className='time-block-booked'>Занято</Button>}
+                                {(TimeArray[1] === 2) &&
+                                <Button size='sm' color='success' className='time-block-booked'
+                                        onClick={() => this.changeColor(1)}>Бронь 10:00-11:00</Button>}
 
-                                    {(TimeArray[2] === 0) &&
-                                    <Button size='sm' color='primary' className='time-block-empty'
-                                            onClick={() => this.changeColor(2)}>Свободно 11:00-12:00</Button>}
-                                    {(TimeArray[2] === 1) &&
-                                    <Button size='sm' color='danger' className='time-block-booked'>Занято</Button>}
-                                    {(TimeArray[2] === 2) &&
-                                    <Button size='sm' color='success' className='time-block-booked'
-                                            onClick={() => this.changeColor(2)}>Бронь 11:00-12:00</Button>}
+                                {(TimeArray[2] === 0) &&
+                                <Button size='sm' color='primary' className='time-block-empty'
+                                        onClick={() => this.changeColor(2)}>Свободно 11:00-12:00</Button>}
+                                {(TimeArray[2] === 1) &&
+                                <Button size='sm' color='danger' className='time-block-booked'>Занято</Button>}
+                                {(TimeArray[2] === 2) &&
+                                <Button size='sm' color='success' className='time-block-booked'
+                                        onClick={() => this.changeColor(2)}>Бронь 11:00-12:00</Button>}
 
-                                    {(TimeArray[3] === 0) &&
-                                    <Button size='sm' color='primary' className='time-block-empty'
-                                            onClick={() => this.changeColor(3)}>Свободно 12:00-13:00</Button>}
-                                    {(TimeArray[3] === 1) &&
-                                    <Button size='sm' color='danger' className='time-block-booked'>Занято</Button>}
-                                    {(TimeArray[3] === 2) &&
-                                    <Button size='sm' color='success' className='time-block-booked'
-                                            onClick={() => this.changeColor(3)}>Бронь 12:00-13:00</Button>}
+                                {(TimeArray[3] === 0) &&
+                                <Button size='sm' color='primary' className='time-block-empty'
+                                        onClick={() => this.changeColor(3)}>Свободно 12:00-13:00</Button>}
+                                {(TimeArray[3] === 1) &&
+                                <Button size='sm' color='danger' className='time-block-booked'>Занято</Button>}
+                                {(TimeArray[3] === 2) &&
+                                <Button size='sm' color='success' className='time-block-booked'
+                                        onClick={() => this.changeColor(3)}>Бронь 12:00-13:00</Button>}
 
-                                    {(TimeArray[4] === 0) &&
-                                    <Button size='sm' color='primary' className='time-block-empty'
-                                            onClick={() => this.changeColor(4)}>Свободно 13:00-14:00</Button>}
-                                    {(TimeArray[4] === 1) &&
-                                    <Button size='sm' color='danger' className='time-block-booked'>Занято</Button>}
-                                    {(TimeArray[4] === 2) &&
-                                    <Button size='sm' color='success' className='time-block-booked'
-                                            onClick={() => this.changeColor(4)}>Бронь 13:00-14:00</Button>}
+                                {(TimeArray[4] === 0) &&
+                                <Button size='sm' color='primary' className='time-block-empty'
+                                        onClick={() => this.changeColor(4)}>Свободно 13:00-14:00</Button>}
+                                {(TimeArray[4] === 1) &&
+                                <Button size='sm' color='danger' className='time-block-booked'>Занято</Button>}
+                                {(TimeArray[4] === 2) &&
+                                <Button size='sm' color='success' className='time-block-booked'
+                                        onClick={() => this.changeColor(4)}>Бронь 13:00-14:00</Button>}
 
-                                    {(TimeArray[5] === 0) &&
-                                    <Button size='sm' color='primary' className='time-block-empty'
-                                            onClick={() => this.changeColor(5)}>Свободно 14:00-15:00</Button>}
-                                    {(TimeArray[5] === 1) &&
-                                    <Button size='sm' color='danger' className='time-block-booked'>Занято</Button>}
-                                    {(TimeArray[5] === 2) &&
-                                    <Button size='sm' color='success' className='time-block-booked'
-                                            onClick={() => this.changeColor(5)}>Бронь 14:00-15:00</Button>}
+                                {(TimeArray[5] === 0) &&
+                                <Button size='sm' color='primary' className='time-block-empty'
+                                        onClick={() => this.changeColor(5)}>Свободно 14:00-15:00</Button>}
+                                {(TimeArray[5] === 1) &&
+                                <Button size='sm' color='danger' className='time-block-booked'>Занято</Button>}
+                                {(TimeArray[5] === 2) &&
+                                <Button size='sm' color='success' className='time-block-booked'
+                                        onClick={() => this.changeColor(5)}>Бронь 14:00-15:00</Button>}
 
-                                    {(TimeArray[6] === 0) &&
-                                    <Button size='sm' color='primary' className='time-block-empty'
-                                            onClick={() => this.changeColor(6)}>Свободно 15:00-16:00</Button>}
-                                    {(TimeArray[6] === 1) &&
-                                    <Button size='sm' color='danger' className='time-block-booked'>Занято</Button>}
-                                    {(TimeArray[6] === 2) &&
-                                    <Button size='sm' color='success' className='time-block-booked'
-                                            onClick={() => this.changeColor(6)}>Бронь 15:00-16:00</Button>}
+                                {(TimeArray[6] === 0) &&
+                                <Button size='sm' color='primary' className='time-block-empty'
+                                        onClick={() => this.changeColor(6)}>Свободно 15:00-16:00</Button>}
+                                {(TimeArray[6] === 1) &&
+                                <Button size='sm' color='danger' className='time-block-booked'>Занято</Button>}
+                                {(TimeArray[6] === 2) &&
+                                <Button size='sm' color='success' className='time-block-booked'
+                                        onClick={() => this.changeColor(6)}>Бронь 15:00-16:00</Button>}
 
-                                    {(TimeArray[7] === 0) &&
-                                    <Button size='sm' color='primary' className='time-block-empty'
-                                            onClick={() => this.changeColor(7)}>Свободно 16:00-17:00</Button>}
-                                    {(TimeArray[7] === 1) &&
-                                    <Button size='sm' color='danger' className='time-block-booked'>Занято</Button>}
-                                    {(TimeArray[7] === 2) &&
-                                    <Button size='sm' color='success' className='time-block-booked'
-                                            onClick={() => this.changeColor(7)}>Бронь 16:00-17:00</Button>}
+                                {(TimeArray[7] === 0) &&
+                                <Button size='sm' color='primary' className='time-block-empty'
+                                        onClick={() => this.changeColor(7)}>Свободно 16:00-17:00</Button>}
+                                {(TimeArray[7] === 1) &&
+                                <Button size='sm' color='danger' className='time-block-booked'>Занято</Button>}
+                                {(TimeArray[7] === 2) &&
+                                <Button size='sm' color='success' className='time-block-booked'
+                                        onClick={() => this.changeColor(7)}>Бронь 16:00-17:00</Button>}
 
-                                    {(TimeArray[8] === 0) &&
-                                    <Button size='sm' color='primary' className='time-block-empty'
-                                            onClick={() => this.changeColor(8)}>Свободно 17:00-18:00</Button>}
-                                    {(TimeArray[8] === 1) &&
-                                    <Button size='sm' color='danger' className='time-block-booked'>Занято</Button>}
-                                    {(TimeArray[8] === 2) &&
-                                    <Button size='sm' color='success' className='time-block-booked'
-                                            onClick={() => this.changeColor(8)}>Бронь 17:00-18:00</Button>}
-                                    <Row>
-                                        <div style={{marginLeft: 15}}>Бронь
-                                            с {this.state.timeOfStart} до {this.state.timeOfEnd}</div>
-                                    </Row>
-                                </Col>
-                                <Col>
-                                    <div>Участники:</div>
-                                    {Users}
-                                </Col>
-                            </Row>
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button color="danger" onClick={this.changeToggle}>Отмена</Button>{' '}
-                            <Button color="primary" onClick={() => this.createNewMeeting()}>Забронировать</Button>
-                        </ModalFooter>
-                    </Modal>
-                </div>
+                                {(TimeArray[8] === 0) &&
+                                <Button size='sm' color='primary' className='time-block-empty'
+                                        onClick={() => this.changeColor(8)}>Свободно 17:00-18:00</Button>}
+                                {(TimeArray[8] === 1) &&
+                                <Button size='sm' color='danger' className='time-block-booked'>Занято</Button>}
+                                {(TimeArray[8] === 2) &&
+                                <Button size='sm' color='success' className='time-block-booked'
+                                        onClick={() => this.changeColor(8)}>Бронь 17:00-18:00</Button>}
+                                <Row>
+                                    <div style={{marginLeft: 15}}>Бронь
+                                        с {this.state.timeOfStart} до {this.state.timeOfEnd}</div>
+                                </Row>
+                            </Col>
+                            <Col>
+                                <div>Участники:</div>
+                                {Users}
+                            </Col>
+                        </Row>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="danger" onClick={this.changeToggle}>Отмена</Button>{' '}
+                        <Button color="primary" onClick={() => this.createNewMeeting()}>Забронировать</Button>
+                    </ModalFooter>
+                </Modal>
                 <Row>
                     <NavigationPanel/>
                     <Col sm={{size: 9}} style={{

@@ -1,17 +1,14 @@
 package com.workspace.server.service;
 
-import com.workspace.server.model.Meeting;
 import com.workspace.server.model.PasswordResetToken;
 import com.workspace.server.repository.MeetingRepository;
 import com.workspace.server.repository.UserRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.time.Duration;
+import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Optional;
 
 @Service
@@ -28,7 +25,7 @@ public class CleanerService {
     @Scheduled(cron = "0 0 0 * * ?") //every day at 00:00
     @Transactional
     public void clearMeeting() {
-        meetingRepository.deleteMeetingsByDateBefore(LocalDate.now());
+        meetingRepository.deleteMeetingsByDateBefore(LocalDate.now().plusYears(1));
         System.out.println("clearMeeting is Done");
     }
 

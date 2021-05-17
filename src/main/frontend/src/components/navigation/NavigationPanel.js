@@ -4,9 +4,8 @@ import './NavigationPanel.css';
 import {Link} from "react-router-dom";
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import calendar1 from './NavigationPanel.css'
 import interactionPlugin from "@fullcalendar/interaction";
-import {getMeetings, getUserEvents} from "../../util/APIUtils";
+import {getUserEvents} from "../../util/APIUtils";
 
 let EventName = ''
 let EventBody = ''

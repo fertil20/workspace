@@ -19,37 +19,35 @@ export default class News extends Component {
 
     render () {
         return(
-            <div>
-                <Row>
-                    <NavigationPanel/>
-                    <Col sm={{size:1.5}} style={{backgroundColor: 'white', borderRadius: 10,overflow: 'auto', height:'100%', paddingBottom: 20, marginRight: '2%', width: '53%'}}>
-                        <div style={{width:570}}>
-                            <div className='news-title'>Кто может получить выплаты и при каких условиях</div>
-                            <div className='news-date'>28.04.2021</div>
-                            <Row>
-                                <Col>
-                                    <div style={{width:200,paddingLeft:20}}><img src={nobody} alt='nobody' className='news-image'/></div>
-                                </Col>
-                                <Col >
-                                    <div style={{width:330}} className='news-text'>{NewsText1}</div>
-                                </Col>
-                            </Row>
-                            <div style={{width:560,paddingLeft:20,height:'auto',paddingTop:5,paddingBottom:25}} className='news-text'>{NewsText2}</div>
-                            {this.state.CurUser.currentUser.privileges.includes('Manage_News') && <div><Button disabled='true' size='sm' className='news-edit-button'>Редактировать</Button>
-                                <Button disabled='true' size='sm' color='danger' className='news-delete-button'>Удалить</Button></div>}
+            <Row>
+                <NavigationPanel/>
+                <Col sm={{size:1.5}} style={{backgroundColor: 'white', borderRadius: 10,overflow: 'auto', height:'100%', paddingBottom: 20, marginRight: '2%', width: '53%'}}>
+                    <div style={{width:570}}>
+                        <div className='news-title'>Кто может получить выплаты и при каких условиях</div>
+                        <div className='news-date'>28.04.2021</div>
+                        <Row>
+                            <Col>
+                                <div style={{width:200,paddingLeft:20}}><img src={nobody} alt='nobody' className='news-image'/></div>
+                            </Col>
+                            <Col >
+                                <div style={{width:330}} className='news-text'>{NewsText1}</div>
+                            </Col>
+                        </Row>
+                        <div style={{width:560,paddingLeft:20,height:'auto',paddingTop:5,paddingBottom:25}} className='news-text'>{NewsText2}</div>
+                        {this.state.CurUser.currentUser.privileges.includes('Manage_News') && <div><Button disabled='true' size='sm' className='news-edit-button'>Редактировать</Button>
+                            <Button disabled='true' size='sm' color='danger' className='news-delete-button'>Удалить</Button></div>}
+                    </div>
+                </Col>
+                <Col sm={{size:1.5}} style={{backgroundColor: 'white', borderRadius:10,overflow: 'auto', height:'100%', paddingBottom: 20, width: '20%'}}>
+                    <div style={{width:210}}>
+                        <div style={{margin:10}} >
+                            <div className='news-text'>Путин выплатит семьям со школьниками по 10 тысяч рублей</div>
+                            <div className='news-small'>28.04.2021</div>
                         </div>
-                    </Col>
-                    <Col sm={{size:1.5}} style={{backgroundColor: 'white', borderRadius:10,overflow: 'auto', height:'100%', paddingBottom: 20, width: '20%'}}>
-                        <div style={{width:210}}>
-                            <div style={{margin:10}} >
-                                <div className='news-text'>Путин выплатит семьям со школьниками по 10 тысяч рублей</div>
-                                <div className='news-small'>28.04.2021</div>
-                            </div>
-                            {this.state.CurUser.currentUser.privileges.includes('Manage_News') && <Button disabled='true' size='sm' className='news-add-button'>Добавить новость</Button>}
-                        </div>
-                    </Col>
-                </Row>
-            </div>
+                        {this.state.CurUser.currentUser.privileges.includes('Manage_News') && <Button disabled='true' size='sm' className='news-add-button'>Добавить новость</Button>}
+                    </div>
+                </Col>
+            </Row>
         )
     }
 }

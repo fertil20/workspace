@@ -35,7 +35,7 @@ public class ResetPasswordController {
         String token = RandomString.make(30);
 
         resetService.updateResetPasswordToken(token, email);
-        String resetPasswordLink = "http://localhost:3000/resetPassword?token=" + token;
+        String resetPasswordLink = "https://my-workspace.ml/resetPassword?token=" + token;
         sendEmail(email, resetPasswordLink);
     }
 

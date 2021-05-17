@@ -18,7 +18,7 @@ import {
     NavItem,
     Nav,
     NavLink,
-    TabContent, TabPane, FormGroup, Form
+    TabContent, TabPane
 } from 'reactstrap';
 import classnames from 'classnames';
 import React, {Component} from "react";
@@ -382,124 +382,122 @@ class RoleManager extends Component {
         }
 
         return (
-            <div className="profile"  >
-                <Row>
-                    <NavigationPanel/>
-                    <Col sm={{ size: 3.3 }} style={{backgroundColor: 'white', borderRadius:10, height:"auto", overflowY: 'auto', width: '25%',overflowX:'hidden',paddingBottom:20}}>
-                        <div className="column1-title">Группа доступа</div>
-                        <Button outline color="primary" size='sm' className="button-group" onClick={this.changeToggle}>+ Добавить группу доступа</Button>
-                        <div>
-                            <Modal isOpen={this.state.toggle} toggle={this.changeToggle}>
-                                <ModalHeader toggle={this.changeToggle}>Добавить новую группу</ModalHeader>
-                                <ModalBody>
-                                    <Input type="text" name="role" id="role" placeholder='Введите название роли'
-                                           value={this.state.role.value}
-                                           onChange={(event) => this.handleInputChange(event)}
-                                    />
-                                </ModalBody>
-                                <ModalFooter>
-                                    <Button color="danger" onClick={this.changeToggle}>Отмена</Button>{' '}
-                                    <Button color="primary" onClick={this.roleAddSubmit}>Добавить</Button>
-                                </ModalFooter>
-                            </Modal>
-                        </div>
-                        {
-                            this.state.roles ? (
-                                <div>
-                                    {
-                                        this.state.roles.map(
-                                            roles =>
-                                                <Row>
-                                                    <Col>
-                                                <Button outline color="primary" size='sm' className='button-text' onClick={() => this.showUsersByRole(roles.name)}>{roles.name}</Button>
-                                                    </Col>
-                                                    <Col >
-                                                        {((roles.name === 'Пользователь') || (roles.name === 'Администратор'))&& <Button disabled size='sm' outline color='danger' className='button-text'>Удалить</Button>}
-                                                        {((roles.name !== 'Пользователь') && (roles.name !== 'Администратор'))&& <Button size='sm' outline color='danger' className='button-text' onClick={()=> this.deleteRoleByRoleName(roles.name)}>Удалить</Button>}
-                                                    </Col>
-                                                </Row>
-                                        )
-                                    }
-                                </div>
-                            ):null
-                        }
-                    </Col>
-                    <Col sm={{size: 5.6}} style={{backgroundColor: 'white', borderRadius:10,overflowY: 'auto', height:'auto', marginLeft: '2%', width: '48%',overflowX:'hidden'}}>
-                        <Nav tabs>
-                            <NavItem style={{width:'50%'}}>
-                                <NavLink className={classnames({ active: this.state.activeTab === '1' })} onClick={() => this.setState({activeTab: '1'})} style={{cursor:'pointer'}}>
-                                    <div className="column2-title">Пользователи</div>
-                                </NavLink>
-                            </NavItem>
-                            <NavItem style={{width:'50%'}}>
-                                <NavLink className={classnames({ active: this.state.activeTab === '2' })} onClick={() => this.setState({activeTab: '2'})} style={{cursor:'pointer'}}>
-                                    <div className="column2-title">Права доступа</div>
-                                </NavLink>
-                            </NavItem>
-                        </Nav>
-                            <TabContent activeTab={this.state.activeTab}>
-                                <TabPane tabId="1">
-                                    <ButtonDropdown isOpen={this.state.toggleDropDown} toggle={this.changeToggleDropDown} style={{marginBottom:10, marginRight:340}}>
-                                        {((CurrentRole === 'Пользователь') || (CurrentRole ==='Администратор')) && <DropdownToggle disabled caret outline color="primary" size='sm' className='button-text'>
-                                            + Добавить пользователя
-                                        </DropdownToggle>}
-                                        {((CurrentRole !== 'Пользователь') && (CurrentRole !=='Администратор')) && <DropdownToggle caret outline color="primary" size='sm' className='button-text'>
-                                            + Добавить пользователя
-                                        </DropdownToggle>}
-                                        {UsersWithoutRole}
-                                    </ButtonDropdown>
-                                    {CurrentRole === '' && <div style={{margin:10,fontWeight:"bold"}}>Выберите группу доступа</div>}
-                                    {CurrentRole !== '' && <div style={{margin:10,fontWeight:"bold"}}>Пользователи с группой доступа <a style={{color:'#5380B7'}}>{CurrentRole}</a></div>}
-                                    {UsersByRole}
-                                </TabPane>
-                                <TabPane tabId="2">
-                                    {CurrentRole === '' && <div style={{margin:10,fontWeight:"bold"}}>Выберите группу доступа</div>}
-                                    {CurrentRole !== '' && <div style={{margin:10,fontWeight:"bold"}}>Права группы доступа <a style={{color:'#5380B7'}}>{CurrentRole}</a></div>}
-                                    {CurrentRole !=='' &&
-                                    <Row>
-                                        <Col >
-                                            <div className='role-column1'>Управление пользователями
-                                                <Input disabled={!CheckBoxAble} className='manageUsersCheckbox' type ='checkbox'  style={{right:25}} name='Manage_Users'
-                                                       onChange={(event)=> {this.handleCheckBoxState(event)}}
-                                                />
-                                            </div>
-                                            <div className='role-column'>Управление ролями
-                                                <Input disabled={!CheckBoxAble} className='manageRolesCheckbox' type ='checkbox' style={{right:25}} name='Manage_Roles'
-                                                       onChange={(event)=> {this.handleCheckBoxState(event)}}
-                                                />
-                                            </div>
-                                            <div className='role-column'>Просмотр карточки сотрудника
-                                                <Input disabled={!CheckBoxAble} className='viewSecretCheckbox' type ='checkbox' style={{right:25}} name='View_Secret'
-                                                       onChange={(event)=> {this.handleCheckBoxState(event)}}
-                                                />
-                                            </div>
-                                            <div className='role-column'>Редактирование карточек сотрудников
-                                                <Input disabled={!CheckBoxAble} className='editUsersCheckbox' type ='checkbox' style={{right:25}} name='Edit_Users'
-                                                       onChange={(event)=> {this.handleCheckBoxState(event)}}
-                                                />
-                                            </div>
-                                            <div className='role-column'>Курирование новостей
-                                                <Input disabled={!CheckBoxAble} className='manageNewsCheckbox' type ='checkbox' style={{right:25}} name='Manage_News'
-                                                       onChange={(event)=> {this.handleCheckBoxState(event)}}
-                                                />
-                                            </div>
-                                            <div className='role-column'>Редактирование контента "О компании"
-                                                <Input disabled={!CheckBoxAble} className='editAboutCheckbox' type ='checkbox' style={{right:25}} name='Edit_About'
-                                                       onChange={(event)=> {this.handleCheckBoxState(event)}}
-                                                />
-                                            </div>
-                                            <div className='role-column'>Бронирование переговорных
-                                                <Input disabled={!CheckBoxAble} className='booking' type ='checkbox' style={{right:25}} name='Booking'
-                                                       onChange={(event)=> {this.handleCheckBoxState(event)}}
-                                                />
-                                            </div>
-                                        </Col>
-                                    </Row>}
-                                </TabPane>
-                            </TabContent>
-                    </Col>
-                </Row>
-            </div>
+            <Row>
+                <NavigationPanel/>
+                <Col sm={{ size: 3.3 }} style={{backgroundColor: 'white', borderRadius:10, height:"auto", overflowY: 'auto', width: '25%',overflowX:'hidden',paddingBottom:20}}>
+                    <div className="column1-title">Группа доступа</div>
+                    <Button outline color="primary" size='sm' className="button-group" onClick={this.changeToggle}>+ Добавить группу доступа</Button>
+                    <div>
+                        <Modal isOpen={this.state.toggle} toggle={this.changeToggle}>
+                            <ModalHeader toggle={this.changeToggle}>Добавить новую группу</ModalHeader>
+                            <ModalBody>
+                                <Input type="text" name="role" id="role" placeholder='Введите название роли'
+                                       value={this.state.role.value}
+                                       onChange={(event) => this.handleInputChange(event)}
+                                />
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="danger" onClick={this.changeToggle}>Отмена</Button>{' '}
+                                <Button color="primary" onClick={this.roleAddSubmit}>Добавить</Button>
+                            </ModalFooter>
+                        </Modal>
+                    </div>
+                    {
+                        this.state.roles ? (
+                            <div>
+                                {
+                                    this.state.roles.map(
+                                        roles =>
+                                            <Row>
+                                                <Col>
+                                                    <Button outline color="primary" size='sm' className='button-text' onClick={() => this.showUsersByRole(roles.name)}>{roles.name}</Button>
+                                                </Col>
+                                                <Col >
+                                                    {((roles.name === 'Пользователь') || (roles.name === 'Администратор'))&& <Button disabled size='sm' outline color='danger' className='button-text'>Удалить</Button>}
+                                                    {((roles.name !== 'Пользователь') && (roles.name !== 'Администратор'))&& <Button size='sm' outline color='danger' className='button-text' onClick={()=> this.deleteRoleByRoleName(roles.name)}>Удалить</Button>}
+                                                </Col>
+                                            </Row>
+                                    )
+                                }
+                            </div>
+                        ):null
+                    }
+                </Col>
+                <Col sm={{size: 5.6}} style={{backgroundColor: 'white', borderRadius:10,overflowY: 'auto', height:'auto', marginLeft: '2%', width: '48%',overflowX:'hidden'}}>
+                    <Nav tabs>
+                        <NavItem style={{width:'50%'}}>
+                            <NavLink className={classnames({ active: this.state.activeTab === '1' })} onClick={() => this.setState({activeTab: '1'})} style={{cursor:'pointer'}}>
+                                <div className="column2-title">Пользователи</div>
+                            </NavLink>
+                        </NavItem>
+                        <NavItem style={{width:'50%'}}>
+                            <NavLink className={classnames({ active: this.state.activeTab === '2' })} onClick={() => this.setState({activeTab: '2'})} style={{cursor:'pointer'}}>
+                                <div className="column2-title">Права доступа</div>
+                            </NavLink>
+                        </NavItem>
+                    </Nav>
+                    <TabContent activeTab={this.state.activeTab}>
+                        <TabPane tabId="1">
+                            <ButtonDropdown isOpen={this.state.toggleDropDown} toggle={this.changeToggleDropDown} style={{marginBottom:10, marginRight:340}}>
+                                {((CurrentRole === 'Пользователь') || (CurrentRole ==='Администратор')) && <DropdownToggle disabled caret outline color="primary" size='sm' className='button-text'>
+                                    + Добавить пользователя
+                                </DropdownToggle>}
+                                {((CurrentRole !== 'Пользователь') && (CurrentRole !=='Администратор')) && <DropdownToggle caret outline color="primary" size='sm' className='button-text'>
+                                    + Добавить пользователя
+                                </DropdownToggle>}
+                                {UsersWithoutRole}
+                            </ButtonDropdown>
+                            {CurrentRole === '' && <div style={{margin:10,fontWeight:"bold"}}>Выберите группу доступа</div>}
+                            {CurrentRole !== '' && <div style={{margin:10,fontWeight:"bold"}}>Пользователи с группой доступа <a style={{color:'#5380B7'}}>{CurrentRole}</a></div>}
+                            {UsersByRole}
+                        </TabPane>
+                        <TabPane tabId="2">
+                            {CurrentRole === '' && <div style={{margin:10,fontWeight:"bold"}}>Выберите группу доступа</div>}
+                            {CurrentRole !== '' && <div style={{margin:10,fontWeight:"bold"}}>Права группы доступа <a style={{color:'#5380B7'}}>{CurrentRole}</a></div>}
+                            {CurrentRole !=='' &&
+                            <Row>
+                                <Col >
+                                    <div className='role-column1'>Управление пользователями
+                                        <Input disabled={!CheckBoxAble} className='manageUsersCheckbox' type ='checkbox'  style={{right:25}} name='Manage_Users'
+                                               onChange={(event)=> {this.handleCheckBoxState(event)}}
+                                        />
+                                    </div>
+                                    <div className='role-column'>Управление ролями
+                                        <Input disabled={!CheckBoxAble} className='manageRolesCheckbox' type ='checkbox' style={{right:25}} name='Manage_Roles'
+                                               onChange={(event)=> {this.handleCheckBoxState(event)}}
+                                        />
+                                    </div>
+                                    <div className='role-column'>Просмотр карточки сотрудника
+                                        <Input disabled={!CheckBoxAble} className='viewSecretCheckbox' type ='checkbox' style={{right:25}} name='View_Secret'
+                                               onChange={(event)=> {this.handleCheckBoxState(event)}}
+                                        />
+                                    </div>
+                                    <div className='role-column'>Редактирование карточек сотрудников
+                                        <Input disabled={!CheckBoxAble} className='editUsersCheckbox' type ='checkbox' style={{right:25}} name='Edit_Users'
+                                               onChange={(event)=> {this.handleCheckBoxState(event)}}
+                                        />
+                                    </div>
+                                    <div className='role-column'>Курирование новостей
+                                        <Input disabled={!CheckBoxAble} className='manageNewsCheckbox' type ='checkbox' style={{right:25}} name='Manage_News'
+                                               onChange={(event)=> {this.handleCheckBoxState(event)}}
+                                        />
+                                    </div>
+                                    <div className='role-column'>Редактирование контента "О компании"
+                                        <Input disabled={!CheckBoxAble} className='editAboutCheckbox' type ='checkbox' style={{right:25}} name='Edit_About'
+                                               onChange={(event)=> {this.handleCheckBoxState(event)}}
+                                        />
+                                    </div>
+                                    <div className='role-column'>Бронирование переговорных
+                                        <Input disabled={!CheckBoxAble} className='booking' type ='checkbox' style={{right:25}} name='Booking'
+                                               onChange={(event)=> {this.handleCheckBoxState(event)}}
+                                        />
+                                    </div>
+                                </Col>
+                            </Row>}
+                        </TabPane>
+                    </TabContent>
+                </Col>
+            </Row>
         );
     }
 }
