@@ -1,6 +1,8 @@
 package com.workspace.server.rest;
 
+import com.workspace.server.dto.NewsListResponse;
 import com.workspace.server.dto.NewsRequest;
+import com.workspace.server.dto.NewsResponse;
 import com.workspace.server.model.News;
 import com.workspace.server.repository.NewsRepository;
 import org.springframework.core.io.ByteArrayResource;
@@ -9,7 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/news")
@@ -22,8 +26,14 @@ public class NewsController {
     }
 
     @GetMapping("/see/{id}")
-    public News getNews(@PathVariable Long id) {
-        return newsRepository.getOne(id);
+    public Optional<NewsResponse> getNews(@PathVariable Long id) {
+        return newsRepository.findById(id)
+                .map(news -> new NewsResponse(
+                        news.getId(),
+                        news.getTitle(),
+                        news.getDate(),
+                        news.getTopText(),
+                        news.getBottomText()));
     }
 
     @GetMapping(value = "/see/{id}/image", produces = MediaType.IMAGE_JPEG_VALUE)
@@ -44,7 +54,24 @@ public class NewsController {
     }
 
     @GetMapping("/see")
-    public List<News> getAllNews() {
-        return newsRepository.findAll();
+    public Set<NewsResponse> getAllNews() {
+        return newsRepository.findAll().stream()
+                .map(news -> new NewsResponse(
+                        news.getId(),
+                        news.getTitle(),
+                        news.getDate(),
+                        news.getTopText(),
+                        news.getBottomText()))
+                .collect(Collectors.toSet());
+    }
+
+    @GetMapping("/list")
+    public Set<NewsListResponse> getListNews() {
+        return newsRepository.findAll().stream()
+                .map(news -> new NewsListResponse(
+                        news.getId(),
+                        news.getTitle(),
+                        news.getDate()))
+                .collect(Collectors.toSet());
     }
 }
