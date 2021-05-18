@@ -9,14 +9,8 @@ import java.util.Set;
 public class MeetingRequest {
     private Set<Long> usersId;
     private String title;
-    private LocalDate date;
     private String color;
-    private byte timeOfStart;
-    private byte timeOfEnd;
+    private Instant timeOfStart;
+    private Instant timeOfEnd;
     private String organizerName;
-
-    public Instant getInstant() {
-        return date.atStartOfDay().toInstant(ZoneOffset.UTC)
-                .plus(Duration.ofHours(timeOfStart));
-    }//todo Адаптировать время под разные часовые пояса
 }

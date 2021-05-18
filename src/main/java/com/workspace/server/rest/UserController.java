@@ -68,7 +68,6 @@ public class UserController {
                 .map(meeting -> new UserMeetingsResponse(
                         meeting.getId(),
                         meeting.getTitle(),
-                        meeting.getDate(),
                         meeting.getColor(),
                         meeting.getTimeOfStart(),
                         meeting.getTimeOfEnd(),

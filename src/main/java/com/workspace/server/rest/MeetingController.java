@@ -17,8 +17,7 @@ import org.springframework.web.server.NotAcceptableStatusException;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
-import java.time.Instant;
-import java.time.LocalDate;
+import java.time.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -65,7 +64,6 @@ public class MeetingController {
                 .map(meeting -> new MeetingsByRoomResponse(
                         meeting.getId(),
                         meeting.getTitle(),
-                        meeting.getDate(),
                         meeting.getColor(),
                         meeting.getTimeOfStart(),
                         meeting.getTimeOfEnd(),
@@ -82,10 +80,9 @@ public class MeetingController {
 
     @PostMapping("/room/{id}/newMeeting") //todo проверить свободное время пользователя и переговорной
     public void setNewMeeting(@PathVariable Long id, @RequestBody MeetingRequest request) {
-        if (request.getInstant().isAfter(Instant.now())) {
+        if (request.getTimeOfStart().isAfter(Instant.now(Clock.system(ZoneOffset.UTC)))) {
             Meeting meeting = new Meeting();
             meeting.setTitle(request.getTitle());
-            meeting.setDate(request.getDate());
             meeting.setColor(request.getColor());
             meeting.setTimeOfStart(request.getTimeOfStart());
             meeting.setTimeOfEnd(request.getTimeOfEnd());
@@ -128,12 +125,10 @@ public class MeetingController {
         mailSender.send(message);
     }
 
-    @GetMapping("/availableUsers/{date}/{timeOfStart}/{timeOfEnd}")
-    public List<MeetingUsersResponse> getMeetingNewUsers(@PathVariable String date,
-                                                         @PathVariable String timeOfStart,
+    @GetMapping("/availableUsers/{timeOfStart}/{timeOfEnd}")
+    public List<MeetingUsersResponse> getMeetingNewUsers(@PathVariable String timeOfStart,
                                                          @PathVariable String timeOfEnd) {
-        return userRepository.findAllAvailableUsers(LocalDate.parse(date),
-                Byte.parseByte(timeOfStart), Byte.parseByte(timeOfEnd))
+        return userRepository.findAllAvailableUsers(Instant.parse(timeOfStart), Instant.parse(timeOfEnd))
                 .stream().map(user -> new MeetingUsersResponse(user.getId(), user.getName()))
                 .collect(Collectors.toList());
     }

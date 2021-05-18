@@ -10,11 +10,4 @@ public class NewsRequest {
     private String topText;
     private String bottomText;
     private MultipartFile multipartImage;
-
-    public NewsRequest(String title, String topText, String bottomText, MultipartFile multipartImage) {
-        this.title = title;
-        this.topText = topText;
-        this.bottomText = bottomText;
-        this.multipartImage = multipartImage;
-    }
 }
