@@ -4,14 +4,14 @@ import './News.css';
 import NavigationPanel from "../navigation/NavigationPanel";
 import {Row, Col, Button, Input} from 'reactstrap';
 import ShortNews from "./newsShort";
-import {deleteNews, loadNews} from "../../util/APIUtils";
+import {deleteNews, loadNews, loadNewsByID} from "../../util/APIUtils";
 import {Link} from "react-router-dom";
 
 let NewsText1 = 'Пособия могут получать семьи, в которых доход на человека меньше прожиточного минимума — 1203 руб. Напомним, что до первого апреля сумма пособия была размером с половину прожиточного минимума на душу населения, а уже с первого апреля есть возможность пересчитать её. Половина останется, если в семье получаемая соответственная сумма прожиточного минимума выходит на среднедушевой доход.'
 let NewsText2 = 'И если даже 75% не позволяет семье выйти на хороший уровень дохода, то размер пособия будет составлять 100% прожиточного минимума, — говорит Исаева.\n' +
     'Также с апреля текущего месяца будет учитываться доход семьи с декабря 2019 по ноябрь 2020. Что касается изменений в показаниях к доступности выплат определенным категориям населения, изменения затронули семьи, в которых проходит обучение студент-очник возрастом не более 23 лет; семьи с детьми-инвалидами (сумма будет поступать без учёта компенсационных выплат по уходу за детьми с ОВЗ); семьи-опекуны.'
 
-export default class News extends Component {
+export default class NewsOne extends Component {
 
     constructor(props) {
         super(props);
@@ -19,12 +19,12 @@ export default class News extends Component {
             CurUser: JSON.parse(localStorage.getItem('app')),
             news: ''
         }
-        this.loadAllNews = this.loadAllNews.bind(this)
+        this.loadOneNews = this.loadOneNews.bind(this)
     }
 
     componentDidMount() {
         this._isMounted = true;
-        this.loadAllNews()
+        // this._isMounted && this.loadOneNews(this.props.match.params.id);
     }
 
 
@@ -32,15 +32,15 @@ export default class News extends Component {
         this._isMounted = false;
     }
 
-    loadAllNews(){
-        loadNews()
-            .then(response => {
-                this._isMounted && this.setState({news: response})
-                console.log(this.state.news)
-            })
-            .catch(error => {
-                alert('Что-то пошло не так.');
-            });
+    loadOneNews(id){
+        // loadNewsByID(id)
+        //     .then(response => {
+        //         this.setState({news: response})
+        //         console.log(this.state.news)
+        //     })
+        //     .catch(error => {
+        //         alert('Что-то пошло не так.');
+        //     });
     }
 
     deleteNewsByID(NewsId){
@@ -61,15 +61,10 @@ export default class News extends Component {
             <Row>
                 <NavigationPanel/>
                 <Col sm={{size:1.5}} style={{backgroundColor: 'white', borderRadius: 10,overflow: 'auto', height:'100%', paddingBottom: 20, marginRight: '2%', width: '53%'}}>
-                    {
-                        this.state.news ? (
-                            <div>
-                                {
-                                    this.state.news.map(
-                                        news =>
+
                                             <div style={{width:570, marginBottom:30}}>
-                                                <div className='news-title'>{news.title}</div>
-                                                <div className='news-date'>{news.date}</div>
+                                                <div className='news-title'>123</div>
+                                                <div className='news-date'>123</div>
                                                 <Row>
                                                     <Col>
                                                         <div style={{width:200,paddingLeft:20}}><img src={nobody} alt='nobody' className='news-image'/></div>
@@ -82,11 +77,6 @@ export default class News extends Component {
                                                 {this.state.CurUser.currentUser.privileges.includes('Manage_News') && <div><Link to='/news/edit'><Button size='sm' className='news-edit-button'>Редактировать</Button></Link>
                                                     <Button size='sm' color='danger' className='news-delete-button' onClick={()=>this.deleteNewsByID('id')}>Удалить</Button></div>}
                                             </div>
-                                    )
-                                }
-                            </div>
-                        ) : null
-                    }
                 </Col>
                 <ShortNews/>
             </Row>

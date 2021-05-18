@@ -21,6 +21,38 @@ const request = (options) => {
         .then((text) => text.length ? JSON.parse(text) : {})
 };
 
+
+export function addNews(addNewsRequest) {
+    return request({
+        url: API_BASE_URL + "/news/add",
+        method: 'POST',
+        body: JSON.stringify(addNewsRequest)
+    });
+}
+
+export function deleteNews(deleteNewsRequest) {
+    // return request({
+    //     url: API_BASE_URL + "/news",
+    //     method: 'POST',
+    //     body: JSON.stringify(deleteNewsRequest)
+    // });
+}
+
+export function loadNewsByID(id) {
+    return request({
+        url: API_BASE_URL + "/news/see/"+id,
+        method: 'GET',
+    });
+}
+
+export function loadNews() {
+    return request({
+        url: API_BASE_URL + "/news/see",
+        method: 'GET',
+    });
+}
+
+
 export function getFreeUsers(date, timeOfStart, timeOfEnd){
     return request({
         url: API_BASE_URL + "/meetings/availableUsers/" + date + "/" + timeOfStart + "/" + timeOfEnd,

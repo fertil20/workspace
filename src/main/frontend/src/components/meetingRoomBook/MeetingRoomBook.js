@@ -42,7 +42,10 @@ export default class MeetingRoomBook extends Component {
             user: JSON.parse(localStorage.getItem('app')),
             toggleEvent: false,
             meetingRooms: '',
-            currentRoom: 1
+            currentRoom: 1,
+            UTCBeg: '',
+            UTCEnd: '',
+            CurrentEventDate: '',
         }
         this.handleDateClick = this.handleDateClick.bind(this);
         this.changeRoom = this.changeRoom.bind(this);
@@ -97,6 +100,7 @@ export default class MeetingRoomBook extends Component {
     }
 
     handleDateClick = (arg) => {
+        this.state.CurrentEventDate = arg.date
         CurrentEventDate = arg.dateStr
         let date = new Date();
         date = date.toISOString().substr(0,10)
@@ -124,6 +128,12 @@ export default class MeetingRoomBook extends Component {
     }
 
     createNewMeeting() {
+        if(this.state.timeOfStart!=='-'&&this.state.timeOfEnd!=='-'){
+            this.state.CurrentEventDate.setHours(this.state.timeOfStart)
+            this.state.UTCBeg = this.state.CurrentEventDate.toUTCString()
+            this.state.CurrentEventDate.setHours(this.state.timeOfEnd)
+            this.state.UTCEnd = this.state.CurrentEventDate.toUTCString()
+        }
         const MeetingRequest = {
             title: this.state.title.value,
             date: CurrentEventDate,
@@ -131,7 +141,9 @@ export default class MeetingRoomBook extends Component {
             timeOfStart: this.state.timeOfStart,
             timeOfEnd: this.state.timeOfEnd,
             organizerName: this.state.user.currentUser.name,
-            usersId: this.state.usersOnMeeting
+            usersId: this.state.usersOnMeeting,
+            UTCBeg: this.state.UTCBeg,
+            UTCEnd: this.state.UTCEnd
         }
         if (MeetingRequest.title !== '' && MeetingRequest.timeOfStart !== '-' && MeetingRequest.usersId.length !== 0) {
             Meeting(MeetingRequest, this.state.currentRoom)

@@ -13,7 +13,6 @@
 .news-image {
     width:200px;
     height: 260px;
-    border-radius: 10px;
 }
 
 .news-text {
@@ -49,4 +48,20 @@
     float: bottom;
     background: #5380B7;
     border-radius: 10px;
+}
+
+.news-cancel {
+    margin-left: 30px;
+    height: 30px;
+    width: 150px;
+    float: bottom;
+    border-radius: 10px;
+}
+
+.news-publish {
+    height: 30px;
+    width: 150px;
+    border-radius: 10px;
+    margin-left: 30px;
+    background: #5380B7;
 }
