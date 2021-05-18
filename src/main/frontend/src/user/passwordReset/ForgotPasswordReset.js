@@ -96,7 +96,7 @@ export default class ForgotPasswordReset extends Component {
         }
         if (this.state.password1.validateStatus === 'short') {
             buttonDisabled = true
-            textContent = <div className='color-orange'>Пароль должен быть не менее 6 симолов</div>
+            textContent = <div className='color-orange'>Пароль должен быть не менее 6 символов</div>
         }
         if (this.state.password1.validateStatus === 'validatingSecond') {
             buttonDisabled = true

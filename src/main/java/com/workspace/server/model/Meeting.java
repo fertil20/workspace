@@ -5,8 +5,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Set;
 
 @Entity
@@ -37,6 +38,9 @@ public class Meeting {
 
     @Column(nullable=false)
     private String organizerName;
+/*
+    @Column(nullable = false)
+    private Instant meetingDateTime todo полностью передать время*/
 
     @ManyToMany
     @JoinTable(name = "meetings_users",
@@ -60,9 +64,4 @@ public class Meeting {
     public Meeting(MeetingRoom meetingRoom) {
         this.meetingRoom = meetingRoom;
     }
-/*
-    public Meeting(LocalDate date, Byte timeOfStart) {
-        this.timeOfStart = timeOfStart;
-        this.date = date;
-    }*/
 }
