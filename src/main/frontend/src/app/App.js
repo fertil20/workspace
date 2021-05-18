@@ -32,8 +32,11 @@ import AboutCompanyEdit from "../components/about/AboutCompanyEdit";
 import NewEmployee from "../components/about/NewEmployee";
 import NewEmployeeEdit from "../components/about/NewEmployeeEdit";
 import News from "../components/news/News";
+import addNews from "../components/news/addNews";
+import editNews from "../components/news/editNews";
 import birthdayPage from "../components/birthday/BirthdayPage";
 import MeetingRoomBook from "../components/meetingRoomBook/MeetingRoomBook";
+import NewsOne from "../components/news/NewsOne";
 const { Content } = Layout;
 
 class App extends Component {
@@ -134,6 +137,9 @@ class App extends Component {
                             <Route path="/signup" component={Signup}/>
                             <Route path="/forgotPassword" component={ForgotPassword}/>
                             <Route path="/resetPassword" component={ForgotPasswordReset}/>
+                            {/*<PrivateRoute exact path="/news/:id" authenticated={this.persistentState.getState().isAuthenticated} component={NewsOne} handleLogout={this.handleLogout}/>*/}
+                            <PrivateRoute exact path="/news/edit" authenticated={this.persistentState.getState().isAuthenticated} component={editNews} handleLogout={this.handleLogout}/>
+                            <PrivateRoute exact path="/news/add" authenticated={this.persistentState.getState().isAuthenticated} component={addNews} handleLogout={this.handleLogout}/>
                             <PrivateRoute exact path="/birthday" authenticated={this.persistentState.getState().isAuthenticated} component={birthdayPage} handleLogout={this.handleLogout}/>
                             <PrivateRoute exact path="/meeting" authenticated={this.persistentState.getState().isAuthenticated} component={MeetingRoomBook} handleLogout={this.handleLogout}/>
                             <PrivateRoute exact path="/news" authenticated={this.persistentState.getState().isAuthenticated} component={News} handleLogout={this.handleLogout}/>

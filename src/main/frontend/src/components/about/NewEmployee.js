@@ -47,9 +47,8 @@ export default class NewEmployee extends Component{
                                 <div style={{height:'auto',width:270}}>{OfficeAboutText2}</div>
                             </Col>
                             <Col>
-                                <div style={{height:'auto'}}>{OfficePhoneText}</div>
+                                <div style={{height:'auto',width:150}}>{OfficePhoneText}</div>
                             </Col>
-                            {this.state.CurUser.currentUser.privileges.includes('Edit_About') && <Button style={{marginRight:50}} disabled='true' size='sm' className='company-button' href='/about/newEmployee/edit'>Редактировать</Button>}
                         </Row>
                     </div>
                 </Col>

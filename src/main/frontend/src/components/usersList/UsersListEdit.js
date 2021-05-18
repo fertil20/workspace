@@ -149,30 +149,13 @@ class UsersListEdit extends Component {
                                                 || (userStatus.toLowerCase().indexOf(this.state.FIO.value.toLowerCase()) !== -1))  &&
                                             <div>
                                                 <ListGroup horizontal key={user.id}>
-                                                    <ListGroupItem style={{width:'25%', overflowX: 'auto'}} key={user.id+'.1'} tag = 'a' href={`/users/${user.username}`}>{user.name}
-                                                    </ListGroupItem>
+                                                    <ListGroupItem style={{width:'25%', overflowX: 'auto'}} key={user.id+'.1'} tag = 'a' href={`/users/${user.username}`}>{user.name}</ListGroupItem>
                                                     <ListGroupItem style={{width:'9%', overflowX: 'auto'}} key={user.id+'.2'}>{this.SetUserStatus(user.status)}</ListGroupItem>
-                                                    <ListGroupItem style={{width:'18%', overflowX: 'auto'}} key={user.id+'.3'}>
-                                                        <Input type='text' name='position' id='position'
-                                                               value={user.position}
-                                                               onChange={(event) => this.handleInputChange(event)}/></ListGroupItem>
-                                                    <ListGroupItem style={{width:'19%', overflowX: 'auto'}} key={user.id+'.4'}>
-                                                        <Input type='text' name='position' id='position'
-                                                               value={user.department}
-                                                               onChange={(event) => this.handleInputChange(event)}/></ListGroupItem>
-                                                    <ListGroupItem style={{width:'29%', overflowX: 'auto'}} key={user.id+'.5'}>
-                                                        <Input type='text' name='position' id='position'
-                                                               value={user.email}
-                                                               onChange={(event) => this.handleInputChange(event)}/>
-                                                        <Input type='text' name='position' id='position'
-                                                               value={user.phone}
-                                                               onChange={(event) => this.handleInputChange(event)}/>
-                                                        <Input type='text' name='position' id='position'
-                                                               value={user.tg}
-                                                               onChange={(event) => this.handleInputChange(event)}/>
+                                                    <ListGroupItem style={{width:'18%', overflowX: 'auto'}} key={user.id+'.3'}>{user.position}</ListGroupItem>
+                                                    <ListGroupItem style={{width:'19%', overflowX: 'auto'}} key={user.id+'.4'}>{user.department}</ListGroupItem>
+                                                    <ListGroupItem style={{width:'29%', overflowX: 'auto'}} key={user.id+'.5'}>{user.email}<br/>{user.phone}<br/>Telegram: @{user.tg}
                                                         {user.username !== this.state.CurUser.currentUser.username && <Button size='sm' color='danger' style={{height:30, marginTop:5}} key={user.id+'.6'} onClick={() => this.DeleteUser(user.id)}>Удалить сотрудника</Button>}
                                                     </ListGroupItem>
-
                                                 </ListGroup>
                                             </div>
                                     )

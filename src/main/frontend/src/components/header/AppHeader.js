@@ -80,12 +80,15 @@ function NavBarLogged(props){
                         <DropdownItem href="/">
                             Главная
                         </DropdownItem>
+                        <DropdownItem href={`/users/${props.currentUser.username}`}>
+                            Профиль
+                        </DropdownItem>
                         <DropdownItem href="/news">
                             Новости
                         </DropdownItem>
                         <DropdownItem divider />
-                        <DropdownItem href={`/users/${props.currentUser.username}`}>
-                            Профиль
+                        <DropdownItem href={`/forgotPassword`}>
+                            Сменить пароль
                         </DropdownItem>
                         <DropdownItem onClick={props.handleMenuClick} href="/login">
                             Выйти

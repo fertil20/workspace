@@ -6,6 +6,7 @@ import hello4 from "../../media/hello4.jpg";
 import './Home.css';
 import NavigationPanel from "../navigation/NavigationPanel";
 import {Row,Col} from 'reactstrap';
+import ShortNews from "../news/newsShort";
 
 const randomImg = (Math.floor(Math.random() * 6 + 1));
 
@@ -68,12 +69,7 @@ export default class Home extends Component {
                             <img src="https://sun9-30.userapi.com/impg/JI5Obz-cKWItsQEzj4uY4VhlqlfLs7Hmu2KkLw/IVf6VOJGAxg.jpg?size=1600x1374&quality=96&sign=50c4c0bebc35af815d0be0b582b1ae63&type=album" alt='Hello!' className="home"/>}
                         </div>
                     </Col>
-                    <Col sm={{size: 1.5}}
-                         style={{backgroundColor: 'white', borderRadius: 10,height: '100%', padding: 20, width: '20%'}}>
-                        <div>
-                            Новости
-                        </div>
-                    </Col>
+                    <ShortNews/>
                 </Row>
             )
         }
