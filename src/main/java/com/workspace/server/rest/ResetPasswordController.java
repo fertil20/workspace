@@ -81,6 +81,5 @@ public class ResetPasswordController {
         User user = resetService.getByResetPasswordToken(token);
 
         resetService.updatePassword(user, password);
-
     }
 }

@@ -81,7 +81,7 @@ function NavBarLogged(props){
                             Профиль
                         </DropdownItem>
                         <DropdownItem divider />
-                        <DropdownItem href={`/passwordReset`}>
+                        <DropdownItem href={`/changePassword`}>
                             Сменить пароль
                         </DropdownItem>
                         <DropdownItem onClick={props.handleMenuClick} href="/login">

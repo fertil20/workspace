@@ -85,6 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .antMatchers("/",
                         "/_ah/health",
                         "/_ah/start",
+                        "/_ah/stop",
                         "/health",
                         "/ready",
                         "/favicon.ico",

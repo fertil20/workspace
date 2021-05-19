@@ -66,8 +66,8 @@ public class MeetingController {
                         meeting.getId(),
                         meeting.getTitle(),
                         meeting.getColor(),
-                        meeting.getTimeOfStart(),
-                        meeting.getTimeOfEnd(),
+                        meeting.getTimeOfStart().plus(Duration.ofHours(3)),
+                        meeting.getTimeOfEnd().plus(Duration.ofHours(3)),
                         meeting.getOrganizerName(),
                         meeting.getUsers().stream()
                                 .map(user -> new MeetingUsersResponse(
@@ -81,12 +81,12 @@ public class MeetingController {
 
     @PostMapping("/room/{id}/newMeeting") //todo проверить свободное время пользователя и переговорной
     public void setNewMeeting(@PathVariable Long id, @RequestBody MeetingRequest request) {
-        if (request.getTimeOfStart().isAfter(LocalDateTime.now())) {
+        if (request.getTimeOfStart().isAfter(Instant.now())) {
             Meeting meeting = new Meeting();
             meeting.setTitle(request.getTitle());
             meeting.setColor(request.getColor());
-            meeting.setTimeOfStart(request.getTimeOfStart());
-            meeting.setTimeOfEnd(request.getTimeOfEnd());
+            meeting.setTimeOfStart(request.getTimeOfStart().minus(Duration.ofHours(3)));
+            meeting.setTimeOfEnd(request.getTimeOfEnd().minus(Duration.ofHours(3)));
             meeting.setOrganizerName(request.getOrganizerName());
             meeting.setUsers(new HashSet<>(userRepository.findAllById(request.getUsersId())));
             meeting.setMeetingRoom(meetingRoomRepository.getOne(id));

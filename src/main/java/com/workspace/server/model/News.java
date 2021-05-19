@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 
 @Entity
@@ -31,5 +32,5 @@ public class News {
 
     @Column(name = "picture")
     @Lob
-    byte[] picture;
+    byte[] picture = "Нет картинки".getBytes(StandardCharsets.UTF_8);
 }

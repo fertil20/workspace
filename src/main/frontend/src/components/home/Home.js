@@ -6,7 +6,7 @@ import hello4 from "../../media/hello4.jpg";
 import './Home.css';
 import NavigationPanel from "../navigation/NavigationPanel";
 import {Row,Col} from 'reactstrap';
-import ShortNews from "../news/newsShort";
+import ShortNews from "../news/NewsShort";
 
 const randomImg = (Math.floor(Math.random() * 6 + 1));
 

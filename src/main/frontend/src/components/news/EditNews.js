@@ -3,7 +3,7 @@ import defaultImg from "../../media/defaultImg.png";
 import './News.css';
 import NavigationPanel from "../navigation/NavigationPanel";
 import {Row, Col, Button, Input} from 'reactstrap';
-import ShortNews from "./newsShort";
+import ShortNews from "./NewsShort";
 import {deleteNews, editNews, loadImageByID, loadNews, loadNewsByID} from "../../util/APIUtils";
 import {formatDate} from "../../util/Helpers";
 import {Link} from "react-router-dom";
@@ -34,15 +34,6 @@ export default class NewsEdit extends Component {
         this.deleteNewsByID = this.deleteNewsByID.bind(this)
     }
 
-    componentDidMount() {
-        this._isMounted = true;
-    }
-
-
-    componentWillUnmount() {
-        this._isMounted = false;
-    }
-
     saveNews(){
         const addNewNewsRequest ={
             title: this.state.title.value,
@@ -50,7 +41,7 @@ export default class NewsEdit extends Component {
             text2: this.state.text2.value,
             file: this.state.file,
         }
-        editNews(addNewNewsRequest.title,addNewNewsRequest.text1,addNewNewsRequest.text2,addNewNewsRequest.file,this.state.id )
+        editNews(this.state.id, addNewNewsRequest.title,addNewNewsRequest.text1,addNewNewsRequest.text2,addNewNewsRequest.file,)
             .then(response => {
                 alert('Успешно отредактировано.')
                 this.props.history.push(`/news/show/`+this.state.id);
@@ -136,7 +127,7 @@ export default class NewsEdit extends Component {
                 <Col sm={{size:1.5}} style={{backgroundColor: 'white', borderRadius: 10,overflow: 'auto', height:'100%', paddingBottom: 20, marginRight: '2%', width: '53%'}}>
                     <div style={{width:570, marginBottom:30}}>
                         <div style={{paddingLeft:20,paddingTop:5}}>
-                            <Input name='title' type='text' placeholder='Заголовок новости' value={this.state.title.value}
+                            <Input name='title' type='text' placeholder='Заголовок новости' required value={this.state.title.value}
                                    onChange={(event)=>this.handleInputChange(event)}
                             />
                         </div>

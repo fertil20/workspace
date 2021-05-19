@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Set;
 
 @Entity
@@ -26,10 +26,10 @@ public class Meeting {
     private String color;
 
     @Column(nullable = false)
-    private LocalDateTime timeOfStart;
+    private Instant timeOfStart;
 
     @Column(nullable=false)
-    private LocalDateTime timeOfEnd;
+    private Instant timeOfEnd;
 
     @Column(nullable=false)
     private String organizerName;

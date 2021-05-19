@@ -36,7 +36,7 @@ const requestImage = (options) => {
 
 };
 
-export function addNews(title,topText,bottomText,ImageBlob) {
+export function addNews(title, topText, bottomText, ImageBlob) {
 
     let fd = new FormData()
     fd.append('title',title)
@@ -51,24 +51,24 @@ export function addNews(title,topText,bottomText,ImageBlob) {
     });
 }
 
-export function editNews(title,topText,bottomText,ImageBlob,id) {
+export function editNews(id, title, topText, bottomText, ImageBlob) {
 
     let fd = new FormData()
-    fd.append('id',id)
-    fd.append('multipartImage',ImageBlob)
     fd.append('title',title)
     fd.append('topText',topText)
     fd.append('bottomText',bottomText)
+    fd.append('multipartFile',ImageBlob)
     return requestImage({
         url: API_BASE_URL + "/news/edit/"+id,
         method: 'POST',
-        body: fd
+        body: fd,
+        headers:  new Headers({"Authorization": `Bearer ` + localStorage.getItem(ACCESS_TOKEN)})
     });
 }
 
-export function forgotPasswordReset(password) { //Возвращает пароль и токен
+export function changePassword(password, username) {
     return request({
-        url: API_BASE_URL + "/auth/resetPassword?token=",
+        url: API_BASE_URL + "/users/" + username + "/changePassword/",
         method: 'POST',
         body: password
     });
@@ -80,7 +80,6 @@ export function loadAllShorts(){
         method: 'GET'
     });
 }
-
 
 export function deleteNews(id) {
     return request({
@@ -110,7 +109,6 @@ export function loadNews() {
         method: 'GET',
     });
 }
-
 
 export function getFreeUsers(timeOfStart, timeOfEnd){
     return request({

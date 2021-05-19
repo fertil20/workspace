@@ -8,16 +8,16 @@ import com.workspace.server.repository.UserRepository;
 import com.workspace.server.security.CurrentUser;
 import com.workspace.server.security.UserPrincipal;
 import com.workspace.server.service.UserService;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.time.Duration;
-import java.time.Instant;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -72,8 +72,8 @@ public class UserController {
                         meeting.getId(),
                         meeting.getTitle(),
                         meeting.getColor(),
-                        meeting.getTimeOfStart(),
-                        meeting.getTimeOfEnd(),
+                        meeting.getTimeOfStart().plus(Duration.ofHours(3)),
+                        meeting.getTimeOfEnd().plus(Duration.ofHours(Long.parseLong(ZoneOffset.systemDefault().getId()))),
                         meeting.getOrganizerName(),
                         meeting.getUsers().stream()
                                 .map(user -> new MeetingUsersResponse(
@@ -84,5 +84,16 @@ public class UserController {
                         meeting.getMeetingRoom().getAbout(),
                         meeting.getMeetingRoom().getMaxPeople()))
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    @PostMapping("/{username}/changePassword")
+    public void changeUserPassword(@PathVariable String username, @RequestBody String password) {
+        User user = userRepository.findUserByUsername(username);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(password);
+        user.setPassword(encodedPassword);
+
+        userRepository.save(user);
     }
 }

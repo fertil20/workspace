@@ -264,13 +264,21 @@ export default class MeetingRoomBook extends Component {
     getTimeByEventDate(date) {
         this.state.events.map(
             events => {
-                if (events.timeOfStart.substr(0, 10) === date) {
-                    console.log(events.timeOfStart.substr(11, 2))
-                    let beg = events.timeOfStart.substr(11, 2) - 9
-                    let qua = events.timeOfEnd.substr(11, 2) - events.timeOfStart.substr(11, 0) + beg
+                let startTime = new Date(events.timeOfStart);
+                startTime =   new Date( startTime.getTime() - ( startTime.getTimezoneOffset() * 60000 ) )
+                let endTime = new Date(events.timeOfEnd);
+                endTime =   new Date( endTime.getTime() - ( endTime.getTimezoneOffset() * 60000 ) )
+                if (startTime.toISOString().substr(0, 10) === date) {
+                    console.log(startTime.toISOString().substr(11, 2))
+                    let beg = startTime.toISOString().substr(11, 2) - 9
+                    console.log(beg)
+                    let qua = startTime.toISOString().substr(11, 2) - endTime.toISOString().substr(11, 2) + beg
+                    console.log(qua)
                     for (let j = beg; j < qua; j++) {
                         TimeArray[j] = 1
                     }
+                    events.timeOfStart = startTime.toISOString().substr(11, 2);
+                    events.timeOfEnd = endTime.toISOString().substr(11, 2);
                 }
             }
         )

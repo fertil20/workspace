@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './ForgotPassword.css';
 import {Button, Form, FormGroup, Input} from 'reactstrap';
-import {forgotPasswordReset} from "../../util/APIUtils";
+import {changePassword, getCurrentUser} from "../../util/APIUtils";
 import NotFound from "../../common/NotFound";
 import ServerError from "../../common/ServerError";
 
@@ -19,7 +19,8 @@ export default class ForgotPasswordReset extends Component {
             },
             password2: {
                 value: ''
-            }
+            },
+            user: JSON.parse(localStorage.getItem('app'))
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.checkPasswordMatch = this.checkPasswordMatch.bind(this);
@@ -40,7 +41,7 @@ export default class ForgotPasswordReset extends Component {
     handleSubmit(event) {
         event.preventDefault();
         this.setState({isLoading: true});
-        forgotPasswordReset(this.state.password2.value)
+        changePassword(this.state.password2.value, this.state.user.currentUser.username)
             .then(response => {
                 this.setState({
                     serverError: false,
