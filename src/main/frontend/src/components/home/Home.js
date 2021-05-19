@@ -28,7 +28,7 @@ export default class Home extends Component {
     componentDidMount() {
         setInterval(() => {
             this.loadMe()
-        }, 10);
+        }, 100);
         this._isMounted = true;
     }
 

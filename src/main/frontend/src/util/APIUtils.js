@@ -21,19 +21,17 @@ const request = (options) => {
         .then((text) => text.length ? JSON.parse(text) : {})
 };
 
-const requestImage = (options) => {
-    const headers = new Headers({
-    })
+const requestImage = async (options) => {
+    const headers = new Headers({})
 
-    if(localStorage.getItem(ACCESS_TOKEN)) {
+    if (localStorage.getItem(ACCESS_TOKEN)) {
         headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
     }
 
     const defaults = {headers: headers};
     options = Object.assign({}, defaults, options);
 
-    return fetch(options.url, options)
-
+    return await fetch(options.url, options)
 };
 
 export function addNews(title, topText, bottomText, ImageBlob) {
@@ -62,7 +60,7 @@ export function editNews(id, title, topText, bottomText, ImageBlob) {
         url: API_BASE_URL + "/news/edit/"+id,
         method: 'POST',
         body: fd,
-        headers:  new Headers({"Authorization": `Bearer ` + localStorage.getItem(ACCESS_TOKEN)})
+        headers: new Headers({"Authorization": `Bearer ` + localStorage.getItem(ACCESS_TOKEN)})
     });
 }
 

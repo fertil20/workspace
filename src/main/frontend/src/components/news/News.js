@@ -35,13 +35,13 @@ export default class News extends Component {
         this._isMounted = false;
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+/*    componentDidUpdate(prevProps, prevState, snapshot) {
         if(!this.state.isLoading){
         let idVar = setInterval(() => {
             this.loadAllNews()
             if(this.state.isLoading)clearInterval(idVar)
         }, 2000);}
-    }
+    }*/
 
     ImgLoaded(){
         this.setState({isLoading: true})

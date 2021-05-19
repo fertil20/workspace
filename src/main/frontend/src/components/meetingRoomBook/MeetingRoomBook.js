@@ -96,6 +96,19 @@ export default class MeetingRoomBook extends Component {
         this.loadMeetingsByRoomId()
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.state.meetingRooms === '') {
+            setInterval(() => {
+                this.loadAllMeetingRooms()
+            }, 1000)
+        }
+        if(this.state.events === []) {
+            setInterval(() => {
+                this.loadAllMeetingRooms()
+            }, 1000)
+        }
+    }
+
     componentWillUnmount() {
         this._isMounted = false;
     }
@@ -277,8 +290,8 @@ export default class MeetingRoomBook extends Component {
                     for (let j = beg; j < qua; j++) {
                         TimeArray[j] = 1
                     }
-                    events.timeOfStart = startTime.toISOString().substr(11, 2);
-                    events.timeOfEnd = endTime.toISOString().substr(11, 2);
+/*                    events.timeOfStart = startTime.toISOString().substr(11, 2);
+                    events.timeOfEnd = endTime.toISOString().substr(11, 2);*/
                 }
             }
         )
@@ -411,6 +424,7 @@ export default class MeetingRoomBook extends Component {
     }
 
     render() {
+        if (this.state.meetingRooms !== '') {
         return (
             <div>
                 <Modal isOpen={this.state.toggleEvent} toggle={this.changeEventToggle}>
@@ -573,6 +587,15 @@ export default class MeetingRoomBook extends Component {
                 </Row>
             </div>
         )
+    } else {
+            return (
+                <div className="text-center">
+                    <div className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </div>
+                </div>
+            )
+        }
     }
 }
 

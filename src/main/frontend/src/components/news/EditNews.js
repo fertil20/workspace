@@ -136,7 +136,7 @@ export default class NewsEdit extends Component {
                             <Col>
                                 <img style={{paddingLeft:20}} src={this.state.fileUrl} alt={this.state.fileName} className='news-image'/>
                                 <div style={{width:200,paddingLeft:20}}>
-                                    <Input type='file' onChange={(event)=>this.onChange(event)}/>
+                                    <Input type='file' accept="image/png, image/jpeg" onChange={(event)=>this.onChange(event)}/>
                                     <a>Разрешение: 250x325</a>
                                 </div>
                             </Col>

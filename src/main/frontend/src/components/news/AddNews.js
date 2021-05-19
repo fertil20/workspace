@@ -115,7 +115,7 @@ export default class NewsAdd extends Component {
                             <Col>
                                 <img style={{paddingLeft:20}} src={this.state.fileUrl} alt={this.state.fileName} id = 'fileUpload' className='news-image'/>
                                 <div style={{width:200,paddingLeft:20}}>
-                                    <Input type='file' name='multipartFile' class="file" onChange={(event)=>this.onChange(event)}/>
+                                    <Input type='file' name='multipartFile' accept="image/png, image/jpeg" class="file" onChange={(event)=>this.onChange(event)}/>
                                     <a>Разрешение: 250x325</a>
                                 </div>
                             </Col>

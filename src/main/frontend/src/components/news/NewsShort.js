@@ -28,7 +28,7 @@ export default class ShortNews extends Component {
     loadShorts(){
         loadAllShorts()
             .then(response=>{
-                this.setState({shorts:response})
+                this._isMounted && this.setState({shorts:response})
             })
     }
 
