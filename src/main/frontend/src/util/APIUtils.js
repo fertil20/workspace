@@ -53,9 +53,9 @@ export function loadNews() {
 }
 
 
-export function getFreeUsers(date, timeOfStart, timeOfEnd){
+export function getFreeUsers(timeOfStart, timeOfEnd){
     return request({
-        url: API_BASE_URL + "/meetings/availableUsers/" + date + "/" + timeOfStart + "/" + timeOfEnd,
+        url: API_BASE_URL + "/meetings/availableUsers/" + timeOfStart + "/" + timeOfEnd,
         method: 'GET'
     })
 }

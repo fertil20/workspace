@@ -8,6 +8,7 @@ import com.workspace.server.model.Meeting;
 import com.workspace.server.repository.MeetingRepository;
 import com.workspace.server.repository.MeetingRoomRepository;
 import com.workspace.server.repository.UserRepository;
+import org.springframework.format.datetime.standard.InstantFormatter;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -80,7 +81,7 @@ public class MeetingController {
 
     @PostMapping("/room/{id}/newMeeting") //todo проверить свободное время пользователя и переговорной
     public void setNewMeeting(@PathVariable Long id, @RequestBody MeetingRequest request) {
-        if (request.getTimeOfStart().isAfter(Instant.now(Clock.system(ZoneOffset.UTC)))) {
+        if (request.getTimeOfStart().isAfter(LocalDateTime.now())) {
             Meeting meeting = new Meeting();
             meeting.setTitle(request.getTitle());
             meeting.setColor(request.getColor());

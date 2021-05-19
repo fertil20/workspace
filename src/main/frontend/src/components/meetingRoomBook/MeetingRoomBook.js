@@ -57,6 +57,7 @@ export default class MeetingRoomBook extends Component {
         this.showEventDetails = this.showEventDetails.bind(this);
         this.changeEventToggle = this.changeEventToggle.bind(this);
         this.loadAllMeetingRooms = this.loadAllMeetingRooms.bind(this);
+        this.timeToISO = this.timeToISO.bind(this);
     }
 
     loadMeetingsByRoomId() {
@@ -127,23 +128,28 @@ export default class MeetingRoomBook extends Component {
         }
     }
 
-    createNewMeeting() {
-        if(this.state.timeOfStart!=='-'&&this.state.timeOfEnd!=='-'){
+    timeToISO() {
+        if(this.state.timeOfStart !== '-' && this.state.timeOfEnd !== '-'){
             this.state.CurrentEventDate.setHours(this.state.timeOfStart)
-            this.state.UTCBeg = this.state.CurrentEventDate.toUTCString()
-            this.state.CurrentEventDate.setHours(this.state.timeOfEnd)
-            this.state.UTCEnd = this.state.CurrentEventDate.toUTCString()
+            console.log(this.state.CurrentEventDate)
+            this.state.UTCBeg = this.state.CurrentEventDate.toISOString();
+            console.log(this.state.UTCBeg)
+            this.state.CurrentEventDate.setHours(this.state.timeOfEnd);
+            this.state.UTCEnd = this.state.CurrentEventDate.toISOString();
+            console.log(this.state.UTCEnd)
         }
+    }
+
+    createNewMeeting() {
+        this.timeToISO();
         const MeetingRequest = {
             title: this.state.title.value,
             date: CurrentEventDate,
             color: 'red',
-            timeOfStart: this.state.timeOfStart,
-            timeOfEnd: this.state.timeOfEnd,
+            timeOfStart: this.state.UTCBeg,
+            timeOfEnd: this.state.UTCEnd,
             organizerName: this.state.user.currentUser.name,
             usersId: this.state.usersOnMeeting,
-            UTCBeg: this.state.UTCBeg,
-            UTCEnd: this.state.UTCEnd
         }
         if (MeetingRequest.title !== '' && MeetingRequest.timeOfStart !== '-' && MeetingRequest.usersId.length !== 0) {
             Meeting(MeetingRequest, this.state.currentRoom)
@@ -210,7 +216,7 @@ export default class MeetingRoomBook extends Component {
     }
 
     getUsers() {
-        getFreeUsers(CurrentEventDate, this.state.timeOfStart, this.state.timeOfEnd)
+        getFreeUsers(this.state.UTCBeg, this.state.UTCEnd)
             .then(response => {
                 this._isMounted && this.setState({
                     users: response,
@@ -258,9 +264,10 @@ export default class MeetingRoomBook extends Component {
     getTimeByEventDate(date) {
         this.state.events.map(
             events => {
-                if (events.date === date) {
-                    let beg = events.timeOfStart - 9
-                    let qua = events.timeOfEnd - events.timeOfStart + beg
+                if (events.timeOfStart.substr(0, 10) === date) {
+                    console.log(events.timeOfStart.substr(11, 2))
+                    let beg = events.timeOfStart.substr(11, 2) - 9
+                    let qua = events.timeOfEnd.substr(11, 2) - events.timeOfStart.substr(11, 0) + beg
                     for (let j = beg; j < qua; j++) {
                         TimeArray[j] = 1
                     }
@@ -332,6 +339,7 @@ export default class MeetingRoomBook extends Component {
                 direct = button
                 this.state.timeOfStart = button + 9;
                 this.state.timeOfEnd = button + 10;
+                this.timeToISO();
                 this.getUsers()
             } else {
                 this.copyArray(MenArray, TimeArray)
@@ -346,6 +354,7 @@ export default class MeetingRoomBook extends Component {
                         }
                         if (TimeArray[i] === 2) {
                             this.state.timeOfEnd = button + 10
+                            this.timeToISO();
                             this.getUsers()
                             break
                         }
@@ -361,6 +370,7 @@ export default class MeetingRoomBook extends Component {
                         }
                         if (TimeArray[i] === 2) {
                             this.state.timeOfStart = button + 9;
+                            this.timeToISO();
                             this.getUsers()
                             break
                         }
@@ -386,6 +396,7 @@ export default class MeetingRoomBook extends Component {
                 Users = <div>Выберите время</div>
             }
             else {
+                this.timeToISO();
                 this.getUsers()
             }
         }

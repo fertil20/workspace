@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import NavigationPanel from "../navigation/NavigationPanel";
 import {Row,Col,Button} from 'reactstrap';
 import './AboutCompany.css'
+import {Link} from "react-router-dom";
 
 let CompanyAboutText = 'Компания Workspace  – технологический и бизнес-партнер лидеров российского бизнеса и государственных структур. Компания трансформирует понимание современной экономики и технологическую экспертизу в решения, повышающие эффективность управления и конкурентоспособность компаний в цифровую эпоху.\n' +
     '\n' +
@@ -38,7 +39,7 @@ export default class AboutCompany extends Component{
                                 <div style={{height:'auto'}}>{OfficePhoneText2}</div>
                             </Col>
                         </Row>
-                        <Button size='sm' className='company-button' href='/about/newEmployee'>Новый сотрудник</Button>
+                        <Link to='/about/newEmployee'> <Button size='sm' className='company-button'> Новым сотрудникам</Button></Link>
                     </div>
                 </Col>
             </Row>

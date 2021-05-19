@@ -3,7 +3,7 @@ import './App.css';
 import {
     Route,
     withRouter,
-    Switch, BrowserRouter
+    Switch
 } from 'react-router-dom';
 
 import {getCurrentUser} from '../util/APIUtils';
