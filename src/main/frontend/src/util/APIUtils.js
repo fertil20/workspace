@@ -23,7 +23,6 @@ const request = (options) => {
 
 const requestImage = (options) => {
     const headers = new Headers({
-        'Content-Type': 'undefined'
     })
 
     if(localStorage.getItem(ACCESS_TOKEN)) {
@@ -56,10 +55,10 @@ export function editNews(title,topText,bottomText,ImageBlob,id) {
 
     let fd = new FormData()
     fd.append('id',id)
+    fd.append('multipartImage',ImageBlob)
     fd.append('title',title)
     fd.append('topText',topText)
     fd.append('bottomText',bottomText)
-    fd.append('multipartFile',ImageBlob)
     return requestImage({
         url: API_BASE_URL + "/news/edit/"+id,
         method: 'POST',

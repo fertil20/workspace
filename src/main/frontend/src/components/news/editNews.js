@@ -50,9 +50,10 @@ export default class NewsEdit extends Component {
             text2: this.state.text2.value,
             file: this.state.file,
         }
-        editNews(addNewNewsRequest.title,addNewNewsRequest.text1,addNewNewsRequest.text2,this.state.fileUrl,this.state.id )
+        editNews(addNewNewsRequest.title,addNewNewsRequest.text1,addNewNewsRequest.text2,addNewNewsRequest.file,this.state.id )
             .then(response => {
                 alert('Успешно отредактировано.')
+                this.props.history.push(`/news/show/`+this.state.id);
             })
             .catch(error => {
                 alert('Что-то пошло не так.');
@@ -85,7 +86,7 @@ export default class NewsEdit extends Component {
     getNewsImage(id){
         loadImageByID(id)
             .then(response => {
-                this.setState({fileUrl: response.url})
+                this.setState({file:response,fileUrl: response.url})
 
             })
             .catch(error => {

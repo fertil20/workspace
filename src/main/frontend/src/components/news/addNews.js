@@ -62,7 +62,7 @@ export default class NewsAdd extends Component {
     onChange(e) {
         if(e.target.files.length !== 0) {
             this.state.file = e.target.files[0]
-            imageToUpload = new Blob([JSON.stringify(this.state.file, null, 2)]);
+            // imageToUpload = new Blob([JSON.stringify(this.state.file, null, 2)]);
             // this.getBinary(e)
             this.setState({fileUrl: URL.createObjectURL(e.target.files[0])})
             this.state.fileName = e.target.files[0].name

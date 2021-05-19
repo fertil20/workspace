@@ -79,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 "/*", "/users/**", "/meeting/**", "/news/**",
                                 "/login/**", "/forgotPassword/**", "/resetPassword/**",
                                 "/newUser/**", "/roleManager/**", "/manageUsers/**",
-                                "/about/**"
+                                "/about/**", "/api/news/see/*/image"
                                 )
                             .permitAll()
                         .antMatchers("/",

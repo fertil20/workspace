@@ -87,6 +87,7 @@ public class NewsController {
         newsRepository.deleteById(id);
     }
 
+    @Transactional
     @PostMapping("/edit/{id}")
     public void setNews(@PathVariable Long id,
                         @RequestParam MultipartFile multipartImage,
