@@ -4,7 +4,7 @@ import './News.css';
 import NavigationPanel from "../navigation/NavigationPanel";
 import {Row, Col, Button, Input} from 'reactstrap';
 import ShortNews from "./newsShort";
-import {addNews, deleteNews, loadNews} from "../../util/APIUtils";
+import {addNews, deleteNews, loadImageByID, loadNews} from "../../util/APIUtils";
 import {formatDate} from "../../util/Helpers";
 import {Link} from "react-router-dom";
 
@@ -24,7 +24,8 @@ export default class NewsAdd extends Component {
             text2: {value: ''},
             file: '',
             fileName: 'default',
-            fileUrl: defaultImg
+            fileUrl: defaultImg,
+            image: ''
         }
         this.handleInputChange = this.handleInputChange.bind(this)
         this.onChange = this.onChange.bind(this)
@@ -45,41 +46,41 @@ export default class NewsAdd extends Component {
             title: this.state.title.value,
             topText: this.state.text1.value,
             bottomText: this.state.text2.value,
-            multipartImage: imageToUpload,
-            // Date: this.state.CurrentDate
         }
-        addNews(addNewNewsRequest)
+        console.log(this.state.file)
+        addNews(addNewNewsRequest.title,addNewNewsRequest.topText,addNewNewsRequest.bottomText,this.state.file)
             .then(response => {
                 alert('Новость добавлена')
+                this.props.history.push(`/news`);
             })
             .catch(error => {
                 alert('Что-то пошло не так.');
             });
     }
 
-    // on123(e) {
-    //     if(e.target.files.length !== 0) {
-    //         this.state.file = e.target.files[0]
-    //         let image = this.getBinary(e)
-    //         console.log(image)
-    //         this.setState({fileUrl: URL.createObjectURL(e.target.files[0])})
-    //         this.state.fileName = e.target.files[0].name
-    //     }
-    // }
 
-    onChange(e){
+    onChange(e) {
+        if(e.target.files.length !== 0) {
+            this.state.file = e.target.files[0]
+            imageToUpload = new Blob([JSON.stringify(this.state.file, null, 2)]);
+            // this.getBinary(e)
+            this.setState({fileUrl: URL.createObjectURL(e.target.files[0])})
+            this.state.fileName = e.target.files[0].name
+        }
+    }
+
+    getBinary(e){
         let file = e.target.files[0];
         let reader = new FileReader();
         let binaryBlob = null
         reader.onloadend = function() {
             let data=(reader.result).split(',')[1];
-            binaryBlob = atob(data);
-            console.log('done')
-            // console.log(binaryBlob)
+            binaryBlob = reader.result;
+            // console.log('done')
+            imageToUpload = binaryBlob
         }
-        reader.readAsDataURL(file);
-        console.log(binaryBlob)
-        return binaryBlob
+        reader.readAsText(file);
+
     }
 
     handleInputChange(event) {
@@ -114,7 +115,7 @@ export default class NewsAdd extends Component {
                             <Col>
                                 <img style={{paddingLeft:20}} src={this.state.fileUrl} alt={this.state.fileName} id = 'fileUpload' className='news-image'/>
                                 <div style={{width:200,paddingLeft:20}}>
-                                    <Input type='file' onChange={(event)=>this.onChange(event)}/>
+                                    <Input type='file' name='multipartFile' class="file" onChange={(event)=>this.onChange(event)}/>
                                     <a>Разрешение: 250x325</a>
                                 </div>
                             </Col>

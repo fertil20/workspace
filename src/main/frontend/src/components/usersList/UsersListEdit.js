@@ -164,7 +164,7 @@ class UsersListEdit extends Component {
                         ):null
                     }
                     <Button size="sm" href='/users' style={{marginTop:10, marginLeft:10}} className='add-button'>
-                        Сохранить
+                        Выйти из редактирования
                     </Button>
                     <Button size="sm" href='/newUser' style={{marginTop:10, marginLeft:10}} className='add-button'>
                         Добавить сотрудника

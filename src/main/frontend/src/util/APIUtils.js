@@ -21,21 +21,81 @@ const request = (options) => {
         .then((text) => text.length ? JSON.parse(text) : {})
 };
 
+const requestImage = (options) => {
+    const headers = new Headers({
+        'Content-Type': 'undefined'
+    })
 
-export function addNews(addNewsRequest) {
-    return request({
+    if(localStorage.getItem(ACCESS_TOKEN)) {
+        headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
+    }
+
+    const defaults = {headers: headers};
+    options = Object.assign({}, defaults, options);
+
+    return fetch(options.url, options)
+
+};
+
+export function addNews(title,topText,bottomText,ImageBlob) {
+
+    let fd = new FormData()
+    fd.append('title',title)
+    fd.append('topText',topText)
+    fd.append('bottomText',bottomText)
+    fd.append('multipartFile',ImageBlob)
+    return requestImage({
         url: API_BASE_URL + "/news/add",
         method: 'POST',
-        body: JSON.stringify(addNewsRequest)
+        body: fd,
+        headers:  new Headers({"Authorization": `Bearer ` + localStorage.getItem(ACCESS_TOKEN)})
     });
 }
 
-export function deleteNews(deleteNewsRequest) {
-    // return request({
-    //     url: API_BASE_URL + "/news",
-    //     method: 'POST',
-    //     body: JSON.stringify(deleteNewsRequest)
-    // });
+export function editNews(title,topText,bottomText,ImageBlob,id) {
+
+    let fd = new FormData()
+    fd.append('id',id)
+    fd.append('title',title)
+    fd.append('topText',topText)
+    fd.append('bottomText',bottomText)
+    fd.append('multipartFile',ImageBlob)
+    return requestImage({
+        url: API_BASE_URL + "/news/edit/"+id,
+        method: 'POST',
+        body: fd
+    });
+}
+
+export function forgotPasswordReset(password) { //Возвращает пароль и токен
+    return request({
+        url: API_BASE_URL + "/auth/resetPassword?token=",
+        method: 'POST',
+        body: password
+    });
+}
+
+export function loadAllShorts(){
+    return request({
+        url: API_BASE_URL + "/news/list",
+        method: 'GET'
+    });
+}
+
+
+export function deleteNews(id) {
+    return request({
+        url: API_BASE_URL + "/news/delete/"+id,
+        method: 'POST'
+    });
+}
+
+export function loadImageByID(id) {
+    return requestImage({
+        url: API_BASE_URL + "/news/see/"+id+"/image",
+        method: 'GET',
+        headers:  new Headers({"Authorization": `Bearer ` + localStorage.getItem(ACCESS_TOKEN)})
+    });
 }
 
 export function loadNewsByID(id) {

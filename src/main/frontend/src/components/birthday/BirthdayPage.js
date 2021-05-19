@@ -111,7 +111,7 @@ class BirthdayPage extends Component {
                         ):null
                     }
                 </Col>
-                <Col sm={{size: 2,offset:1}} style={{backgroundColor:'white', borderRadius:10, height:'35%', width: '25%'}}>
+                <Col sm={{size: 2,offset:1}} style={{backgroundColor:'white', borderRadius:10, height:'100%', width: '25%'}}>
                     {
                         this.state.user ? (
                             <div>

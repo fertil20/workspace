@@ -23,6 +23,7 @@ import {PersistentState} from "../util/PersistentState";
 import ProfileEdit from "../user/profile/ProfileEdit";
 import ForgotPassword from "../user/passwordReset/ForgotPassword";
 import ForgotPasswordReset from "../user/passwordReset/ForgotPasswordReset";
+import PasswordResetAuth from "../user/passwordReset/PasswordResetAuth";
 import Home from "../components/home/Home";
 import NewUser from "../user/new/NewUser";
 import RoleManager from "../components/roleManager/RoleManager";
@@ -137,8 +138,9 @@ class App extends Component {
                             <Route path="/signup" component={Signup}/>
                             <Route path="/forgotPassword" component={ForgotPassword}/>
                             <Route path="/resetPassword" component={ForgotPasswordReset}/>
-                            {/*<PrivateRoute exact path="/news/:id" authenticated={this.persistentState.getState().isAuthenticated} component={NewsOne} handleLogout={this.handleLogout}/>*/}
-                            <PrivateRoute exact path="/news/edit" authenticated={this.persistentState.getState().isAuthenticated} component={editNews} handleLogout={this.handleLogout}/>
+                            <PrivateRoute exact path="/passwordReset" authenticated={this.persistentState.getState().isAuthenticated} component={PasswordResetAuth} handleLogout={this.handleLogout}/>
+                            <PrivateRoute exact path="/news/show/:id" authenticated={this.persistentState.getState().isAuthenticated} component={NewsOne} handleLogout={this.handleLogout}/>
+                            <PrivateRoute exact path="/news/edit/:id" authenticated={this.persistentState.getState().isAuthenticated} component={editNews} handleLogout={this.handleLogout}/>
                             <PrivateRoute exact path="/news/add" authenticated={this.persistentState.getState().isAuthenticated} component={addNews} handleLogout={this.handleLogout}/>
                             <PrivateRoute exact path="/birthday" authenticated={this.persistentState.getState().isAuthenticated} component={birthdayPage} handleLogout={this.handleLogout}/>
                             <PrivateRoute exact path="/meeting" authenticated={this.persistentState.getState().isAuthenticated} component={MeetingRoomBook} handleLogout={this.handleLogout}/>

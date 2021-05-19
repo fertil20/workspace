@@ -1,16 +1,19 @@
 package com.workspace.server.rest;
 
 import com.workspace.server.dto.NewsListResponse;
+//import com.workspace.server.dto.NewsRequest;
 import com.workspace.server.dto.NewsResponse;
 import com.workspace.server.model.News;
 import com.workspace.server.repository.NewsRepository;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -36,6 +39,7 @@ public class NewsController {
                         news.getBottomText()));
     }
 
+    @Transactional
     @GetMapping(value = "/see/{id}/image", produces = MediaType.IMAGE_JPEG_VALUE)
     public Resource downloadNewsImage(@PathVariable Long id) {
         byte[] image = newsRepository.getOne(id).getPicture();
@@ -43,18 +47,21 @@ public class NewsController {
     }
 
     @PostMapping("/add")
-    public void setNews(@RequestParam MultipartFile multipartImage) throws IOException {
+    public void setNews(@RequestParam String title,
+                        @RequestParam String topText,
+                        @RequestParam String bottomText,
+                        @RequestParam("multipartFile") MultipartFile multipartFile) throws IOException {
         News news = new News();
-        news.setTitle("newsRequest.getTitle()");
-        news.setTopText("newsRequest.getTopText()");
-        news.setBottomText("newsRequest.getBottomText()");
-        news.setPicture(multipartImage.getBytes());
+        news.setTitle(title);
+        news.setTopText(topText);
+        news.setBottomText(bottomText);
+        news.setPicture(multipartFile.getBytes());
 
         newsRepository.save(news);
     }
 
     @GetMapping("/see")
-    public Set<NewsResponse> getAllNews() {
+    public List<NewsResponse> getAllNews() {
         return newsRepository.findAll().stream()
                 .map(news -> new NewsResponse(
                         news.getId(),
@@ -62,17 +69,22 @@ public class NewsController {
                         news.getDate(),
                         news.getTopText(),
                         news.getBottomText()))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/list")
-    public Set<NewsListResponse> getListNews() {
+    public List<NewsListResponse> getListNews() {
         return newsRepository.findAll().stream()
                 .map(news -> new NewsListResponse(
                         news.getId(),
                         news.getTitle(),
                         news.getDate()))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
+    }
+
+    @PostMapping("/delete/{id}")
+    public void deleteNews(@PathVariable Long id){
+        newsRepository.deleteById(id);
     }
 
     @PostMapping("/edit/{id}")

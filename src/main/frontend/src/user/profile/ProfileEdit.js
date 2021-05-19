@@ -303,7 +303,7 @@ class ProfileEdit extends Component {
                                             {!this.state.CurUser.currentUser.privileges.includes('Edit_Users') && <div style={{height:40}}>{this.state.user.department}</div>}
                                             <div style={{height: 10}}/>
                                             {this.state.CurUser.currentUser.privileges.includes('Edit_Users') &&  <Input type="text" name="office" id="editOffice"
-                                                                                                                         required
+                                                                                                                         required pattern='[0-9][0-9][0-9]' placeholder='000'
                                                                                                                          value={this.state.office.value}
                                                                                                                          onChange={(event) => this.handleInputChange(event)}/>}
                                             {!this.state.CurUser.currentUser.privileges.includes('Edit_Users') && <div style={{height:35}}>{this.state.user.office}</div>}

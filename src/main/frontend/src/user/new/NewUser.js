@@ -437,7 +437,7 @@ class NewUser extends Component {
                                                    onChange={(event) => this.handleInputChange(event)}/>
                                             <div style={{height: 10}}/>
                                             <Input type="text" name="office" id="editOffice"
-                                                   required
+                                                   required pattern='[0-9][0-9][0-9]' placeholder='000'
                                                    value={this.state.office.value}
                                                    onChange={(event) => this.handleInputChange(event)}/>
                                             <div style={{height: 10}}/>

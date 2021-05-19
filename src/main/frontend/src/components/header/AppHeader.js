@@ -77,17 +77,11 @@ function NavBarLogged(props){
                         <div style={{textAlign:'center'}}>{props.currentUser.username}</div>
                         <div style={{textAlign:'center'}}> @{props.currentUser.username}</div>
                         <DropdownItem divider />
-                        <DropdownItem href="/">
-                            Главная
-                        </DropdownItem>
                         <DropdownItem href={`/users/${props.currentUser.username}`}>
                             Профиль
                         </DropdownItem>
-                        <DropdownItem href="/news">
-                            Новости
-                        </DropdownItem>
                         <DropdownItem divider />
-                        <DropdownItem href={`/forgotPassword`}>
+                        <DropdownItem href={`/passwordReset`}>
                             Сменить пароль
                         </DropdownItem>
                         <DropdownItem onClick={props.handleMenuClick} href="/login">

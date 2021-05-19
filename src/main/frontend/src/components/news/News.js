@@ -4,59 +4,90 @@ import './News.css';
 import NavigationPanel from "../navigation/NavigationPanel";
 import {Row, Col, Button, Input} from 'reactstrap';
 import ShortNews from "./newsShort";
-import {deleteNews, loadNews} from "../../util/APIUtils";
+import {deleteNews, loadImageByID, loadNews} from "../../util/APIUtils";
 import {Link} from "react-router-dom";
-
-let NewsText1 = 'Пособия могут получать семьи, в которых доход на человека меньше прожиточного минимума — 1203 руб. Напомним, что до первого апреля сумма пособия была размером с половину прожиточного минимума на душу населения, а уже с первого апреля есть возможность пересчитать её. Половина останется, если в семье получаемая соответственная сумма прожиточного минимума выходит на среднедушевой доход.'
-let NewsText2 = 'И если даже 75% не позволяет семье выйти на хороший уровень дохода, то размер пособия будет составлять 100% прожиточного минимума, — говорит Исаева.\n' +
-    'Также с апреля текущего месяца будет учитываться доход семьи с декабря 2019 по ноябрь 2020. Что касается изменений в показаниях к доступности выплат определенным категориям населения, изменения затронули семьи, в которых проходит обучение студент-очник возрастом не более 23 лет; семьи с детьми-инвалидами (сумма будет поступать без учёта компенсационных выплат по уходу за детьми с ОВЗ); семьи-опекуны.'
 
 export default class News extends Component {
 
     constructor(props) {
         super(props);
+        this._isMounted = false;
         this.state ={
             CurUser: JSON.parse(localStorage.getItem('app')),
-            news: ''
+            news: null,
+            image: [],
+            isLoading: false
         }
         this.loadAllNews = this.loadAllNews.bind(this)
+        this.getNewsImage = this.getNewsImage.bind(this)
+        this.ImgLoaded = this.ImgLoaded.bind(this)
     }
 
+
     componentDidMount() {
-        this._isMounted = true;
         this.loadAllNews()
+        this._isMounted = true;
     }
 
 
     componentWillUnmount() {
+
         this._isMounted = false;
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(!this.state.isLoading){
+        let idVar = setInterval(() => {
+            this.loadAllNews()
+            if(this.state.isLoading)clearInterval(idVar)
+        }, 2000);}
+    }
+
+    ImgLoaded(){
+        this.setState({isLoading: true})
+    }
+
 
     loadAllNews(){
         loadNews()
             .then(response => {
-                this._isMounted && this.setState({news: response})
-                console.log(this.state.news)
+                this.setState({news: response})
+                if(response){
+                this.state.news.map(
+                    news=>{
+                        this.getNewsImage(news.id)
+                    })
+                    this.setState({isLoading:true})
+                }
+            })
+            .catch(error => {
+            });
+    }
+
+    getNewsImage(id){
+        if(id){
+            loadImageByID(id)
+                .then(response => {
+                })
+                .catch(error => {
+                    alert('Что-то пошло не так2.');
+                });}
+    }
+
+
+    deleteNewsByID(NewsId){
+        deleteNews(NewsId)
+            .then(response => {
+                alert('Новость удалена.');
+                this.props.history.go(`/news`);
             })
             .catch(error => {
                 alert('Что-то пошло не так.');
             });
     }
 
-    deleteNewsByID(NewsId){
-        // const deleteNewsRequest = {
-        //     id: NewsId
-        // };
-        // deleteNews(deleteNewsRequest)
-        //     .then(response => {
-        //         alert('Новость удалена.');
-        //     })
-        //     .catch(error => {
-        //         alert('Что-то пошло не так.');
-        //     });
-    }
-
     render () {
+        if (this.state.isLoading) {
         return(
             <Row>
                 <NavigationPanel/>
@@ -66,23 +97,23 @@ export default class News extends Component {
                             <div>
                                 {
                                     this.state.news.map(
-                                        news =>
+                                        (news, index) =>(
                                             <div style={{width:570, marginBottom:30}}>
                                                 <div className='news-title'>{news.title}</div>
                                                 <div className='news-date'>{news.date}</div>
                                                 <Row>
                                                     <Col>
-                                                        <div style={{width:200,paddingLeft:20}}><img src={nobody} alt='nobody' className='news-image'/></div>
+                                                        <div style={{width:200,paddingLeft:20}}><img src={process.env.REACT_APP_API_BASE_URL+'/news/see/'+news.id+'/image'} onLoad={()=>this.ImgLoaded()} alt={news.id} className='news-image'/></div>
                                                     </Col>
                                                     <Col >
-                                                        <div style={{width:330}} className='news-text'>{NewsText1}</div>
+                                                        <div style={{width:330}} className='news-text'>{news.topText}</div>
                                                     </Col>
                                                 </Row>
-                                                <div style={{width:560,paddingLeft:20,height:'auto',paddingTop:5,paddingBottom:25}} className='news-text'>{NewsText2}</div>
-                                                {this.state.CurUser.currentUser.privileges.includes('Manage_News') && <div><Link to='/news/edit'><Button size='sm' className='news-edit-button'>Редактировать</Button></Link>
-                                                    <Button size='sm' color='danger' className='news-delete-button' onClick={()=>this.deleteNewsByID('id')}>Удалить</Button></div>}
-                                            </div>
-                                    )
+                                                <div style={{width:560,paddingLeft:20,height:'auto',paddingTop:5,paddingBottom:25}} className='news-text'>{news.bottomText}</div>
+                                                {this.state.CurUser.currentUser.privileges.includes('Manage_News') && <div><Link to={'/news/edit/'+news.id}><Button size='sm' className='news-edit-button'>Редактировать</Button></Link>
+                                                    <Button size='sm' color='danger' className='news-delete-button' onClick={()=>this.deleteNewsByID(news.id)}>Удалить</Button></div>}
+                                            </div>)
+                                    ).reverse()
                                 }
                             </div>
                         ) : null
@@ -91,5 +122,12 @@ export default class News extends Component {
                 <ShortNews/>
             </Row>
         )
+    }else{
+            return <div className="text-center">
+                <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
+            </div>
+        }
     }
 }

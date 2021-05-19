@@ -4,7 +4,7 @@ import './News.css';
 import NavigationPanel from "../navigation/NavigationPanel";
 import {Row, Col, Button, Input} from 'reactstrap';
 import ShortNews from "./newsShort";
-import {deleteNews, loadNews} from "../../util/APIUtils";
+import {deleteNews, editNews, loadImageByID, loadNews, loadNewsByID} from "../../util/APIUtils";
 import {formatDate} from "../../util/Helpers";
 import {Link} from "react-router-dom";
 
@@ -25,7 +25,8 @@ export default class NewsEdit extends Component {
             text2: {value: ''},
             file: '',
             fileName: 'default',
-            fileUrl: defaultImg
+            fileUrl: '',
+            id: ''
         }
         this.handleInputChange = this.handleInputChange.bind(this)
         this.onChange = this.onChange.bind(this)
@@ -43,24 +44,64 @@ export default class NewsEdit extends Component {
     }
 
     saveNews(){
-        // const addNewNewsRequest ={
-        //     title: this.state.title.value,
-        //     text1: this.state.title.text1,
-        //     text2: this.state.title.text,
-        //     file: this.state.file.text,
-        //     date: this.state.CurrentDate
-        // }
-        // addNews()
-        //     .then(response => {
-        //         alert('Новость добавлена')
-        //     })
-        //     .catch(error => {
-        //         alert('Что-то пошло не так.');
-        //     });
+        const addNewNewsRequest ={
+            title: this.state.title.value,
+            text1: this.state.text1.value,
+            text2: this.state.text2.value,
+            file: this.state.file,
+        }
+        editNews(addNewNewsRequest.title,addNewNewsRequest.text1,addNewNewsRequest.text2,this.state.fileUrl,this.state.id )
+            .then(response => {
+                alert('Успешно отредактировано.')
+            })
+            .catch(error => {
+                alert('Что-то пошло не так.');
+            });
     }
 
-    deleteNewsByID(){
+    componentDidMount() {
+        this._isMounted = true;
+        this.loadOneNews(this.props.match.params.id);
+        this.getNewsImage(this.props.match.params.id);
+    }
 
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
+    loadOneNews(id){
+        loadNewsByID(id)
+            .then(response=>{
+                    this.setState({
+                            title:{value:response.title},
+                            text1:{value:response.topText},
+                            text2:{value:response.bottomText},
+                        id: response.id
+                    })
+                }
+            )
+    }
+
+    getNewsImage(id){
+        loadImageByID(id)
+            .then(response => {
+                this.setState({fileUrl: response.url})
+
+            })
+            .catch(error => {
+                alert('Что-то пошло не так.');
+            });
+    }
+
+    deleteNewsByID(NewsId){
+        deleteNews(NewsId)
+            .then(response => {
+                alert('Новость удалена.');
+                this.props.history.push(`/news`);
+            })
+            .catch(error => {
+                alert('Что-то пошло не так.');
+            });
     }
 
     onChange(e) {
@@ -121,7 +162,7 @@ export default class NewsEdit extends Component {
                         </div>
                         {this.state.CurUser.currentUser.privileges.includes('Manage_News') && <div>
                             <Link to='/news'><Button size='sm'  className='news-publish' >Отменить</Button></Link>
-                            <Button style={{marginLeft:20}} size='sm' color='danger' className='news-delete-button' onClick={()=>this.deleteNewsByID('id')}>Удалить</Button>
+                            <Button style={{marginLeft:20}} size='sm' color='danger' className='news-delete-button' onClick={()=>this.deleteNewsByID(this.state.id)}>Удалить</Button>
                             <Button size='sm' className='news-publish' onClick={()=>this.saveNews()}>Сохранить</Button>
                         </div>}
                     </div>
