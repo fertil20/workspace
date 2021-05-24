@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -24,7 +25,7 @@ public class CleanerService {
     @Scheduled(cron = "0 0 0 * * ?") //every day at 00:00
     @Transactional
     public void clearMeeting() {
-        meetingRepository.deleteMeetingsByTimeOfStartBefore(Instant.now().plusSeconds(31536000)); //1 Year
+        meetingRepository.deleteMeetingsByTimeOfStartBefore(LocalDate.now().plusYears(1)); //1 Year
         System.out.println("clearMeeting is Done");
     }
 

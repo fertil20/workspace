@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -22,14 +22,17 @@ public class Meeting {
     @Column(length = 60, nullable=false)
     private String title;
 
+    @Column(name = "date", nullable=false)
+    private LocalDate date;
+
     @Column(length = 15, nullable=false)
     private String color;
 
-    @Column(nullable = false)
-    private Instant timeOfStart;
+    @Column(nullable=false)
+    private byte timeOfStart;
 
     @Column(nullable=false)
-    private Instant timeOfEnd;
+    private byte timeOfEnd;
 
     @Column(nullable=false)
     private String organizerName;

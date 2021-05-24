@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Repository
@@ -13,5 +14,5 @@ public interface MeetingRepository extends JpaRepository<Meeting, Long> {
 
     Set<Meeting> findMeetingsByUsers_UsernameOrderByTimeOfStart(String username);
 
-    void deleteMeetingsByTimeOfStartBefore(Instant date);
+    void deleteMeetingsByTimeOfStartBefore(LocalDate date);
 }

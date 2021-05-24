@@ -106,7 +106,7 @@ export default class NewsAdd extends Component {
                 <Col sm={{size:1.5}} style={{backgroundColor: 'white', borderRadius: 10,overflow: 'auto', height:'100%', paddingBottom: 20, marginRight: '2%', width: '53%'}}>
                     <div style={{width:570, marginBottom:30}}>
                         <div style={{paddingLeft:20,paddingTop:5}}>
-                            <Input name='title' type='text' placeholder='Заголовок новости' required value={this.state.title.value}
+                            <Input name='title' type='text' placeholder='Заголовок новости' required value={this.state.title.value} maxLength={100}
                                    onChange={(event)=>this.handleInputChange(event)}
                             />
                         </div>

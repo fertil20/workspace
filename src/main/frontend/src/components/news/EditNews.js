@@ -41,7 +41,7 @@ export default class NewsEdit extends Component {
             text2: this.state.text2.value,
             file: this.state.file,
         }
-        editNews(this.state.id, addNewNewsRequest.title,addNewNewsRequest.text1,addNewNewsRequest.text2,addNewNewsRequest.file,)
+        editNews(this.state.id, addNewNewsRequest.title,addNewNewsRequest.text1,addNewNewsRequest.text2,addNewNewsRequest.file)
             .then(response => {
                 alert('Успешно отредактировано.')
                 this.props.history.push(`/news/show/`+this.state.id);
@@ -127,7 +127,7 @@ export default class NewsEdit extends Component {
                 <Col sm={{size:1.5}} style={{backgroundColor: 'white', borderRadius: 10,overflow: 'auto', height:'100%', paddingBottom: 20, marginRight: '2%', width: '53%'}}>
                     <div style={{width:570, marginBottom:30}}>
                         <div style={{paddingLeft:20,paddingTop:5}}>
-                            <Input name='title' type='text' placeholder='Заголовок новости' required value={this.state.title.value}
+                            <Input name='title' type='text' placeholder='Заголовок новости' required value={this.state.title.value} maxLength={100}
                                    onChange={(event)=>this.handleInputChange(event)}
                             />
                         </div>

@@ -14,10 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
-import java.time.Duration;
-import java.time.ZoneOffset;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -71,9 +68,10 @@ public class UserController {
                 .map(meeting -> new UserMeetingsResponse(
                         meeting.getId(),
                         meeting.getTitle(),
+                        meeting.getDate(),
                         meeting.getColor(),
-                        meeting.getTimeOfStart().plus(Duration.ofHours(3)),
-                        meeting.getTimeOfEnd().plus(Duration.ofHours(Long.parseLong(ZoneOffset.systemDefault().getId()))),
+                        meeting.getTimeOfStart(),
+                        meeting.getTimeOfEnd(),
                         meeting.getOrganizerName(),
                         meeting.getUsers().stream()
                                 .map(user -> new MeetingUsersResponse(

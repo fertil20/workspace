@@ -18,16 +18,16 @@ public class News {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title", length = 40, nullable=false)
+    @Column(name = "title", length = 100, nullable=false)
     private String title;
 
     @Column(name = "date", nullable=false)
     private LocalDate date = LocalDate.now();
 
-    @Column(name = "top_text", length = 400)
+    @Column(name = "top_text", length = 500)
     private String topText;
 
-    @Column(name = "bottom_text", length = 400)
+    @Column(name = "bottom_text", length = 500)
     private String bottomText;
 
     @Column(name = "picture")

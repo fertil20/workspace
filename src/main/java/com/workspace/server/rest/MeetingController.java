@@ -65,9 +65,10 @@ public class MeetingController {
                 .map(meeting -> new MeetingsByRoomResponse(
                         meeting.getId(),
                         meeting.getTitle(),
+                        meeting.getDate(),
                         meeting.getColor(),
-                        meeting.getTimeOfStart().plus(Duration.ofHours(3)),
-                        meeting.getTimeOfEnd().plus(Duration.ofHours(3)),
+                        meeting.getTimeOfStart(),
+                        meeting.getTimeOfEnd(),
                         meeting.getOrganizerName(),
                         meeting.getUsers().stream()
                                 .map(user -> new MeetingUsersResponse(
@@ -81,12 +82,13 @@ public class MeetingController {
 
     @PostMapping("/room/{id}/newMeeting") //todo проверить свободное время пользователя и переговорной
     public void setNewMeeting(@PathVariable Long id, @RequestBody MeetingRequest request) {
-        if (request.getTimeOfStart().isAfter(Instant.now())) {
+        if (request.getInstant().isAfter(Instant.now())) {
             Meeting meeting = new Meeting();
             meeting.setTitle(request.getTitle());
+            meeting.setDate(request.getDate());
             meeting.setColor(request.getColor());
-            meeting.setTimeOfStart(request.getTimeOfStart().minus(Duration.ofHours(3)));
-            meeting.setTimeOfEnd(request.getTimeOfEnd().minus(Duration.ofHours(3)));
+            meeting.setTimeOfStart(request.getTimeOfStart());
+            meeting.setTimeOfEnd(request.getTimeOfEnd());
             meeting.setOrganizerName(request.getOrganizerName());
             meeting.setUsers(new HashSet<>(userRepository.findAllById(request.getUsersId())));
             meeting.setMeetingRoom(meetingRoomRepository.getOne(id));
@@ -126,10 +128,12 @@ public class MeetingController {
         mailSender.send(message);
     }
 
-    @GetMapping("/availableUsers/{timeOfStart}/{timeOfEnd}")
-    public List<MeetingUsersResponse> getMeetingNewUsers(@PathVariable String timeOfStart,
+    @GetMapping("/availableUsers/{date}/{timeOfStart}/{timeOfEnd}")
+    public List<MeetingUsersResponse> getMeetingNewUsers(@PathVariable String date,
+                                                         @PathVariable String timeOfStart,
                                                          @PathVariable String timeOfEnd) {
-        return userRepository.findAllAvailableUsers(Instant.parse(timeOfStart), Instant.parse(timeOfEnd))
+        return userRepository.findAllAvailableUsers(LocalDate.parse(date),
+                Byte.parseByte(timeOfStart), Byte.parseByte(timeOfEnd))
                 .stream().map(user -> new MeetingUsersResponse(user.getId(), user.getName()))
                 .collect(Collectors.toList());
     }

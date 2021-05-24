@@ -108,9 +108,9 @@ export function loadNews() {
     });
 }
 
-export function getFreeUsers(timeOfStart, timeOfEnd){
+export function getFreeUsers(date, timeOfStart, timeOfEnd){
     return request({
-        url: API_BASE_URL + "/meetings/availableUsers/" + timeOfStart + "/" + timeOfEnd,
+        url: API_BASE_URL + "/meetings/availableUsers/" + date + "/" + timeOfStart + "/" + timeOfEnd,
         method: 'GET'
     })
 }
