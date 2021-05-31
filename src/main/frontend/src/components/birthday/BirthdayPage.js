@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {getUsersBirthday} from "../../util/APIUtils";
 import NotFound from "../../common/NotFound";
 import ServerError from "../../common/ServerError";
-import {Row, Col} from 'reactstrap';
+import {Col, Row} from 'reactstrap';
 import "./BirthdayPage.css";
 import {Link} from "react-router-dom";
 
@@ -13,7 +13,6 @@ class BirthdayPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            CurUser: JSON.parse(localStorage.getItem('app')),
             user: null,
             isLoading: false,
             deleteUserID: '',

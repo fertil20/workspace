@@ -35,7 +35,7 @@ public class DatabaseConfig {
         config.setUsername(environment.getProperty("spring.datasource.username"));
         config.setPassword(environment.getProperty("spring.datasource.password"));
         config.addDataSourceProperty("socketFactory", "com.google.cloud.sql.postgres.SocketFactory");
-        config.addDataSourceProperty("cloudSqlInstance", "lucid-box-313913:europe-west1:workspace-database");
+        config.addDataSourceProperty("cloudSqlInstance", "lucid-box-313913:europe-west1:workspace");
         return new HikariDataSource(config);
     }
 }

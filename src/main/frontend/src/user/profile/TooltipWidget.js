@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Tooltip } from 'reactstrap';
+import React, {useState} from 'react';
+import {Tooltip} from 'reactstrap';
 import working from '../../media/working.png'
 import sunbed from '../../media/sunbed.png'
 import ill from '../../media/ill.png'

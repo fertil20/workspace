@@ -3,15 +3,18 @@ import './NewUser.css';
 import NotFound from '../../common/NotFound';
 import ServerError from '../../common/ServerError';
 import {
-    Row,
-    Col,
     Button,
-    FormGroup,
+    Col,
+    Dropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownToggle,
     Form,
+    FormGroup,
     Input,
-    Dropdown, DropdownToggle, DropdownMenu, DropdownItem
+    Row
 } from 'reactstrap';
-import {TooltipWidgetHome,TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidgetIll} from '../profile/TooltipWidget'
+import {TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidgetHome, TooltipWidgetIll} from '../profile/TooltipWidget'
 import React, {Component, useState} from "react";
 import {checkEmailAvailability, checkUsernameAvailability, newUser} from "../../util/APIUtils";
 import {EMAIL_MAX_LENGTH, USERNAME_MAX_LENGTH, USERNAME_MIN_LENGTH} from "../../constants/constants";

@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
-import { createPoll } from '../util/APIUtils';
-import { MAX_CHOICES, POLL_QUESTION_MAX_LENGTH, POLL_CHOICE_MAX_LENGTH } from '../constants/constants';
+import React, {Component} from 'react';
+import {createPoll} from '../util/APIUtils';
+import {MAX_CHOICES, POLL_CHOICE_MAX_LENGTH, POLL_QUESTION_MAX_LENGTH} from '../constants/constants';
 import './NewPoll.css';
-import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
-import { Form } from '@ant-design/compatible';
+import {CloseOutlined, PlusOutlined} from '@ant-design/icons';
+import {Form} from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Input, Button, Select, Col, notification } from 'antd';
+import {Button, Col, Input, notification, Select} from 'antd';
+
 const Option = Select.Option;
 const FormItem = Form.Item;
 const { TextArea } = Input

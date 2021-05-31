@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { getUserProfile } from '../../util/APIUtils';
-import { Avatar } from 'antd';
-import { getAvatarColor } from '../../util/Colors';
+import React, {Component} from 'react';
+import {getUserProfile} from '../../util/APIUtils';
+import {Avatar} from 'antd';
+import {getAvatarColor} from '../../util/Colors';
 import {formatDate, formatTime} from '../../util/Helpers';
 import './Profile.css';
 import NotFound from '../../common/NotFound';
 import ServerError from '../../common/ServerError';
-import {Row, Col, Button} from 'reactstrap';
-import {TooltipWidgetHome,TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidgetIll} from './TooltipWidget'
+import {Button, Col, Row} from 'reactstrap';
+import {TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidgetHome, TooltipWidgetIll} from './TooltipWidget'
 import NavigationPanel from "../../components/navigation/NavigationPanel";
 import {formatPhoneNumberIntl} from "react-phone-number-input";
 

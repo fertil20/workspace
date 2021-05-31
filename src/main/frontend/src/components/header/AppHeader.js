@@ -1,17 +1,7 @@
 import React, {Component, useState} from 'react';
-import {
-    withRouter
-} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import './AppHeader.css';
-import {
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    Row,
-    Col
-} from 'reactstrap';
-
+import {Col, DropdownItem, DropdownMenu, DropdownToggle, Row, UncontrolledDropdown} from 'reactstrap';
 
 
 class AppHeader extends Component {

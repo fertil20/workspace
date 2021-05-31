@@ -1,4 +1,4 @@
-import {API_BASE_URL, POLL_LIST_SIZE, ACCESS_TOKEN} from '../constants/constants';
+import {ACCESS_TOKEN, API_BASE_URL, POLL_LIST_SIZE} from '../constants/constants';
 
 const request = (options) => {
     const headers = new Headers({
@@ -168,14 +168,14 @@ export function getRoleUsers(roleName) {
 
 export function addUserToRole(roleName, username) {
     return request({
-        url: API_BASE_URL + "/roles/" + roleName+ "/addUser/" + username,
+        url: API_BASE_URL + "/roles/" + roleName + "/addUser/" + username,
         method: 'POST',
     });
 }
 
 export function deleteRole(roleName) {
     return request({
-        url: API_BASE_URL + "/roles" +"/deleteRole/" + roleName,
+        url: API_BASE_URL + "/roles/" + roleName + "/deleteRole",
         method: 'POST',
     });
 }

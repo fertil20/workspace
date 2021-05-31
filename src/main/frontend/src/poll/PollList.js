@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import { getAllPolls, getUserCreatedPolls, getUserVotedPolls } from '../util/APIUtils';
+import React, {Component} from 'react';
+import {castVote, getAllPolls, getUserCreatedPolls, getUserVotedPolls} from '../util/APIUtils';
 import Poll from './Poll';
-import { castVote } from '../util/APIUtils';
-import { Button, notification } from 'antd';
+import {Button, notification} from 'antd';
 import {Icon} from '@ant-design/compatible';
-import { POLL_LIST_SIZE } from '../constants/constants';
-import { withRouter } from 'react-router-dom';
+import {POLL_LIST_SIZE} from '../constants/constants';
+import {withRouter} from 'react-router-dom';
 import './PollList.css';
 
 class PollList extends Component {

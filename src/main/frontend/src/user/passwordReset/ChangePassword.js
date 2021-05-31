@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './ForgotPassword.css';
 import {Button, Form, FormGroup, Input} from 'reactstrap';
-import {changePassword, getCurrentUser} from "../../util/APIUtils";
+import {changePassword} from "../../util/APIUtils";
 import NotFound from "../../common/NotFound";
 import ServerError from "../../common/ServerError";
 

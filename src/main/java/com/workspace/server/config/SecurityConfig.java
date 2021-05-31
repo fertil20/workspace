@@ -1,8 +1,8 @@
 package com.workspace.server.config;
 
-import com.workspace.server.service.CustomUserDetailsService;
 import com.workspace.server.security.JwtAuthenticationEntryPoint;
 import com.workspace.server.security.JwtAuthenticationFilter;
+import com.workspace.server.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

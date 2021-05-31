@@ -7,9 +7,9 @@ import com.workspace.server.model.User;
 import com.workspace.server.repository.RoleRepository;
 import com.workspace.server.repository.UserRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -41,7 +41,7 @@ public class RoleController {
         roleRepository.save(role);
     }
 
-    @PostMapping("/deleteRole/{role}")
+    @PostMapping("/{role}/deleteRole")
     @Transactional
     @PreAuthorize("@customAuthorizationService.canEditRole(#role)")
     public void deleteRole(@PathVariable String role) {

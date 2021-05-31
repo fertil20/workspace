@@ -1,18 +1,22 @@
-import React, { Component } from 'react';
-import { signup, checkUsernameAvailability, checkEmailAvailability } from '../../util/APIUtils';
+import React, {Component} from 'react';
+import {checkEmailAvailability, checkUsernameAvailability, signup} from '../../util/APIUtils';
 import './Signup.css';
-import { Link } from 'react-router-dom';
-import { 
-    NAME_MIN_LENGTH, NAME_MAX_LENGTH, 
-    USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH,
+import {Link} from 'react-router-dom';
+import {
     EMAIL_MAX_LENGTH,
-    PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH
+    NAME_MAX_LENGTH,
+    NAME_MIN_LENGTH,
+    PASSWORD_MAX_LENGTH,
+    PASSWORD_MIN_LENGTH,
+    USERNAME_MAX_LENGTH,
+    USERNAME_MIN_LENGTH
 } from '../../constants/constants';
 
-import { Form } from '@ant-design/compatible';
+import {Form} from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
 
-import { Input, Button, notification } from 'antd';
+import {Button, Input, notification} from 'antd';
+
 const FormItem = Form.Item;
 
 class Signup extends Component {

@@ -3,7 +3,7 @@ package com.workspace.server.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
 import java.time.Duration;
 import java.time.Instant;
 

@@ -7,9 +7,9 @@ import com.workspace.server.repository.UserRepository;
 import com.workspace.server.security.CurrentUser;
 import com.workspace.server.security.UserPrincipal;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 

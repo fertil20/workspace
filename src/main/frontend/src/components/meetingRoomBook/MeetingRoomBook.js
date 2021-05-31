@@ -1,12 +1,18 @@
 import React, {Component} from "react";
 import NavigationPanel from "../navigation/NavigationPanel";
 import {
-    Row,
+    Button,
     Col,
     DropdownItem,
-    UncontrolledButtonDropdown,
     DropdownMenu,
-    DropdownToggle, Modal, ModalHeader, ModalBody, Input, ModalFooter, Button
+    DropdownToggle,
+    Input,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalHeader,
+    Row,
+    UncontrolledButtonDropdown
 } from 'reactstrap';
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from '@fullcalendar/daygrid';

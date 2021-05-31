@@ -2,9 +2,9 @@ import {Component} from "react";
 import defaultImg from "../../media/defaultImg.png";
 import './News.css';
 import NavigationPanel from "../navigation/NavigationPanel";
-import {Row, Col, Button, Input} from 'reactstrap';
+import {Button, Col, Input, Row} from 'reactstrap';
 import ShortNews from "./NewsShort";
-import {addNews, deleteNews, loadImageByID, loadNews} from "../../util/APIUtils";
+import {addNews} from "../../util/APIUtils";
 import {formatDate} from "../../util/Helpers";
 import {Link} from "react-router-dom";
 

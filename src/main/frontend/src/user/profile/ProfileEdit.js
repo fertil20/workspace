@@ -1,17 +1,10 @@
-import { getAvatarColor } from '../../util/Colors';
+import {getAvatarColor} from '../../util/Colors';
 import {formatDate, formatTime} from '../../util/Helpers';
 import './Profile.css';
 import NotFound from '../../common/NotFound';
 import ServerError from '../../common/ServerError';
-import {
-    Row,
-    Col,
-    Button,
-    Form,
-    Input,
-    Dropdown, DropdownToggle, DropdownMenu, DropdownItem
-} from 'reactstrap';
-import {TooltipWidgetHome,TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidgetIll} from './TooltipWidget'
+import {Button, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Form, Input, Row} from 'reactstrap';
+import {TooltipWidgetAtWork, TooltipWidgetHoliday, TooltipWidgetHome, TooltipWidgetIll} from './TooltipWidget'
 import {Avatar} from "antd";
 import React, {Component, useState} from "react";
 import {getUserProfile, profileEdit} from "../../util/APIUtils";

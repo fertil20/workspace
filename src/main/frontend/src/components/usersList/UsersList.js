@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {getAllUsers} from "../../util/APIUtils";
 import NotFound from "../../common/NotFound";
 import ServerError from "../../common/ServerError";
-import {ListGroup, ListGroupItem, Button, Row, Input, Form, Col} from 'reactstrap';
+import {Button, Col, Form, Input, ListGroup, ListGroupItem, Row} from 'reactstrap';
 import "./UsersList.css";
 import search from '../../media/search.png'
 import {

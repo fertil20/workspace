@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import NavigationPanel from "../navigation/NavigationPanel";
-import {Row,Col,Button} from 'reactstrap';
+import {Button, Col, Row} from 'reactstrap';
 import './AboutCompany.css'
 import {Link} from "react-router-dom";
 

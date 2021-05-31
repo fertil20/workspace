@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import NavigationPanel from "../navigation/NavigationPanel";
-import {Row,Col,Button,Form,FormGroup,Input} from 'reactstrap';
+import {Button, Col, Form, FormGroup, Input, Row} from 'reactstrap';
 import './AboutCompany.css'
 
 export default class AboutCompanyEdit extends Component{

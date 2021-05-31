@@ -1,30 +1,36 @@
 import NotFound from '../../common/NotFound';
 import ServerError from '../../common/ServerError';
 import {
-    Row,
-    Col,
     Button,
-    Modal,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    Input,
-    DropdownToggle,
-    DropdownMenu,
+    ButtonDropdown,
+    Col,
     DropdownItem,
+    DropdownMenu,
+    DropdownToggle,
+    Input,
     ListGroup,
     ListGroupItem,
-    ButtonDropdown,
-    NavItem,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalHeader,
     Nav,
+    NavItem,
     NavLink,
-    TabContent, TabPane
+    Row,
+    TabContent,
+    TabPane
 } from 'reactstrap';
 import classnames from 'classnames';
 import React, {Component} from "react";
 import {
-    addNewRole, addUserToRole, deleteRole, deleteUserFromRole, editRolePrivileges,
-    getAllRoles, getRolePrivileges,
+    addNewRole,
+    addUserToRole,
+    deleteRole,
+    deleteUserFromRole,
+    editRolePrivileges,
+    getAllRoles,
+    getRolePrivileges,
     getRoleUsers,
     getUsersWithoutRole,
 } from "../../util/APIUtils";

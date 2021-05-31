@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.workspace</groupId>
     <artifactId>workspace</artifactId>
-    <version>0.6.2-RELEASE</version>
+    <version>0.7.1-RELEASE</version>
 
     <description>Demo project for Spring Boot</description>
     <properties>

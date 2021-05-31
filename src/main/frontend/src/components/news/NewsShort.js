@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, Col, Row} from 'reactstrap';
+import {Button, Col} from 'reactstrap';
 import './News.css';
 import {Link} from "react-router-dom";
 import {loadAllShorts} from "../../util/APIUtils";

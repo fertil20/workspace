@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 import './News.css';
 import NavigationPanel from "../navigation/NavigationPanel";
-import {Row, Col, Button, Input} from 'reactstrap';
+import {Button, Col, Row} from 'reactstrap';
 import ShortNews from "./NewsShort";
-import {deleteNews, loadImageByID, loadNews, loadNewsByID} from "../../util/APIUtils";
+import {deleteNews, loadImageByID, loadNewsByID} from "../../util/APIUtils";
 import {Link} from "react-router-dom";
 
 export default class NewsOne extends Component {

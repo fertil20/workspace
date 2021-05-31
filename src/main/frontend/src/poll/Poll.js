@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './Poll.css';
-import { CheckCircleOutlined } from '@ant-design/icons';
-import { Avatar } from 'antd';
-import { Link } from 'react-router-dom';
-import { getAvatarColor } from '../util/Colors';
-import { formatDateTime } from '../util/Helpers';
+import {CheckCircleOutlined} from '@ant-design/icons';
+import {Avatar, Button, Radio} from 'antd';
+import {Link} from 'react-router-dom';
+import {getAvatarColor} from '../util/Colors';
+import {formatDateTime} from '../util/Helpers';
 
-import { Radio, Button } from 'antd';
 const RadioGroup = Radio.Group;
 
 class Poll extends Component {

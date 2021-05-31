@@ -1,13 +1,9 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './App.css';
-import {
-    Route,
-    withRouter,
-    Switch
-} from 'react-router-dom';
+import {Route, Switch, withRouter} from 'react-router-dom';
 
 import {getCurrentUser} from '../util/APIUtils';
-import { ACCESS_TOKEN } from '../constants/constants';
+import {ACCESS_TOKEN} from '../constants/constants';
 
 import NewPoll from '../poll/NewPoll';
 import Login from '../user/login/Login';
@@ -18,7 +14,7 @@ import NotFound from '../common/NotFound';
 import PrivateRoute from '../common/PrivateRoute';
 import UsersList from '../components/usersList/UsersList';
 
-import { Layout, notification } from 'antd';
+import {Layout, notification} from 'antd';
 import {PersistentState} from "../util/PersistentState";
 import ProfileEdit from "../user/profile/ProfileEdit";
 import ForgotPassword from "../user/passwordReset/ForgotPassword";
@@ -38,6 +34,7 @@ import editNews from "../components/news/EditNews";
 import birthdayPage from "../components/birthday/BirthdayPage";
 import MeetingRoomBook from "../components/meetingRoomBook/MeetingRoomBook";
 import NewsOne from "../components/news/NewsOne";
+
 const { Content } = Layout;
 
 class App extends Component {

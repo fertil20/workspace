@@ -1,7 +1,7 @@
 package com.workspace.server.security;
 
-import com.workspace.server.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.workspace.server.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
