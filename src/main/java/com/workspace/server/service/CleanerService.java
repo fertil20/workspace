@@ -25,7 +25,7 @@ public class CleanerService {
     @Scheduled(cron = "0 0 0 * * ?") //every day at 00:00
     @Transactional
     public void clearMeeting() {
-        meetingRepository.deleteMeetingsByDateBefore(LocalDate.now().plusYears(1)); //1 Year
+        meetingRepository.deleteMeetingsByDateBefore(LocalDate.now().minusYears(1)); //1 Year
         System.out.println("clearMeeting is Done");
     }
 
