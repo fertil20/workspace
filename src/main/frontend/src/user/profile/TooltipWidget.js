@@ -4,7 +4,7 @@ import working from '../../media/working.png'
 import sunbed from '../../media/sunbed.png'
 import ill from '../../media/ill.png'
 import home from '../../media/home.png'
-
+//todo даты отпуска/больничного
 export const TooltipWidgetHome = () => {
     const [tooltipOpen, setTooltipOpen] = useState(false);
 
@@ -45,7 +45,7 @@ export const TooltipWidgetIll = () => {
             <img src={ill} id="TooltipIll" width={25} height={25} alt='Ill'/>
             <Tooltip placement="bottom" isOpen={tooltipOpen} target="TooltipIll" toggle={toggle}>
                 На больничном
-                с 00.00.0000
+                {/*с 00.00.0000*/}
             </Tooltip>
         </div>
     );
@@ -61,8 +61,8 @@ export const TooltipWidgetHoliday = () => {
             <img src={sunbed} id="TooltipHoliday" width={25} height={25} alt='Holiday'/>
             <Tooltip placement="bottom" isOpen={tooltipOpen} target="TooltipHoliday" toggle={toggle}>
                 В отпуске
-                с 00.00.0000 до 00.00.0000
-                Замещающий ААААААА А.А.
+                {/*с 00.00.0000 до 00.00.0000*/}
+                {/*Замещающий ААААААА А.А.*/}
             </Tooltip>
         </div>
     );
