@@ -8,7 +8,7 @@ import ServerError from "../../common/ServerError";
 let textContent = ''
 let buttonDisabled = ''
 
-export default class ForgotPasswordReset extends Component {
+export default class ChangePassword extends Component {
 
     constructor(props) {
         super(props);
